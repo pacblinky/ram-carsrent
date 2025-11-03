@@ -19,7 +19,6 @@ class Reservation extends Model
     protected $casts = [
     'start_datetime' => 'datetime',
     'end_datetime' => 'datetime',
-    'status' => 'boolean'
     ];
 
     // Relationships
@@ -42,12 +41,28 @@ class Reservation extends Model
     protected static function booted()
     {
         static::saving(function ($reservation) {
-            if ($reservation->car && $reservation->start_date && $reservation->end_date) {
-                $days = now()
-                    ->parse($reservation->start_date)
-                    ->diffInDays(now()->parse($reservation->end_date)) ?: 1;
+            
+            if ($reservation->car_id && $reservation->start_datetime && $reservation->end_datetime) {
+                
+                $car = Car::find($reservation->car_id);
+                $start = Carbon::parse($reservation->start_datetime);
+                $end = Carbon::parse($reservation->end_datetime);
+                
+                // Calculate duration in total minutes
+                $minutes = $start->diffInMinutes($end);
+                
+                // Convert minutes to days, rounding up.
+                // (24 hours * 60 minutes = 1440 minutes per day)
+                $days = ceil($minutes / 1440);
 
-                $reservation->total_price = $reservation->car->price_per_day * $days;
+                // Ensure a minimum of 1 day rental
+                if ($days <= 0) {
+                    $days = 1;
+                }
+
+                if ($car) {
+                    $reservation->total_price = $car->price_per_day * $days;
+                }
             }
         });
     }
