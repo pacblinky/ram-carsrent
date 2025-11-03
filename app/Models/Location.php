@@ -8,8 +8,8 @@ class Location extends Model
 {
     protected $fillable = [
         'name',
-        'google_maps_link
-    '];
+        'google_maps_link'
+    ];
 
     public function cars()
     {
