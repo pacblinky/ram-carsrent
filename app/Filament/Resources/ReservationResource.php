@@ -4,9 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReservationResource\Pages;
 use App\Models\Reservation;
-use App\Models\User;
-use App\Models\Car;
-use App\Models\Location;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,9 +12,8 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\BadgeColumn;
 
 class ReservationResource extends Resource
 {
@@ -36,25 +32,52 @@ class ReservationResource extends Resource
                     ->relationship('user', 'name')
                     ->searchable()
                     ->required(),
+
                 Select::make('car_id')
                     ->label('Car')
                     ->relationship('car', 'name')
                     ->searchable()
                     ->required(),
-                Select::make('location_id')
-                    ->label('Location')
-                    ->relationship('location', 'name')
+
+                Select::make('pickup_location_id')
+                    ->label('Pickup Location')
+                    ->relationship('pickup', 'name')
                     ->searchable()
                     ->required(),
-                DateTimePicker::make('start_datetime')->required(),
-                DateTimePicker::make('end_datetime')->required(),
+
+                Select::make('dropoff_location_id')
+                    ->label('Drop-off Location')
+                    ->relationship('dropoff', 'name')
+                    ->searchable()
+                    ->required(),
+
+                DateTimePicker::make('start_datetime')
+                    ->label('Start Date & Time')
+                    ->required(),
+
+                DateTimePicker::make('end_datetime')
+                    ->label('End Date & Time')
+                    ->required(),
+
                 TextInput::make('total_price')
+                    ->label('Total Price')
                     ->numeric()
                     ->prefix('$')
                     ->disabled()
                     ->dehydrated(false)
                     ->helperText('Automatically calculated when saved'),
-                Toggle::make('status')->label('Active?')->default(true),
+
+                Select::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending'    => 'Pending',
+                        'confirmed'  => 'Confirmed',
+                        'completed'  => 'Completed',
+                        'canceled'   => 'Canceled',
+                        'overdue'    => 'Overdue',
+                    ])
+                    ->default('pending')
+                    ->required(),
             ]);
     }
 
@@ -64,12 +87,21 @@ class ReservationResource extends Resource
             ->columns([
                 TextColumn::make('user.name')->label('User')->sortable(),
                 TextColumn::make('car.name')->label('Car'),
-                TextColumn::make('location.name')->label('Location'),
+                TextColumn::make('pickup.name')->label('Pickup')->sortable(),
+                TextColumn::make('dropoff.name')->label('Drop-off')->sortable(),
                 TextColumn::make('start_datetime')->dateTime()->label('Start'),
                 TextColumn::make('end_datetime')->dateTime()->label('End'),
-                TextColumn::make('total_price')->money('usd', true),
-                IconColumn::make('status')->boolean()->label('Active'),
+                TextColumn::make('total_price')->money('usd', true)->sortable(),
+                BadgeColumn::make('status')
+                    ->colors([
+                        'warning' => 'pending',
+                        'info'    => 'confirmed',
+                        'success' => 'completed',
+                        'danger'  => 'canceled',
+                        'gray'    => 'overdue',
+                    ]),
             ])
+            ->defaultSort('start_datetime', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -82,9 +114,9 @@ class ReservationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListReservations::route('/'),
+            'index'  => Pages\ListReservations::route('/'),
             'create' => Pages\CreateReservation::route('/create'),
-            'edit' => Pages\EditReservation::route('/{record}/edit'),
+            'edit'   => Pages\EditReservation::route('/{record}/edit'),
         ];
     }
 }
