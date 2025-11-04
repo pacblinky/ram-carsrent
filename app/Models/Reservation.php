@@ -11,7 +11,8 @@ class Reservation extends Model
     protected $fillable = [
         'user_id',
         'car_id',
-        'location_id',
+        'pickup_location_id',
+        'dropoff_location_id',
         'start_datetime',
         'end_datetime',
         'total_price',
@@ -26,7 +27,8 @@ class Reservation extends Model
 
     public function user()     { return $this->belongsTo(User::class); }
     public function car()      { return $this->belongsTo(Car::class); }
-    public function location() { return $this->belongsTo(Location::class); }
+    public function pickup()   { return $this->belongsTo(Location::class, 'pickup_location_id'); }
+    public function dropoff()  { return $this->belongsTo(Location::class, 'dropoff_location_id'); }
 
     protected static function booted()
     {

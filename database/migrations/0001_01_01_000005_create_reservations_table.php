@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('car_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('location_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('pickup_location_id')->constrained('locations')->cascadeOnDelete();
+            $table->foreignId('dropoff_location_id')()->constrained('locations')->cascadeOnDelete();
             $table->dateTime('start_datetime');
             $table->dateTime('end_datetime');
-            $table->decimal('total_price', 10, 2)->nullable();
+            $table->decimal('total_price', 10, 2);
             $table->string('status')->default('pending');
             $table->timestamps();
         });
