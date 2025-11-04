@@ -26,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandName('Ram - Car Rental')
             ->colors([
                 'primary' => Color::Amber,
             ])

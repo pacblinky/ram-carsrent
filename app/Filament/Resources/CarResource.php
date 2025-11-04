@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -25,67 +26,107 @@ class CarResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-truck';
     protected static ?string $navigationGroup = 'Management';
     protected static ?string $navigationLabel = 'Cars';
+    protected static ?string $modelLabel = 'Car';
+    protected static ?string $pluralModelLabel = 'Cars';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
-                TextInput::make('brand')->required(),
-                Select::make('category')
-                    ->label('Category')
-                    ->options([
-                        'sedan' => 'Sedan',
-                        'suv' => 'SUV',
-                        'hatchback' => 'Hatchback',
-                        'coupe' => 'Coupe',
-                        'convertible' => 'Convertible',
-                        'pickup' => 'Pickup Truck',
-                        'van' => 'Van',
-                    ])
-                    ->searchable()
-                    ->required()
-                    ->native(false),
-                Select::make('fuel_type')
-                    ->label('Fuel Type')
-                    ->options([
-                        'petrol' => 'Petrol',
-                        'diesel' => 'Diesel',
-                        'electric' => 'Electric',
-                        'hybrid' => 'Hybrid',
-                    ])
-                    ->required()
-                    ->native(false), // nice Filament-styled dropdown
-                Select::make('transmission')
-                    ->label('Transmission')
-                    ->options([
-                        'manual' => 'Manual',
-                        'automatic' => 'Automatic',
-                        'semi-automatic' => 'Semi-Automatic',
-                    ])
-                    ->required()
-                    ->native(false),
-                TextInput::make('number_of_seats')->numeric()->minValue(1),
-                TextInput::make('number_of_doors')->numeric()->minValue(1),
-                TextInput::make('price_per_day')
-                    ->numeric()
-                    ->prefix('$')
-                    ->required(),
-                Select::make('location_id')
-                    ->label('Location')
-                    ->options(Location::pluck('name', 'id'))
-                    ->searchable()
-                    ->required(),
-                Textarea::make('description')->rows(3),
-                Toggle::make('is_available')->label('Available')->default(true),
-                FileUpload::make('images')
-                    ->label('Car Images')
-                    ->directory('cars')
-                    ->multiple()
-                    ->reorderable()
-                    ->image()
-                    ->maxFiles(5)
-                    ->helperText('Upload up to 5 images'),
+                Section::make('Basic Information')
+                    ->description('General details about the car.')
+                    ->icon('heroicon-o-information-circle')
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('brand')
+                            ->required()
+                            ->maxLength(255),
+                        Select::make('category')
+                            ->label('Category')
+                            ->options([
+                                'sedan' => 'Sedan',
+                                'suv' => 'SUV',
+                                'hatchback' => 'Hatchback',
+                                'coupe' => 'Coupe',
+                                'convertible' => 'Convertible',
+                                'pickup' => 'Pickup Truck',
+                                'van' => 'Van',
+                            ])
+                            ->searchable()
+                            ->required()
+                            ->native(false),
+                        Select::make('location_id')
+                            ->label('Location')
+                            ->relationship('location', 'name')
+                            ->searchable()
+                            ->required(),
+                    ])->columns(2),
+
+                Section::make('Specifications')
+                    ->icon('heroicon-o-cog-8-tooth')
+                    ->schema([
+                        Select::make('fuel_type')
+                            ->label('Fuel Type')
+                            ->options([
+                                'petrol' => 'Petrol',
+                                'diesel' => 'Diesel',
+                                'electric' => 'Electric',
+                                'hybrid' => 'Hybrid',
+                            ])
+                            ->required()
+                            ->native(false),
+                        Select::make('transmission')
+                            ->label('Transmission')
+                            ->options([
+                                'manual' => 'Manual',
+                                'automatic' => 'Automatic',
+                                'semi-automatic' => 'Semi-Automatic',
+                            ])
+                            ->required()
+                            ->native(false),
+                        TextInput::make('number_of_seats')
+                            ->numeric()
+                            ->minValue(1)
+                            ->label('Seats')
+                            ->required(),
+                        TextInput::make('number_of_doors')
+                            ->numeric()
+                            ->minValue(1)
+                            ->label('Doors')
+                            ->required(),
+                        Toggle::make('is_available')
+                            ->label('Available')
+                            ->default(true),
+                    ])->columns(3),
+
+                Section::make('Pricing')
+                    ->icon('heroicon-o-currency-dollar')
+                    ->schema([
+                        TextInput::make('price_per_day')
+                            ->numeric()
+                            ->prefix('$')
+                            ->required()
+                            ->label('Price per Day'),
+                    ]),
+
+                Section::make('Media & Description')
+                    ->icon('heroicon-o-photo')
+                    ->schema([
+                        FileUpload::make('images')
+                            ->label('Car Images')
+                            ->directory('cars')
+                            ->multiple()
+                            ->reorderable()
+                            ->image()
+                            ->maxFiles(5)
+                            ->helperText('Upload up to 5 images of the car'),
+                        Textarea::make('description')
+                            ->rows(4)
+                            ->maxLength(1000)
+                            ->placeholder('Brief description, features, or notes about the car...'),
+                    ]),
             ]);
     }
 
@@ -93,19 +134,54 @@ class CarResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('brand')->sortable()->searchable(),
-                TextColumn::make('category'),
-                TextColumn::make('price_per_day')->money('usd', true),
-                TextColumn::make('location.name')->label('Location'),
-                IconColumn::make('is_available')->boolean()->label('Available'),
+                TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('brand')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('category')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'suv' => 'success',
+                        'sedan' => 'primary',
+                        'pickup' => 'warning',
+                        'van' => 'gray',
+                        'hatchback' => 'info',
+                        'coupe' => 'danger',
+                        default => 'secondary',
+                    }),
+                TextColumn::make('price_per_day')
+                    ->money('usd', true)
+                    ->label('Price/Day')
+                    ->sortable(),
+                TextColumn::make('location.name')
+                    ->label('Location')
+                    ->sortable()
+                    ->searchable(),
+                IconColumn::make('is_available')
+                    ->boolean()
+                    ->label('Available'),
+                TextColumn::make('created_at')
+                    ->dateTime('M d, Y')
+                    ->label('Created')
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->filters([
+                Tables\Filters\TernaryFilter::make('is_available')
+                    ->label('Availability')
+                    ->trueLabel('Available')
+                    ->falseLabel('Unavailable'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
