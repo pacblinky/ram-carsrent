@@ -158,4 +158,88 @@
             </a>
         </div>
     </section>
+    <section class="bg-white dark:bg-gray-900 py-16 px-4">
+        <div class="max-w-screen-xl mx-auto text-center">
+            
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-2">
+                HOW IT WORKS
+            </p>
+            
+            <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-12 max-w-3xl mx-auto">
+                Presenting Your New Go-To Car<br>Rental Experience
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-gray-800 dark:text-gray-200 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Choose a Location</h3>
+                    <p class="text-base text-gray-600 dark:text-gray-400">Select the ideal destination to begin your journey with ease</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-gray-800 dark:text-gray-200 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Choose Your Vehicle</h3>
+                    <p class="text-base text-gray-600 dark:text-gray-400">Browse our fleet and find the perfect car for your needs</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-gray-800 dark:text-gray-200 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m-6 6a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Verification</h3>
+                    <p class="text-base text-gray-600 dark:text-gray-400">Review your information and confirm your booking</p>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-gray-800 dark:text-gray-200 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12.75A3.375 3.375 0 0112.375 9H17.25a3.375 3.375 0 013.375 3.375v5.25a3.375 3.375 0 01-3.375 3.375H12.375A3.375 3.375 0 019 18v-5.25z" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Begin Your Journey</h3>
+                    <p class="text-base text-gray-600 dark:text-gray-400">Start your adventure with confidence and ease</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="max-w-screen-xl mx-auto py-16 px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden">
+                <div class="md:w-1/2 z-10 mb-8 md:mb-0">
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Looking for a rental car?</h2>
+                    <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
+                        Discover your ideal rental car for every adventure, whether it's a road trip or business travel
+                    </p>
+                    <a href="#" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
+                        Get Started Now
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+                <div class="relative md:w-1/2">
+                    <img class="relative md:absolute md:-bottom-12 md:-right-12 w-full max-w-sm md:max-w-md lg:max-w-lg" src="https://carento.botble.com/storage/cars/img-1.png" alt="Grey SUV">
+                </div>
+            </div>
+
+            <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden">
+                <div class="md:w-1/2 z-10 mb-8 md:mb-0">
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Looking for a rental car?</h2>
+                    <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
+                        Maximize your vehicle's potential; seamlessly rent or sell with confidence
+                    </p>
+                    <a href="#" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
+                        Get Started Now
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+                <div class="relative md:w-1/2">
+                    <img class="relative md:absolute md:-bottom-12 md:-right-12 w-full max-w-sm md:max-w-md lg:max-w-lg" src="https://carento.botble.com/storage/cars/img-2.png" alt="Grey BMW">
+                </div>
+            </div>
+
+        </div>
+    </section>
 </x-app-layout>
