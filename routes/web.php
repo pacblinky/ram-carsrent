@@ -90,5 +90,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/cars', [CarsListController::class, 'index'])->name('cars.index');
+Route::get('/cars/{id}', [CarsListController::class, 'show'])->name('cars.show');
 
 require __DIR__.'/auth.php';
