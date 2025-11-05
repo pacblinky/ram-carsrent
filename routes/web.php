@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\CarsListController;
 
 Route::get('/', function () {
     $featuredVehicles = [
@@ -87,5 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/cars', [CarsListController::class, 'index'])->name('cars.index');
 
 require __DIR__.'/auth.php';
