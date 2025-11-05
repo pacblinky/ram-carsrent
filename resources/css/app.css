@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 @custom-variant dark (&:where(.dark, .dark *));
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-250px * 7)); /* Adjust based on number of logos and logo width */ }
+}
+
+.animate-scroll {
+    animation: scroll 30s linear infinite; /* Adjust duration as needed */
+}

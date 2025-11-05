@@ -20,7 +20,7 @@
             }
         </script>
     </head>
-    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
+    <body class="font-sans antialiased bg-gray-200 dark:bg-gray-900">
         <!-- Navbar -->
         @include('layouts.navbar')
 
@@ -37,5 +37,7 @@
         <main>
             {{ $slot }}
         </main>
+        
+        @include('layouts.footer')
     </body>
 </html>
