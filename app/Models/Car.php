@@ -8,7 +8,7 @@ class Car extends Model
 {
     protected $fillable = [
         'name',
-        'brand',
+        'brand_id',
         'category',
         'fuel_type',
         'transmission',
@@ -25,6 +25,11 @@ class Car extends Model
         'is_available' => 'boolean',
         'images' => 'array'
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     public function location()
     {
