@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('car_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained("users")->cascadeOnDelete();
+            $table->foreignId('car_id')->constrained("cars")->cascadeOnDelete();
             $table->foreignId('pickup_location_id')->constrained('locations')->cascadeOnDelete();
             $table->foreignId('dropoff_location_id')->constrained('locations')->cascadeOnDelete();
             $table->dateTime('start_datetime');

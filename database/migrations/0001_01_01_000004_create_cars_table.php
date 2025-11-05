@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('number_of_seats');
             $table->unsignedTinyInteger('number_of_doors');
             $table->decimal('price_per_day', 10, 2)->default(0);
-            $table->foreignId('location_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('location_id')->constrained("locations")->cascadeOnDelete();
             $table->text('description')->nullable();
             $table->json('images')->nullable();
             $table->boolean('is_available')->default(true);
