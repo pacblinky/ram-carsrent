@@ -10,7 +10,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/locale/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
         $locale = 'en';
@@ -19,10 +18,6 @@ Route::get('/locale/{locale}', function ($locale) {
     App::setLocale($locale);
     return Redirect::back();
 })->name('locale.switch');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
