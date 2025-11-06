@@ -51,11 +51,12 @@ class CarResource extends Resource
                         ->options([
                             'sedan' => 'Sedan',
                             'suv' => 'SUV',
+                            'sports_car' => 'Sports Car',
                             'hatchback' => 'Hatchback',
                             'coupe' => 'Coupe',
                             'convertible' => 'Convertible',
-                            'pickup' => 'Pickup Truck',
-                            'van' => 'Van',
+                            'pickup_truck' => 'Pickup Truck',
+                            'van' => 'Van'
                         ])
                         ->searchable()
                         ->required()
