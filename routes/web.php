@@ -9,23 +9,14 @@ use App\Http\Controllers\CarsListController;
 use App\Http\Controllers\ReservationController;
 use App\Models\Car;
 use App\Models\Location;
-use App\Models\Brand;
 
-// Named the home route 'home' for easier linking in navbar
 Route::get('/', function () {
-    // 1. Fetch Locations for the Search Form Dropdown
     $locations = Location::all();
-
-    // 2. Fetch Recent Cars from Database (Top 3 latest)
-    // We eager load brand and location to avoid N+1 query issues in the view
     $recentCars = Car::with(['brand', 'location'])
         ->where('is_available', true)
         ->latest()
         ->take(3)
         ->get();
-
-    // 3. (Optional) Fetch real brands if you want to replace the hardcoded logos later
-    // For now, we'll just pass the recent cars and locations.
 
     return view('welcome', compact('locations', 'recentCars'));
 })->name('home');
@@ -43,6 +34,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // --- NEW RESERVATION ROUTES ---
+    Route::get('/my-reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::patch('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
 });
 
 Route::get('/cars', [CarsListController::class, 'index'])->name('cars.index');
