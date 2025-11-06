@@ -1,4 +1,5 @@
 import flowbite from 'flowbite/plugin';
+import tailwindcssRtl from 'tailwindcss-rtl'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -18,5 +19,5 @@ export default {
         },
     },
 
-    plugins: [flowbite],
+    plugins: [flowbite, tailwindcssRtl],
 };
