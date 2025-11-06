@@ -106,9 +106,19 @@ class CarResource extends Resource
                         ->label('Doors')
                         ->required(),
 
+                    // New Quantity Input
+                    TextInput::make('quantity')
+                        ->numeric()
+                        ->minValue(1)
+                        ->default(1)
+                        ->label('Total Quantity')
+                        ->required()
+                        ->helperText('How many of this exact car model are available?'),
+
                     Toggle::make('is_available')
-                        ->label('Available')
-                        ->default(true),
+                        ->label('Available for Rent')
+                        ->default(true)
+                        ->helperText('Master switch to hide/show this car entirely.'),
                 ])
                 ->columns(3),
 
@@ -154,6 +164,11 @@ class CarResource extends Resource
                 ->sortable()
                 ->searchable(),
 
+            // Added Quantity Column to Table View
+            TextColumn::make('quantity')
+                ->label('Qty')
+                ->sortable(),
+
             TextColumn::make('category')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
@@ -178,7 +193,7 @@ class CarResource extends Resource
 
             IconColumn::make('is_available')
                 ->boolean()
-                ->label('Available'),
+                ->label('Active'),
 
             TextColumn::make('created_at')
                 ->dateTime('M d, Y')
@@ -188,9 +203,7 @@ class CarResource extends Resource
         ->defaultSort('created_at', 'desc')
         ->filters([
             Tables\Filters\TernaryFilter::make('is_available')
-                ->label('Availability')
-                ->trueLabel('Available')
-                ->falseLabel('Unavailable'),
+                ->label('Availability Master Switch'),
         ])
         ->actions([
             Tables\Actions\ViewAction::make(),

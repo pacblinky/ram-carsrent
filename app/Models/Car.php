@@ -14,6 +14,7 @@ class Car extends Model
         'transmission',
         'number_of_seats',
         'number_of_doors',
+        'quantity', // Added quantity to fillable
         'price_per_day',
         'location_id', 
         'description', 

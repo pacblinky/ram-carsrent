@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('transmission');
             $table->unsignedTinyInteger('number_of_seats');
             $table->unsignedTinyInteger('number_of_doors');
+            // New quantity column with a default of 1
+            $table->integer('quantity')->default(1);
             $table->decimal('price_per_day', 10, 2)->default(0);
             $table->foreignId('location_id')->constrained("locations")->cascadeOnDelete();
             $table->text('description')->nullable();

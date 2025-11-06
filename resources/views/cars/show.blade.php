@@ -57,7 +57,7 @@
                     @if($spec['icon'] == 'electric')
                         <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
                     @elseif($spec['icon'] == 'manual' || $spec['icon'] == 'auto')
-                         <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527c.477-.34.994-.142 1.246.317l.545 1.03c.25.46.07.994-.317 1.246l-.527.737c-.25.35-.272.806-.108 1.204.165.397.505.71.93.78l.893.15c.542.09.94.56.94 1.11v1.093c0 .55-.398 1.02-.94 1.11l-.893.149c-.425.07-.764.384-.93.78-.164.398-.142.855.108 1.205l-.527.737c-.34.477-.142-.994.317-1.246l1.03-.545c.46-.25.994-.07 1.246.317l.737.527c.35.25.806.272 1.204.108.397-.165.71-.505.78-.93l.15-.893zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>
+                         <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527c.477-.34.994-.142 1.246.317l.545 1.03c.25.46.07.994-.317 1.246l-.527.737c-.25.35-.272.806-.108 1.204.165.397.505.71.93.78l.893.15c.542.09.94.56.94 1.11v1.093c0 .55-.398 1.02-.94 1.11l-.893.149c-.425.07-.764.384-.93.78-.164.398-.142.855.108 1.205l.527.737c.34.477.142.994-.317 1.246l1.03-.545c.46-.25.994-.07 1.246.317l.737.527c.35.25.806.272 1.204.108.397-.165.71-.505.78-.93l.15-.893zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>
                     @elseif($spec['icon'] == 'seats')
                         <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.5 1.5 0 0118 21.75H6a1.5 1.5 0 01-1.499-1.632z" /></svg>
                     @else
@@ -87,7 +87,6 @@
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
                             </div>
-                            {{-- Uses datepicker-min-date for Flowbite compatibility --}}
                             <input
                                 type="text"
                                 id="start_date"
@@ -192,18 +191,32 @@
                         <span class="text-lg font-medium text-gray-900 dark:text-white">Total</span>
                         <div class="text-right">
                             <span class="text-2xl font-bold text-gray-900 dark:text-white">
-                                {{-- Currency symbol can be adjusted here --}}
                                 $<span id="total_price">0</span>
                             </span>
                              <div id="price_breakdown" class="text-sm text-gray-500 dark:text-gray-400 mt-1"></div>
                         </div>
                     </div>
 
-                    {{-- Submit Button --}}
+                    {{-- Terms Checkbox --}}
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input id="terms_agree" name="terms_agree" type="checkbox" value="1" required
+                                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
+                        </div>
+                        <div class="ms-3 text-sm">
+                            <label for="terms_agree" class="font-medium text-gray-900 dark:text-gray-300">Pay on Receiving the Car</label>
+                            <p class="text-xs font-normal text-gray-500 dark:text-gray-400">I understand that payment is due upon vehicle pickup.</p>
+                        </div>
+                    </div>
+                    
+                    {{-- Updated Book Now Button --}}
                     <button type="submit"
-                            class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300
+                            id="book-now-button"
+                            disabled {{-- Button is disabled by default --}}
+                            class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300
                                 font-medium rounded-lg text-sm px-5 py-3 text-center
-                                dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800
+                                disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out">
                         Book Now
                     </button>
                 </form>
@@ -228,6 +241,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalPriceEl = document.getElementById("total_price");
     const breakdownEl  = document.getElementById("price_breakdown");
 
+    // --- Checkbox and Button elements ---
+    const termsCheckbox = document.getElementById("terms_agree");
+    const bookNowButton = document.getElementById("book-now-button");
+
     // 1. Generate 30-minute time intervals for select boxes
     const generateTimes = (select) => {
         select.innerHTML = "";
@@ -237,7 +254,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 select.append(new Option(value, value));
             }
         }
-        // Set sensible defaults (e.g., 10:00 AM) if possible
         select.value = "10:00";
     };
 
@@ -248,6 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toLocalDate = (str) => {
         if (!str) return null;
         const [date, time] = str.split(" ");
+        if (!date || !time) return null; 
         const [y, m, d] = date.split("-").map(Number);
         const [hh, mm] = time.split(":").map(Number);
         return new Date(y, m - 1, d, hh, mm, 0, 0);
@@ -257,35 +274,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const blocks = unavailable.map(r => ({
         start: toLocalDate(r.start),
         end:   toLocalDate(r.end),
-    }));
+    })).filter(b => b.start && b.end); 
 
     // Check if a specific datetime is inside a booked block
     const isBlocked = dt => {
         if (!dt) return false;
         const t = dt.getTime();
+        // We check if 't' is *inside* a block, so StartBlock <= t < EndBlock
         return blocks.some(b => t >= b.start.getTime() && t < b.end.getTime());
     };
 
     // 2. Update available times based on selected date
-    //    Disables past times for today, and fully booked times slots.
     const updateTimeOptions = (dateInput, timeSelect) => {
         const dateVal = dateInput.value;
         if (!dateVal) return;
 
         const now = new Date();
+        now.setSeconds(0, 0); 
 
         [...timeSelect.options].forEach(opt => {
             const dt = toLocalDate(`${dateVal} ${opt.value}`);
-            if (!dt) return;
+            if (!dt) {
+                opt.disabled = true;
+                return;
+            }
             
-            // Block if it's in the past OR overlaps with a reservation
             const isPast = dt < now;
-            const blocked = isPast || isBlocked(dt);
+            const blocked = isBlocked(dt);
             
-            opt.disabled = blocked;
-            // Optional: add visual cue for disabled options if browser supports it well
-            if (blocked && !opt.textContent.includes("(Unavailable)")) {
-                 // opt.textContent += " (Unavailable)"; 
+            opt.disabled = isPast || blocked;
+
+            opt.textContent = opt.value; 
+            if (isPast) {
+                opt.textContent += " (Past)";
+                opt.classList.add('text-gray-400');
+            } else if (blocked) {
+                opt.textContent += " (Booked)";
+                opt.classList.add('text-red-400');
+            } else {
+                opt.classList.remove('text-gray-400', 'text-red-400');
             }
         });
     };
@@ -295,24 +322,24 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!startDate.value || !startTime.value) return;
 
         const start = toLocalDate(`${startDate.value} ${startTime.value}`);
-        // If end date isn't set yet, default it to start date
+        if (!start) return; 
+        
         if (!endDate.value) {
              endDate.value = startDate.value;
         }
         
         let end = toLocalDate(`${endDate.value} ${endTime.value}`);
 
-        // If End is strictly before Start, reset End to Start + 1 hour (or 30mins)
-        if (end && end <= start) {
-             // Reset end date to match start date
+        if (!end || end <= start) {
              endDate.value = startDate.value;
              
-             // Find a time at least 1 hour after start time
-             const newEndTime = new Date(start.getTime() + 60 * 60 * 1000);
+             const newEndTime = new Date(start.getTime() + 60 * 60 * 1000); 
              const newHH = String(newEndTime.getHours()).padStart(2, '0');
              const newMM = newEndTime.getMinutes() >= 30 ? "30" : "00";
              
              endTime.value = `${newHH}:${newMM}`;
+             
+             updateTimeOptions(endDate, endTime);
         }
     };
 
@@ -338,21 +365,16 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Calculate difference in minutes
         const diffMin = (end - start) / (1000 * 60);
-        // Convert minutes to days (1440 mins = 1 day)
         const daysExact = diffMin / 1440;
-        // Round up to nearest full day (or whatever your business logic is)
         const billableDays = Math.max(1, Math.ceil(daysExact));
-
         const total = billableDays * pricePerDay;
 
-        // Format with commas for thousands if needed
         totalPriceEl.textContent = total.toLocaleString('en-US', {minimumFractionDigits: 0});
 
         if (breakdownEl) {
             breakdownEl.innerHTML = `
-                ${billableDays} day(s) × $${pricePerDay} =
+                ${billableDays} day(s) × $${pricePerDay.toLocaleString()} =
                 <strong>$${total.toLocaleString()}</strong>
             `;
         }
@@ -360,25 +382,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ================= EVENT LISTENERS =================
     
-    // Handle Start Date changes
+    // Checkbox listener to enable/disable button
+    termsCheckbox.addEventListener('change', function() {
+        bookNowButton.disabled = !this.checked;
+    });
+
     const handleStartDateChange = (e) => {
-         // When start date changes, attempt to update End Date minimum
-         // Note: Flowbite might require re-initialization for this to take visual effect immediately in some versions.
          endDate.setAttribute('datepicker-min-date', e.target.value);
-         
          updateTimeOptions(startDate, startTime);
          ensureEndAfterStart();
          calculatePrice();
     };
 
-    // Handle End Date changes
     const handleEndDateChange = (e) => {
          updateTimeOptions(endDate, endTime);
          ensureEndAfterStart();
          calculatePrice();
     };
 
-    // Listen to standard 'change' and custom Flowbite 'changeDate' events
     startDate.addEventListener("change", handleStartDateChange);
     startDate.addEventListener("changeDate", handleStartDateChange);
     
@@ -395,8 +416,9 @@ document.addEventListener("DOMContentLoaded", () => {
         calculatePrice();
     });
 
-    // Initial calculation on load if values happen to be pre-filled
+    // Initial runs on page load
     updateTimeOptions(startDate, startTime);
+    updateTimeOptions(endDate, endTime);
     calculatePrice();
 });
 </script>

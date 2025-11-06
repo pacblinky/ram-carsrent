@@ -7,73 +7,28 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\CarsListController;
 use App\Http\Controllers\ReservationController;
+use App\Models\Car;
+use App\Models\Location;
+use App\Models\Brand;
 
+// Named the home route 'home' for easier linking in navbar
 Route::get('/', function () {
-    $featuredVehicles = [
-        [
-            'name' => 'Mercedes-Benz E-Class',
-            'price' => 60.00,
-            'image' => 'https://via.placeholder.com/600x400.png/E0E0E0/333333?text=Mercedes',
-            'rating' => 4
-        ],
-        [
-            'name' => 'Tesla Model S',
-            'price' => 80.00,
-            'image' => 'https://via.placeholder.com/600x400.png/E0E0E0/333333?text=Tesla',
-            'rating' => 5
-        ],
-        [
-            'name' => 'Range Rover Velar',
-            'price' => 90.00,
-            'image' => 'https://via.placeholder.com/600x400.png/E0E0E0/333333?text=Range+Rover',
-            'rating' => 5
-        ],
-    ];
+    // 1. Fetch Locations for the Search Form Dropdown
+    $locations = Location::all();
 
-    // NEW: Data for Most Viewed Vehicles
-    $mostViewedVehicles = [
-        [
-            'name' => 'Mercedes-Benz C300 4MATIC 2024',
-            'image' => 'https://images.unsplash.com/photo-1616421312328-9b8e243d465d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
-            'rating' => 2.5,
-            'reviews' => 2,
-            'specs' => [
-                ['icon' => 'mileage', 'text' => '5,569 miles'],
-                ['icon' => 'transmission', 'text' => 'Manual'],
-                ['icon' => 'fuel', 'text' => 'Electric'],
-                ['icon' => 'seats', 'text' => '5 seats'],
-            ],
-            'price' => 55,
-        ],
-        [
-            'name' => 'BMW 330i xDrive M Sport 2024',
-            'image' => 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-            'rating' => 5.0,
-            'reviews' => 10,
-            'specs' => [
-                ['icon' => 'mileage', 'text' => '8,667 miles'],
-                ['icon' => 'transmission', 'text' => 'Automatic'],
-                ['icon' => 'fuel', 'text' => 'Electric'],
-                ['icon' => 'seats', 'text' => '5 seats'],
-            ],
-            'price' => 34,
-        ],
-        [
-            'name' => 'Lexus ES 350 F Sport 2024',
-            'image' => 'https://images.unsplash.com/photo-1604131650379-055f6b2c80c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-            'rating' => 4.0,
-            'reviews' => 2,
-            'specs' => [
-                ['icon' => 'mileage', 'text' => '18,140 miles'],
-                ['icon' => 'transmission', 'text' => 'Automatic'],
-                ['icon' => 'fuel', 'text' => 'Gasoline'],
-                ['icon' => 'seats', 'text' => '5 seats'],
-            ],
-            'price' => 93,
-        ],
-    ];
-    return view('welcome', compact('featuredVehicles', 'mostViewedVehicles'));
-});
+    // 2. Fetch Recent Cars from Database (Top 3 latest)
+    // We eager load brand and location to avoid N+1 query issues in the view
+    $recentCars = Car::with(['brand', 'location'])
+        ->where('is_available', true)
+        ->latest()
+        ->take(3)
+        ->get();
+
+    // 3. (Optional) Fetch real brands if you want to replace the hardcoded logos later
+    // For now, we'll just pass the recent cars and locations.
+
+    return view('welcome', compact('locations', 'recentCars'));
+})->name('home');
 
 Route::get('/locale/{locale}', function ($locale) {
     if (!in_array($locale, ['en', 'ar'])) {
