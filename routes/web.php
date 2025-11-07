@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\CarsListController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ContactController; // <-- ADD THIS
 use App\Models\Car;
 use App\Models\Location;
 use App\Models\Brand;
@@ -46,6 +47,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/cars', [CarsListController::class, 'index'])->name('cars.index');
 Route::get('/cars/{id}', [CarsListController::class, 'show'])->name('cars.show');
 Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->middleware('auth')->name('reservations.store');
+
+// --- ADD THESE NEW CONTACT ROUTES ---
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+// ------------------------------------
 
 Route::fallback(function () {
     return redirect()->route('home');

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Animation for the brand logo scroller */
 @keyframes scroll {
     0% { transform: translateX(0); }
     100% { transform: translateX(calc(-250px * 7)); /* Adjust based on number of logos and logo width */ }
@@ -9,4 +11,17 @@
 
 .animate-scroll {
     animation: scroll 30s linear infinite; /* Adjust duration as needed */
+}
+
+/* --- ADDED FOR CONTACT PAGE --- */
+/* Simple page-load fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
