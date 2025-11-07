@@ -47,4 +47,8 @@ Route::get('/cars', [CarsListController::class, 'index'])->name('cars.index');
 Route::get('/cars/{id}', [CarsListController::class, 'show'])->name('cars.show');
 Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->middleware('auth')->name('reservations.store');
 
+Route::fallback(function () {
+    return redirect()->route('home');
+});
+
 require __DIR__.'/auth.php';
