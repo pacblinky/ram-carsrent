@@ -6,7 +6,6 @@
             <div class="absolute inset-0 bg-black opacity-30 dark:bg-black dark:opacity-40"></div>
         </div>
 
-        {{-- Added 'animate-load' class for immediate animation on page load --}}
         <div class="relative z-10 w-full max-w-4xl px-4 opacity-0 translate-y-8 animate-load transition-all duration-1000 ease-out">
             <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-2xl">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Find Your Perfect Ride</h2>
@@ -44,7 +43,6 @@
 
     {{-- PREMIUM BRANDS SECTION --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4 overflow-hidden">
-        {{-- Added 'animate-on-scroll' to trigger animation when in view --}}
         <div class="flex justify-between items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
             <div>
                 <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Premium Brands</h2>
@@ -58,22 +56,15 @@
 
         <div class="relative w-full py-4 opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
             <div class="flex space-x-8 animate-scroll whitespace-nowrap" style="width: fit-content;">
-                @php
-                    $brands = [
-                        ['name' => 'Toyota', 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Toyota_logo_transparent.png/800px-Toyota_logo_transparent.png'],
-                        ['name' => 'Ford', 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Ford_Motor_Company_Logo.svg/1200px-Ford_Motor_Company_Logo.svg.png'],
-                        ['name' => 'Nissan', 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Nissan_logo.svg/1200px-Nissan_logo.svg.png'],
-                        ['name' => 'Opel', 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Opel_Logo_2017.svg/1200px-Opel_Logo_2017.svg.png'],
-                        ['name' => 'BMW', 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW_logo_%282020%29.svg/1200px-BMW_logo_%282020%29.svg.png'],
-                        ['name' => 'Mercedes-Benz', 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Benz_Logo_2023.svg/1200px-Mercedes-Benz_Logo_2023.svg.png'],
-                        ['name' => 'Volkswagen', 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Volkswagen_logo-2019.svg/1200px-Volkswagen_logo-2019.svg.png'],
-                    ];
-                    $allBrands = array_merge($brands, $brands);
-                @endphp
-
-                @foreach($allBrands as $brand)
+                {{-- Loop through brands twice for continuous scrolling effect --}}
+                @foreach($brands as $brand)
                     <div class="flex-none w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
-                        <img src="{{ $brand['logo'] }}" alt="{{ $brand['name'] }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
+                        <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
+                    </div>
+                @endforeach
+                @foreach($brands as $brand)
+                    <div class="flex-none w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
+                        <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
                     </div>
                 @endforeach
             </div>
@@ -102,11 +93,9 @@
                         ['icon' => 'fuel', 'text' => ucfirst($car->fuel_type)],
                         ['icon' => 'seats', 'text' => $car->number_of_seats . ' seats'],
                     ];
-                    // Stagger delay based on index
                     $delay = $index * 150; 
                 @endphp
 
-            {{-- Added stagger delay style --}}
             <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col opacity-0 translate-y-12 transition-all duration-1000 ease-out animate-on-scroll hover:shadow-xl hover:-translate-y-1" style="transition-delay: {{ $delay }}ms">
                 <div class="relative h-64 overflow-hidden rounded-t-lg">
                     <a href="{{ route('cars.show', $car->id) }}">
@@ -194,7 +183,7 @@
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-300 ease-out animate-on-scroll">
                      <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m-6 6a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
+                        <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
                      </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Verification</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">Review your information and confirm your booking</p>
@@ -285,4 +274,4 @@
             });
         });
     </script>
-</x-app-layout>
+</x-app-layout>"

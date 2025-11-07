@@ -9,6 +9,7 @@ use App\Http\Controllers\CarsListController;
 use App\Http\Controllers\ReservationController;
 use App\Models\Car;
 use App\Models\Location;
+use App\Models\Brand;
 
 Route::get('/', function () {
     $locations = Location::all();
@@ -17,8 +18,11 @@ Route::get('/', function () {
         ->latest()
         ->take(3)
         ->get();
+    
+    // Fetch all brands from the database
+    $brands = Brand::all();
 
-    return view('home', compact('locations', 'recentCars'));
+    return view('home', compact('locations', 'recentCars', 'brands'));
 })->name('home');
 
 Route::get('/locale/{locale}', function ($locale) {
@@ -35,7 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // --- NEW RESERVATION ROUTES ---
     Route::get('/my-reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::patch('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
 });
