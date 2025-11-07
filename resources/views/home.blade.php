@@ -154,7 +154,7 @@
     </section>
 
     {{-- HOW IT WORKS SECTION --}}
-    <section class="bg-white dark:bg-gray-900 py-16 px-4">
+    <section class="py-16 px-4">
         <div class="max-w-screen-xl mx-auto text-center">
             <div class="opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
                 <p class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-2">
@@ -200,42 +200,47 @@
     </section>
 
     {{-- BOTTOM CTA SECTIONS --}}
-    <section class="max-w-screen-xl mx-auto py-16 px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 -translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
-                <div class="md:w-1/2 z-10 mb-8 md:mb-0">
-                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Looking for a rental car?</h2>
-                    <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
-                        Discover your ideal rental car for every adventure, whether it's a road trip or business travel
-                    </p>
-                    <a href="{{ route('cars.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
-                        Get Started Now
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </a>
-                </div>
-                <div class="relative md:w-1/2">
-                    <img class="relative md:absolute md:-bottom-12 md:-right-12 w-full max-w-sm md:max-w-md lg:max-w-lg transition-transform duration-700 hover:scale-105" src="https://carento.botble.com/storage/cars/img-1.png" alt="Grey SUV">
-                </div>
+<section class="max-w-screen-xl mx-auto py-16 px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {{-- First CTA: Start Renting --}}
+        <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 -translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+            <div class="md:w-1/2 z-10 mb-8 md:mb-0">
+                <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Looking for a rental car?</h2>
+                <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
+                    Discover your ideal rental car for every adventure, whether it's a road trip or business travel.
+                </p>
+                <a href="{{ route('cars.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
+                    Get Started Now
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
             </div>
-
-            <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
-                <div class="md:w-1/2 z-10 mb-8 md:mb-0">
-                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Looking for a rental car?</h2>
-                    <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
-                        Maximize your vehicle's potential; seamlessly rent or sell with confidence
-                    </p>
-                    <a href="{{ route('cars.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
-                        Get Started Now
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </a>
-                </div>
-                <div class="relative md:w-1/2">
-                    <img class="relative md:absolute md:-bottom-12 md:-right-12 w-full max-w-sm md:max-w-md lg:max-w-lg transition-transform duration-700 hover:scale-105" src="https://carento.botble.com/storage/cars/img-2.png" alt="Grey BMW">
-                </div>
+            <div class="relative md:w-1/2">
+                <img class="relative md:absolute md:-bottom-12 md:-right-12 w-full max-w-sm md:max-w-md lg:max-w-lg transition-transform duration-700 hover:scale-105" src="https://carento.botble.com/storage/cars/img-1.png" alt="Grey SUV">
             </div>
-
         </div>
-    </section>
+
+        {{-- Second CTA: Manage Reservations --}}
+        <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+            <div class="md:w-1/2 z-10 mb-8 md:mb-0">
+                <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">Manage your reservations now</h2>
+                <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
+                    If you haven’t already, sign in to access and manage all your reservations easily in one place.
+                </p>
+                <a href="{{ route('reservations.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
+                    Get Started Now
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="relative md:w-1/2">
+                <img class="relative md:absolute md:-bottom-12 md:-right-12 w-full max-w-sm md:max-w-md lg:max-w-lg transition-transform duration-700 hover:scale-105" src="https://carento.botble.com/storage/cars/img-2.png" alt="Grey BMW">
+            </div>
+        </div>
+    </div>
+</section>
 
     {{-- ANIMATION SCRIPT --}}
     <script>

@@ -27,7 +27,7 @@
                             </div>
                             <input type="email" name="email" id="email"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('email') border-red-500 dark:border-red-500 @enderror"
-                                   placeholder="name@company.com" required="" autocomplete="username" value="{{ old('email') }}">
+                                   placeholder="name@example.com" required="" autocomplete="username" value="{{ old('email') }}">
                         </div>
                         @error('email')
                             <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
