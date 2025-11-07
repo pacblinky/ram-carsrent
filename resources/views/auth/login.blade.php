@@ -1,23 +1,22 @@
 <x-app-layout>
 <section class="bg-gray-50 dark:bg-gray-900">
-    {{-- Use min-h-screen to ensure it covers the full height, minus the navbar (which we can estimate or adjust for) --}}
-    <div class="flex min-h-[calc(100vh-80px)]"> {{-- Adjust 80px if your navbar height is different --}}
+    <div class="flex min-h-[calc(100vh-80px)]"> 
         
         {{-- Form Section (Left) --}}
         <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 transition-all duration-1000 ease-out opacity-0 translate-y-5" id="login-form-container">
             <div class="w-full max-w-md">
                 <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white mb-4">
-                    Welcome Back
+                    {{ __('auth_pages.login_title') }}
                 </h1>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400 mb-6">
-                    Don't have an account yet? <a href="{{ route('register') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign up</a>.
+                    {{ __('auth_pages.dont_have_account') }} <a href="{{ route('register') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('auth_pages.signup') }}</a>.
                 </p>
 
                 <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('login') }}">
                     @csrf
 
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.email') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
@@ -35,7 +34,7 @@
                     </div>
 
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.password') }}</label>
                         <div class="relative">
                              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
@@ -57,18 +56,18 @@
                                 <input id="remember" name="remember" aria-describedby="remember" type="checkbox"
                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
                             </div>
-                            <div class="ml-3 text-sm">
-                                <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
+                            <div class="ms-3 text-sm">
+                                <label for="remember" class="text-gray-500 dark:text-gray-300">{{ __('auth_pages.remember_me') }}</label>
                             </div>
                         </div>
                         @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Forgot password?</a>
+                            <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('auth_pages.forgot_password') }}</a>
                         @endif
                     </div>
 
                     <button type="submit"
                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-200 ease-in-out">
-                        Sign in to your account
+                        {{ __('auth_pages.login') }}
                     </button>
                     
                 </form>

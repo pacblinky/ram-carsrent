@@ -4,7 +4,7 @@
             {{-- Auth Card --}}
             <div class="w-full bg-white rounded-lg shadow-xl dark:bg-gray-800 sm:max-w-md p-6 sm:p-8 border dark:border-gray-700">
                 <h2 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white mb-4">
-                    Forgot Your Password?
+                    {{ __('auth_pages.forgot_password_title') }}
                 </h2>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400 mb-6">
                     {{ __('No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
@@ -16,7 +16,7 @@
                     @csrf
 
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.your_email') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
@@ -35,7 +35,7 @@
                     </button>
                     
                     <p class="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                        Remember your password? <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign in</a>
+                        {{ __('auth_pages.remember_password') }} <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('auth_pages.sign_in') }}</a>
                     </p>
                 </form>
             </div>

@@ -35,6 +35,6 @@ return [
     'cta_rent_title' => 'Looking for a rental car?',
     'cta_rent_desc' => 'Discover your ideal rental car for every adventure, whether it\'s a road trip or business travel.',
     'cta_manage_title' => 'Manage your reservations now',
-    'cta_manage_desc' => 'If you haven’t already, sign in to access and manage all your reservations easily in one place.',
+    'cta_manage_desc' => 'If you haven not already, sign in to access and manage all your reservations easily in one place.',
     'get_started_now' => 'Get Started Now',
 ];

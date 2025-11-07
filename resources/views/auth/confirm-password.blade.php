@@ -4,7 +4,7 @@
             {{-- Auth Card --}}
             <div class="w-full bg-white rounded-lg shadow-xl dark:bg-gray-800 sm:max-w-md p-6 sm:p-8 border dark:border-gray-700">
                 <h2 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white mb-4">
-                    Confirm Your Password
+                    {{ __('auth_pages.confirm_password_title') }}
                 </h2>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400 mb-6">
                     {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
@@ -14,7 +14,7 @@
                     @csrf
 
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.password') }}</label>
                         <div class="relative">
                              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">

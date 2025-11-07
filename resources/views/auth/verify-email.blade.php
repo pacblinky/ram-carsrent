@@ -4,7 +4,7 @@
             {{-- Auth Card --}}
             <div class="w-full bg-white rounded-lg shadow-xl dark:bg-gray-800 sm:max-w-md p-6 sm:p-8 border dark:border-gray-700">
                 <h2 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white mb-6">
-                    Verify Your Email
+                    {{ __('auth_pages.verify_email_title') }}
                 </h2>
 
                 @if (session('status') == 'verification-link-sent')

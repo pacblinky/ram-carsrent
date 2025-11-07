@@ -13,10 +13,19 @@ return [
 
     // register.blade.php
     'register_title' => 'إنشاء حساب جديد',
-    'name' => 'الاسم',
+    'name' => 'الاسم الكامل',
+    'phone_number' => 'رقم الهاتف',
+    'government_id' => 'الهوية الحكومية',
     'confirm_password' => 'تأكيد كلمة المرور',
     'already_registered' => 'مسجل بالفعل؟',
-    'register' => 'تسجيل',
+    'register' => 'إنشاء حساب',
+    // --- Placeholders ---
+    'name_placeholder' => 'اسمك بالكامل',
+    'email_placeholder' => 'name@example.com',
+    'phone_placeholder' => '+1234567890',
+    'government_id_placeholder' => 'الرقم القومي أو رقم جواز السفر',
+    'password_placeholder' => '••••••••',
+
 
     // forgot-password.blade.php
     'forgot_password_title' => 'هل نسيت كلمة المرور؟',

@@ -1,20 +1,55 @@
 <?php
 
 return [
-    // cars/index.blade.php
+    // === cars/index.blade.php (Hero & Search) ===
+    'hero_badge' => 'Find cars for sale and for rent near you',
+    'hero_title' => 'Find Your Perfect Car',
+    'hero_subtitle' => 'Search and find your best car rental with easy way',
+    'pickup_location' => 'Pick up Location',
+    'all_locations' => 'All Locations', // Used in dropdown
+    'pickup_datetime' => 'Pick up Date Time',
+    'dropoff_datetime' => 'Drop off Date Time',
+    'find_vehicle_button' => 'Find a Vehicle',
+
+    // === cars/index.blade.php (Sidebar Filters) ===
     'filters' => 'Filters',
-    'search_placeholder' => 'Search by car name...',
+    'price_range_per_day' => 'Price Range / Day',
+    'price_min' => 'Min',
+    'price_max' => 'Max',
+    'apply_price_button' => 'Apply Price',
+    'brand_title' => 'Brand',
     'all_brands' => 'All Brands',
-    'all_locations' => 'All Locations',
+    'categories_title' => 'Categories',
+    'clear_filter' => 'Clear',
+    'reset_filters' => 'Reset Filters',
+
+    // === cars/partials/car-list.blade.php ===
+    'fleet_title' => 'Our Vehicle Fleet',
+    'fleet_subtitle' => 'Turning dreams into reality with versatile vehicles.',
+    'showing_results' => 'Showing :first-:last of :total results',
+    'show_label' => 'Show:',
+    'sort_by_label' => 'Sort by:',
     'sort_by_price' => 'Sort by Price',
     'default' => 'Default',
+    'sort_newest' => 'Newest First',
     'low_to_high' => 'Low to High',
     'high_to_low' => 'High to Low',
-    'reset_filters' => 'Reset Filters',
+    'sort_price_asc' => 'Price: Low to High',
+    'sort_price_desc' => 'Price: High to Low',
+    'loading' => 'Loading...',
+    'per_day_suffix' => '/ day',
+    'view_details_button' => 'View Details',
     'no_cars_found' => 'No cars found matching your criteria.',
+    'empty_list_title' => 'No vehicles found',
+    'empty_list_subtitle' => 'Try adjusting your search or filters.',
+    'clear_all_filters_button' => 'Clear all filters',
     
-    // cars/show.blade.php
+    // === cars/show.blade.php ===
     'vehicle_details' => 'Vehicle Details',
+    'show_on_map' => 'Show on map',
+    'gallery_prev' => 'Previous',
+    'gallery_next' => 'Next',
+    'features_title' => 'Vehicle Features',
     'specifications' => 'Specifications',
     'transmission' => 'Transmission',
     'fuel_type' => 'Fuel Type',
@@ -24,11 +59,27 @@ return [
     'features' => 'Features',
     'description' => 'Description',
     'location' => 'Location',
+    
+    // === cars/show.blade.php (Booking Form) ===
     'book_your_ride' => 'Book Your Ride',
-    'pickup_datetime' => 'Pickup Datetime',
-    'return_datetime' => 'Return Datetime',
+    'rent_this_vehicle_title' => 'Rent This Vehicle',
+    'pickup_date' => 'Pick-Up Date',
+    'dropoff_date' => 'Drop-Off Date',
+    'start_time' => 'Start Time *',
+    'end_time' => 'End Time *',
+    'pickup_location_label' => 'Pick-Up Location',
+    'dropoff_location_label' => 'Drop-Off Location',
+    'select_date_placeholder' => 'Select date',
+    'total_label' => 'Total',
     'total_price' => 'Total Price:',
+    'terms_checkbox_label' => 'Pay on Receiving the Car',
+    'terms_checkbox_desc' => 'I understand that payment is due upon vehicle pickup.',
     'book_now' => 'Book Now',
     'login_to_reserve' => 'You must be logged in to make a reservation.',
     'login' => 'Log in',
+
+    // === JS Strings (show.blade.php) ===
+    'js_time_past' => '(Past)',
+    'js_time_booked' => '(Booked)',
+    'js_price_breakdown' => ':days day(s) × $:price = <strong>$:total</strong>',
 ];

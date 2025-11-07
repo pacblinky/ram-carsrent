@@ -1,34 +1,85 @@
 <?php
 
 return [
-    // cars/index.blade.php
+    // === cars/index.blade.php (Hero & Search) ===
+    'hero_badge' => 'اعثر على سيارات للبيع والإيجار بالقرب منك',
+    'hero_title' => 'ابحث عن سيارتك المثالية',
+    'hero_subtitle' => 'ابحث واعثر على أفضل سيارة للإيجار بطريقة سهلة',
+    'pickup_location' => 'مكان الاستلام',
+    'all_locations' => 'كل المواقع', // Used in dropdown
+    'pickup_datetime' => 'تاريخ ووقت الاستلام',
+    'dropoff_datetime' => 'تاريخ ووقت التسليم',
+    'find_vehicle_button' => 'ابحث عن سيارة',
+
+    // === cars/index.blade.php (Sidebar Filters) ===
     'filters' => 'الفلاتر',
-    'search_placeholder' => 'ابحث باسم السيارة...',
-    'all_brands' => 'كل الماركات',
-    'all_locations' => 'كل المواقع',
+    'price_range_per_day' => 'نطاق السعر / اليوم',
+    'price_min' => 'الأدنى',
+    'price_max' => 'الأعلى',
+    'apply_price_button' => 'تطبيق السعر',
+    'brand_title' => 'العلامة التجارية',
+    'all_brands' => 'كل العلامات',
+    'categories_title' => 'الفئات',
+    'clear_filter' => 'مسح',
+    'reset_filters' => 'إعادة تعيين الفلاتر',
+
+    // === cars/partials/car-list.blade.php ===
+    'fleet_title' => 'أسطول سياراتنا',
+    'fleet_subtitle' => 'نحول الأحلام إلى حقيقة مع سيارات متنوعة.',
+    'showing_results' => 'عرض :first-:last من أصل :total نتائج',
+    'show_label' => 'عرض:',
+    'sort_by_label' => 'ترتيب حسب:',
     'sort_by_price' => 'ترتيب حسب السعر',
-    'default' => 'افتراضي',
+    'default' => 'الافتراضي',
+    'sort_newest' => 'الأحدث أولاً',
     'low_to_high' => 'من الأقل للأعلى',
     'high_to_low' => 'من الأعلى للأقل',
-    'reset_filters' => 'إعادة تعيين الفلاتر',
-    'no_cars_found' => 'لم يتم العثور على سيارات تطابق معايير البحث.',
+    'sort_price_asc' => 'السعر: من الأقل للأعلى',
+    'sort_price_desc' => 'السعر: من الأعلى للأقل',
+    'loading' => 'جاري التحميل...',
+    'per_day_suffix' => '/ اليوم',
+    'view_details_button' => 'عرض التفاصيل',
+    'no_cars_found' => 'لم يتم العثور على سيارات تطابق معاييرك.',
+    'empty_list_title' => 'لم يتم العثور على سيارات',
+    'empty_list_subtitle' => 'حاول تعديل بحثك أو الفلاتر.',
+    'clear_all_filters_button' => 'مسح كل الفلاتر',
     
-    // cars/show.blade.php
-    'vehicle_details' => 'تفاصيل المركبة',
+    // === cars/show.blade.php ===
+    'vehicle_details' => 'تفاصيل السيارة',
+    'show_on_map' => 'عرض على الخريطة',
+    'gallery_prev' => 'السابق',
+    'gallery_next' => 'التالي',
+    'features_title' => 'ميزات السيارة',
     'specifications' => 'المواصفات',
     'transmission' => 'ناقل الحركة',
     'fuel_type' => 'نوع الوقود',
     'seats' => 'المقاعد',
     'mileage' => 'المسافة المقطوعة',
     'unlimited_mileage' => 'مسافة غير محدودة',
-    'features' => 'المميزات',
+    'features' => 'الميزات',
     'description' => 'الوصف',
     'location' => 'الموقع',
+    
+    // === cars/show.blade.php (Booking Form) ===
     'book_your_ride' => 'احجز رحلتك',
-    'pickup_datetime' => 'تاريخ ووقت الاستلام',
-    'return_datetime' => 'تاريخ ووقت التسليم',
+    'rent_this_vehicle_title' => 'استأجر هذه السيارة',
+    'pickup_date' => 'تاريخ الاستلام',
+    'dropoff_date' => 'تاريخ التسليم',
+    'start_time' => 'وقت البدء *',
+    'end_time' => 'وقت الانتهاء *',
+    'pickup_location_label' => 'مكان الاستلام',
+    'dropoff_location_label' => 'مكان التسليم',
+    'select_date_placeholder' => 'اختر التاريخ',
+    'total_label' => 'الإجمالي',
     'total_price' => 'السعر الإجمالي:',
+    'terms_checkbox_label' => 'الدفع عند استلام السيارة',
+    'terms_checkbox_desc' => 'أنا أفهم أن الدفع مستحق عند استلام السيارة.',
     'book_now' => 'احجز الآن',
-    'login_to_reserve' => 'يجب عليك تسجيل الدخول لإجراء حجز.',
+    'login_to_reserve' => 'يجب عليك تسجيل الدخول لإجراء الحجز.',
     'login' => 'تسجيل الدخول',
+
+    // === JS Strings (show.blade.php) ===
+    'js_time_past' => '(فات)',
+    'js_time_booked' => '(محجوز)',
+    'js_price_breakdown' => ':days يوم (أيام) × $:price = <strong>$:total</strong>',
 ];
