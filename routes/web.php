@@ -18,7 +18,7 @@ Route::get('/', function () {
         ->take(3)
         ->get();
 
-    return view('welcome', compact('locations', 'recentCars'));
+    return view('home', compact('locations', 'recentCars'));
 })->name('home');
 
 Route::get('/locale/{locale}', function ($locale) {
