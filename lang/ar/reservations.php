@@ -1,19 +1,28 @@
 <?php
 
 return [
-    'my_reservations' => 'حجوزاتي',
-    'upcoming' => 'القادمة',
-    'past' => 'السابقة',
-    'cancelled' => 'الملغاة',
-    'no_reservations' => 'ليس لديك حجوزات :type.',
-    'from' => 'من:',
-    'to' => 'إلى:',
-    'total_price' => 'السعر الإجمالي:',
-    'status' => 'الحالة:',
-    'cancel_reservation' => 'إلغاء الحجز',
-    'cancel_modal_title' => 'هل أنت متأكد؟',
-    'cancel_modal_desc' => 'هل أنت متأكد أنك تريد إلغاء هذا الحجز؟ لا يمكن التراجع عن هذا الإجراء.',
-    'no_keep_it' => 'لا، احتفظ به',
-    'yes_cancel_it' => 'نعم، قم بالإلغاء',
-    'book_new_car' => 'احجز سيارة جديدة',
+    'my_reservations' => 'My Reservations',
+    'upcoming' => 'Upcoming',
+    'past' => 'Past',
+    'cancelled' => 'Cancelled',
+
+    // --- ADDED THESE ---
+    'status_pending' => 'Pending',
+    'status_confirmed' => 'Confirmed',
+    'status_completed' => 'Completed',
+    'status_canceled' => 'Canceled',
+    'status_overdue' => 'Overdue',
+    // ---------------------
+
+    'no_reservations' => 'You have no :type reservations.',
+    'from' => 'From:',
+    'to' => 'To:',
+    'total_price' => 'Total Price:',
+    'status' => 'Status:',
+    'cancel_reservation' => 'Cancel Reservation',
+    'cancel_modal_title' => 'Are you sure?',
+    'cancel_modal_desc' => 'Are you sure you want to cancel this reservation? This action cannot be undone.',
+    'no_keep_it' => 'No, keep it',
+    'yes_cancel_it' => 'Yes, cancel it',
+    'book_new_car' => 'Book a new car',
 ];
