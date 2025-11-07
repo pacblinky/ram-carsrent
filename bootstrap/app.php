@@ -12,7 +12,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append(SetLocale::class);
+        
+        // REMOVE THIS LINE:
+        // $middleware->append(SetLocale::class); 
+
+        // ADD THIS INSTEAD to add the middleware to the 'web' group:
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
