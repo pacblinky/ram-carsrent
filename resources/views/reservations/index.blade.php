@@ -1,13 +1,24 @@
 <x-app-layout>
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
+        <div class="animate-fade-in">
+        {{-- HERO SECTION --}}
+        <section class="relative bg-gray-900 flex items-center justify-center pt-24 pb-32">
+            <div class="absolute inset-0">
+                <img src="{{ asset('images/driving.gif') }}" alt="Background" class="w-full h-full object-cover opacity-50">
+                <div class="absolute inset-0 bg-black opacity-50"></div>
+            </div>
+            <div class="relative z-10 text-center px-4 opacity-0 translate-y-8 animate-load transition-all duration-1000 ease-out" id="hero-content">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white my-4">{{ __('reservations.my_reservations') }}</h1>
+                <p class="text-lg text-gray-200 dark:text-gray-300 max-w-2xl mx-auto">
+                    {{ __('reservations.manage_desc') }}
+                </p>
+            </div>
+        </section>
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        
-        {{-- Header --}}
-        <div class="mb-8">
-            <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">{{ __('reservations.my_reservations') }}</h1>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                {{ __('reservations.manage_desc') }}
-            </p>
-        </div>
 
         {{-- Alerts --}}
         @if (session('success'))
@@ -142,4 +153,40 @@
             </div>
         @endif
     </div>
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Trigger Hero Animation Immediately
+            setTimeout(() => {
+                const heroContent = document.getElementById('hero-content');
+                if (heroContent) {
+                    heroContent.classList.remove('opacity-0', 'translate-y-8');
+                    heroContent.classList.add('opacity-100', 'translate-y-0');
+                }
+            }, 100); 
+
+            // 2. Set up Intersection Observer for Scroll Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Trigger when 15% of the element is visible
+            };
+
+            const scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add visible state classes
+                        entry.target.classList.remove('opacity-0', 'translate-y-8', '-translate-x-8', 'translate-x-8');
+                        entry.target.classList.add('opacity-100', 'translate-y-0', 'translate-x-0');
+                        // Stop observing once animated
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Target all elements with the 'animate-on-scroll' class
+            document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+                scrollObserver.observe(el);
+            });
+        });
+    </script>
 </x-app-layout>

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'my_reservations' => 'My Reservations',
+    'my_reservations' => 'Reservations',
     'manage_desc' => 'Manage your upcoming and past vehicle rentals.',
     'alert_success' => 'Success!',
     'alert_error' => 'Error!',
