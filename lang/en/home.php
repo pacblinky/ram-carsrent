@@ -5,9 +5,10 @@ return [
     'hero_subtitle' => "Reliable service, quality vehicles, and effortless booking—every time.",
     'pickup_location' => 'Pickup Location',
     'select_location' => 'Select Location',
-    'pickup_datetime' => 'Pickup Datetime',
-    'return_datetime' => 'Return Datetime',
     'search' => 'Search',
+
+    'pickup_date' => 'Pickup Date',
+    'return_date' => 'Return Date',
 
     'brands_title' => 'Premium Brands',
     'brands_subtitle' => 'Unveil the Finest Selection of High-End Vehicles',

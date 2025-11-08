@@ -18,7 +18,13 @@
         <div class="relative z-10 w-full max-w-4xl px-4 opacity-0 translate-y-8 animate-load transition-all duration-1000 ease-out" style="transition-delay: 150ms;">
             <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-2xl">
                 
-                <form action="{{ route('cars.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <form action="{{ route('cars.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-6" id="hero-search-form">
+                    
+                    {{-- Hidden fields to hold the combined datetime for submission --}}
+                    <input type="hidden" name="pickup_datetime" id="hidden_pickup_datetime">
+                    <input type="hidden" name="dropoff_datetime" id="hidden_dropoff_datetime">
+
+                    {{-- 1. Pickup Location --}}
                     <div>
                         <label for="location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_location') }}</label>
                         <select name="location_id" id="location_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -29,16 +35,45 @@
                         </select>
                     </div>
                     
+                    {{-- 2. Pickup Date Only --}}
                     <div>
-                        <label for="pickup_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_datetime') }}</label>
-                        <input type="datetime-local" name="pickup_datetime" id="pickup_datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="search_start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_date') }}</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
+                            </div>
+                            <input
+                                type="text"
+                                id="search_start_date"
+                                datepicker
+                                datepicker-autohide
+                                datepicker-format="yyyy-mm-dd"
+                                datepicker-min-date="{{ date('Y-m-d') }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                placeholder="{{ __('cars_page.select_date') }}">
+                        </div>
                     </div>
 
+                    {{-- 3. Dropoff Date Only --}}
                     <div>
-                        <label for="dropoff_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.return_datetime') }}</label>
-                        <input type="datetime-local" name="dropoff_datetime" id="dropoff_datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="search_end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.return_date') }}</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
+                            </div>
+                            <input
+                                type="text"
+                                id="search_end_date"
+                                datepicker
+                                datepicker-autohide
+                                datepicker-format="yyyy-mm-dd"
+                                datepicker-min-date="{{ date('Y-m-d') }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                placeholder="{{ __('cars_page.select_date') }}">
+                        </div>
                     </div>
 
+                    {{-- 4. Search Button --}}
                     <div class="md:col-span-3">
                         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-transform hover:scale-[1.02]">
                             {{ __('home.search') }}
@@ -60,7 +95,6 @@
 
         <div class="relative w-full py-4 opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
             <div class="flex space-x-8 rtl:space-x-reverse animate-scroll whitespace-nowrap" style="width: fit-content;">
-                {{-- Loop through brands twice for continuous scrolling effect --}}
                 @foreach($brands as $brand)
                     <div class="flex-none w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
                         <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
@@ -120,7 +154,7 @@
                                     @elseif($spec['icon'] == 'transmission')
                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527c.477-.34.994-.142 1.246.317l.545 1.03c.25.46.07.994-.317 1.246l-.527.737c-.25.35-.272.806-.108 1.204.165.397.505.71.93.78l.893.15c.542.09.94.56.94 1.11v1.093c0 .55-.398 1.02-.94 1.11l-.893.149c-.425.07-.764.384-.93.78-.164.398-.142.855.108 1.205l.527.737c.34.477.142.994-.317 1.246l1.03-.545c.46-.25.994-.07 1.246.317l.737.527c.35.25.806.272 1.204.108.397-.165.71-.505.78-.93l.15-.893zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>
                                     @elseif($spec['icon'] == 'fuel')
-                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4-6v2m0 0v2m0-2h2m-2 0H8m8-2v2m0 0v2m0-2h2m-2 0h-2" /></svg>
+                                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4-6v2m0 0v2m0-2h2m-2 0H8m8-2v2m0 0v2m0-2h2m-2 0h-2" /></svg>
                                     @elseif($spec['icon'] == 'seats')
                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.5 18H8.5v-2.5a2.5 2.5 0 012.5-2.5h2a2.5 2.5 0 012.5 2.5V18zM6 9h12a2 2 0 00-2-2H8a2 2 0 00-2 2z" /></svg>
                                     @endif
@@ -170,7 +204,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                {{-- Steps with staggered delay --}}
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-100 ease-out animate-on-scroll">
                     <div class="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-full mb-4">
                          <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
@@ -246,19 +279,20 @@
     </div>
 </section>
 
-    {{-- ANIMATION SCRIPT --}}
+    {{-- ======================================================= --}}
+    {{-- MODIFIED SCRIPT: Merged Animation + Date-Only Logic --}}
+    {{-- ======================================================= --}}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- 1. ORIGINAL ANIMATION SCRIPT ---
             setTimeout(() => {
-                // Select ALL elements with the .animate-load class
                 const heroContent = document.querySelectorAll('.animate-load');
-                
-                // Loop over each element and apply the animation classes
                 heroContent.forEach(el => {
                     el.classList.remove('opacity-0', 'translate-y-8');
                     el.classList.add('opacity-100', 'translate-y-0');
                 });
-            }, 100); // This 100ms delay gives assets time to load
+            }, 100); 
 
             const observerOptions = {
                 root: null,
@@ -279,6 +313,74 @@
             document.querySelectorAll('.animate-on-scroll').forEach((el) => {
                 scrollObserver.observe(el);
             });
+
+            // --- 2. NEW DATE-ONLY SCRIPT FOR HERO FORM (BUG FIXED) ---
+
+            // Element References
+            const searchForm = document.getElementById("hero-search-form");
+            const startDateEl = document.getElementById("search_start_date");
+            const endDateEl   = document.getElementById("search_end_date");
+            const hiddenPickup = document.getElementById("hidden_pickup_datetime");
+            const hiddenDropoff = document.getElementById("hidden_dropoff_datetime");
+
+            // *** FIX: Initialize datepickers ONCE and store instances ***
+            // This assumes Flowbite's Datepicker object is available globally
+            const startDatePicker = new Datepicker(startDateEl);
+            const endDatePicker = new Datepicker(endDateEl);
+
+            // Helper: Convert "Y-m-d" string into a Date object
+            const toDate = (str) => {
+                if (!str) return null;
+                // Datepicker value is "yyyy-mm-dd"
+                const [y, m, d] = str.split("-").map(Number);
+                if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
+                // Note: Month is 0-indexed in JS (0 = Jan, 11 = Dec)
+                return new Date(y, m - 1, d);
+            };
+
+            // *** FIX: Revised logic for syncing pickers ***
+            const syncPickers = () => {
+                const startDate = toDate(startDateEl.value);
+                const endDate = toDate(endDateEl.value);
+
+                if (startDate) {
+                    // 1. Update the minDate of the end datepicker
+                    // This is the correct way to update an existing instance
+                    endDatePicker.setOptions({
+                        minDate: startDateEl.value
+                    });
+
+                    // 2. If end date is now invalid (before start), set it to the start date
+                    if (endDate && endDate < startDate) {
+                        // Use the datepicker's own method to set the date
+                        // This updates the UI and internal value without loops
+                        endDatePicker.setDate(startDateEl.value);
+                    }
+                }
+            };
+            
+            // Add listeners to date inputs
+            // We use 'changeDate' as this is the custom event Flowbite Datepicker fires
+            startDateEl.addEventListener("changeDate", syncPickers);
+            
+            // No listener needed for endDate, as it's controlled by startDate
+
+            // Add listener to the form submission
+            if (searchForm) {
+                searchForm.addEventListener("submit", (e) => {
+                    // Check if date fields are filled
+                    if (startDateEl.value && endDateEl.value) {
+                        // Combine date with default times to create a full day range
+                        // Pickup: Start of the selected day (T00:00)
+                        hiddenPickup.value = `${startDateEl.value}T00:00`;
+                        // Dropoff: End of the selected day (T23:59)
+                        hiddenDropoff.value = `${endDateEl.value}T23:59`;
+                    } else {
+                        // Allow submission if fields are empty (for non-filtered search)
+                        console.log("Date fields are empty, submitting without date filter.");
+                    }
+                });
+            }
         });
     </script>
 </x-app-layout>

@@ -5,9 +5,10 @@ return [
     'hero_subtitle' => 'خدمة موثوقة، سيارات عالية الجودة، وحجز سهل في كل مرة',
     'pickup_location' => 'موقع الاستلام',
     'select_location' => 'اختر الموقع',
-    'pickup_datetime' => 'تاريخ ووقت الاستلام',
-    'return_datetime' => 'تاريخ ووقت التسليم',
     'search' => 'ابحث',
+
+    'pickup_date' => 'تاريخ الاستلام',
+    'return_date' => 'تاريخ الإرجاع',
 
     'brands_title' => 'ماركات فاخرة',
     'brands_subtitle' => 'اكتشف أرقى تشكيلة من السيارات الفاخرة',

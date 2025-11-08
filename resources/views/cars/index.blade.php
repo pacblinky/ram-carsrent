@@ -1,6 +1,6 @@
 <x-app-layout>
     {{-- HERO SEARCH SECTION --}}
-    <section class="relative bg-gray-900 flex items-center justify-center pt-24 pb-48">
+    <section class="relative bg-gray-900 flex flex-col items-center justify-center pt-24 pb-48">
         <div class="absolute inset-0">
             <img src="{{ asset('images/driving.gif') }}" alt="Background" class="w-full h-full object-cover opacity-50">
             <div class="absolute inset-0 bg-black opacity-50"></div>
@@ -16,29 +16,29 @@
             </p>
         </div>
 
-        {{-- MAIN SEARCH FORM (AJAX enabled via class 'ajax-form') --}}
+        {{-- =================================== --}}
+        {{-- MODIFIED MAIN SEARCH FORM --}}
+        {{-- =================================== --}}
         <div class="absolute -bottom-40 md:-bottom-24 z-20 w-full max-w-screen-lg mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-4 gap-4 items-end" id="cars-search-form">
                     
+                    {{-- Hidden fields for submission --}}
+                    <input type="hidden" name="pickup_datetime" id="hidden_pickup_datetime_cars">
+                    <input type="hidden" name="dropoff_datetime" id="hidden_dropoff_datetime_cars">
+
                     {{-- Location Dropdown --}}
                     <div>
                         <label for="location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_location') }}</label>
                         <div class="relative">
-                            
-                            {{-- Search Icon (Right side in RTL) --}}
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/></svg>
                             </div>
-
-                            {{-- Custom Arrow Icon (Left side in RTL) --}}
                             <div class="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
                                 <svg class="w-2.5 h-2.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                            </div>
-
-                            {{-- UPDATED: Added pe-10, appearance-none, and indent-6 --}}
                             <select name="location_id" id="location_id" 
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 pe-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white text-start appearance-none indent-6">
                                 <option value="">{{ __('cars_page.all_locations') }}</option>
@@ -51,14 +51,44 @@
                         </div>
                     </div>
 
-                    {{-- Date Inputs --}}
+                    {{-- Pickup Date --}}
                     <div>
-                        <label for="pickup-datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_datetime') }}</label>
-                        <input type="datetime-local" name="pickup_datetime" id="pickup-datetime" value="{{ request('pickup_datetime') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        <label for="search_start_date_cars" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_date') }}</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
+                            </div>
+                            <input
+                                type="text"
+                                id="search_start_date_cars"
+                                datepicker
+                                datepicker-autohide
+                                datepicker-format="yyyy-mm-dd"
+                                datepicker-min-date="{{ date('Y-m-d') }}"
+                                value="{{ request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('Y-m-d') : '' }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                placeholder="{{ __('cars_page.select_date') }}">
+                        </div>
                     </div>
+                    
+                    {{-- Dropoff Date --}}
                     <div>
-                        <label for="dropoff-datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_datetime') }}</label>
-                        <input type="datetime-local" name="dropoff_datetime" id="dropoff-datetime" value="{{ request('dropoff_datetime') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                        <label for="search_end_date_cars" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_date') }}</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
+                            </div>
+                            <input
+                                type="text"
+                                id="search_end_date_cars"
+                                datepicker
+                                datepicker-autohide
+                                datepicker-format="yyyy-mm-dd"
+                                datepicker-min-date="{{ date('Y-m-d') }}"
+                                value="{{ request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('Y-m-d') : '' }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                placeholder="{{ __('cars_page.select_date') }}">
+                        </div>
                     </div>
 
                     {{-- Submit Button --}}
@@ -167,10 +197,56 @@
         </div>
     </section>
 
-    {{-- AJAX SCRIPT --}}
+    {{-- =================================== --}}
+    {{-- MODIFIED AJAX SCRIPT --}}
+    {{-- =================================== --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('car-list-container');
+
+            // --- Datepicker Logic Setup ---
+            const startDateEl = document.getElementById("search_start_date_cars");
+            const endDateEl   = document.getElementById("search_end_date_cars");
+
+            if (startDateEl && endDateEl) {
+                const startDatePicker = new Datepicker(startDateEl, {
+                    autohide: true,
+                    format: 'yyyy-mm-dd',
+                    minDate: '{{ date('Y-m-d') }}'
+                });
+                const endDatePicker = new Datepicker(endDateEl, {
+                    autohide: true,
+                    format: 'yyyy-mm-dd',
+                    minDate: '{{ date('Y-m-d') }}'
+                });
+
+                const toDate = (str) => {
+                    if (!str) return null;
+                    const [y, m, d] = str.split("-").map(Number);
+                    if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
+                    return new Date(y, m - 1, d);
+                };
+
+                const syncPickers = () => {
+                    const startDate = toDate(startDateEl.value);
+                    const endDate = toDate(endDateEl.value);
+
+                    if (startDate) {
+                        endDatePicker.setOptions({
+                            minDate: startDateEl.value
+                        });
+                        if (endDate && endDate < startDate) {
+                            endDatePicker.setDate(startDateEl.value);
+                        }
+                    }
+                };
+
+                startDateEl.addEventListener("changeDate", syncPickers);
+                // Set initial state just in case of pre-filled values
+                syncPickers(); 
+            }
+            // --- End of Datepicker Logic Setup ---
+
 
             function rebindPartialEvents() {
                 document.querySelectorAll('.ajax-filter-link-select').forEach(select => {
@@ -208,8 +284,8 @@
                 })
                 .catch(error => console.error('Error fetching cars:', error))
                 .finally(() => {
-                  const newOverlay = document.getElementById('loading-overlay');
-                  if (newOverlay) newOverlay.classList.add('hidden');
+                    const newOverlay = document.getElementById('loading-overlay');
+                    if (newOverlay) newOverlay.classList.add('hidden');
                 });
             }
 
@@ -232,6 +308,24 @@
                 if (e.target.classList.contains('ajax-form')) {
                     e.preventDefault();
                     const form = e.target;
+
+                    // --- Populate hidden date fields before creating FormData ---
+                    const startDateInput = form.querySelector("#search_start_date_cars");
+                    const endDateInput = form.querySelector("#search_end_date_cars");
+                    const hiddenPickup = form.querySelector("#hidden_pickup_datetime_cars");
+                    const hiddenDropoff = form.querySelector("#hidden_dropoff_datetime_cars");
+
+                    if (startDateInput && endDateInput && hiddenPickup && hiddenDropoff) {
+                        if (startDateInput.value && endDateInput.value) {
+                            hiddenPickup.value = `${startDateInput.value}T00:00`;
+                            hiddenDropoff.value = `${endDateInput.value}T23:59`;
+                        } else {
+                            hiddenPickup.value = '';
+                            hiddenDropoff.value = '';
+                        }
+                    }
+                    // --- End of date logic ---
+
                     const url = new URL(form.action);
                     const formData = new FormData(form);
                     
@@ -243,6 +337,10 @@
                     });
 
                     formData.forEach((value, key) => {
+                        // Remove datepicker inputs from query, use hidden fields instead
+                        if (key === 'search_start_date_cars' || key === 'search_end_date_cars') {
+                            return;
+                        }
                         if (value) { 
                              url.searchParams.set(key, value);
                         } else {
