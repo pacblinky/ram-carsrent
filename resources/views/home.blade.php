@@ -1,14 +1,22 @@
 <x-app-layout>
     {{-- HERO SEARCH SECTION --}}
-    <section class="relative h-[600px] flex items-center justify-center overflow-hidden">
+    <section class="relative bg-gray-900 flex flex-col items-center justify-center gap-8 py-24">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/driving.gif') }}" alt="Car on a coastal road" class="w-full h-full object-cover scale-105 animate-slow-zoom">
-            <div class="absolute inset-0 bg-black opacity-30 dark:bg-black dark:opacity-40"></div>
+            <img src="{{ asset('images/driving.gif') }}" alt="Background" class="w-full h-full object-cover opacity-50">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
         </div>
 
-        <div class="relative z-10 w-full max-w-4xl px-4 opacity-0 translate-y-8 animate-load transition-all duration-1000 ease-out">
+        {{-- This text will now be on top --}}
+        <div class="relative z-10 text-center px-4 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-load">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white my-4">{{ __('home.hero_title') }}</h1>
+            <p class="text-lg text-gray-200 dark:text-gray-300 max-w-2xl mx-auto">
+                {{ __('home.hero_subtitle') }}
+            </p>
+        </div>
+
+        {{-- This form will now be below the text --}}
+        <div class="relative z-10 w-full max-w-4xl px-4 opacity-0 translate-y-8 animate-load transition-all duration-1000 ease-out" style="transition-delay: 150ms;">
             <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-2xl">
-                <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">{{ __('home.hero_title') }}</h2>
                 
                 <form action="{{ route('cars.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
@@ -80,10 +88,10 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($recentCars as $index => $car)
                 @php
-                     $imageUrl = !empty($car->images) && is_array($car->images) && count($car->images) > 0 
+                    $imageUrl = !empty($car->images) && is_array($car->images) && count($car->images) > 0 
                         ? asset('storage/' . $car->images[0]) 
                         : asset('images/logo.png');
-                     $specs = [
+                    $specs = [
                         ['icon' => 'mileage', 'text' => __('home.spec_unlimited')],
                         ['icon' => 'transmission', 'text' => ucfirst($car->transmission)],
                         ['icon' => 'fuel', 'text' => ucfirst($car->fuel_type)],
@@ -172,21 +180,21 @@
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
                      <div class="p-4 bg-green-50 dark:bg-green-900/30 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                         <svg class="w-8 h-8 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                      </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step2_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step2_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-300 ease-out animate-on-scroll">
                      <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
+                         <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
                      </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step3_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step3_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-500 ease-out animate-on-scroll">
                      <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12.75A3.375 3.375 0 0112.375 9H17.25a3.375 3.375 0 013.375 3.375v5.25a3.375 3.375 0 01-3.375 3.375H12.375A3.375 3.375 0 019 18v-5.25z" /></svg>
+                         <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12.75A3.375 3.375 0 0112.375 9H17.25a3.375 3.375 0 013.375 3.375v5.25a3.375 3.375 0 01-3.375 3.375H12.375A3.375 3.375 0 019 18v-5.25z" /></svg>
                      </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step4_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step4_desc') }}</p>
@@ -242,12 +250,15 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
-                const heroContent = document.querySelector('.animate-load');
-                if (heroContent) {
-                    heroContent.classList.remove('opacity-0', 'translate-y-8');
-                    heroContent.classList.add('opacity-100', 'translate-y-0');
-                }
-            }, 100);
+                // Select ALL elements with the .animate-load class
+                const heroContent = document.querySelectorAll('.animate-load');
+                
+                // Loop over each element and apply the animation classes
+                heroContent.forEach(el => {
+                    el.classList.remove('opacity-0', 'translate-y-8');
+                    el.classList.add('opacity-100', 'translate-y-0');
+                });
+            }, 100); // This 100ms delay gives assets time to load
 
             const observerOptions = {
                 root: null,

@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'hero_title' => 'Find Your Perfect Ride',
+    'hero_title' => 'Experience Comfort and Confidence on Every Drive',
+    'hero_subtitle' => "Reliable service, quality vehicles, and effortless booking—every time.",
     'pickup_location' => 'Pickup Location',
     'select_location' => 'Select Location',
     'pickup_datetime' => 'Pickup Datetime',
