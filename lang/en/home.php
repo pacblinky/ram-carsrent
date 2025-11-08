@@ -15,8 +15,10 @@ return [
 
     'recent_title' => 'Recent Vehicles',
     'recent_subtitle' => 'Our latest additions to the fleet',
-    'unlimited' => 'Unlimited',
-    'seats' => ':count seats',
+    'spec_unlimited' => 'Unlimited',
+    'spec_automatic' => 'Automatic',
+    'spec_electric' => 'Electric',
+    'spec_seats' => 'seats',
     'per_day' => '/ day',
     'book_now' => 'Book Now',
     'no_vehicles' => 'No vehicles currently available.',

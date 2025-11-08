@@ -15,12 +15,16 @@ return [
 
     'recent_title' => 'أحدث السيارات',
     'recent_subtitle' => 'آخر إضافاتنا إلى الأسطول',
-    'unlimited' => 'غير محدود',
-    'seats' => ':count مقاعد',
+    'spec_unlimited' => 'غير محدود',
+    'spec_seats' => 'مقاعد',
     'per_day' => '/ يوم',
     'book_now' => 'احجز الآن',
     'no_vehicles' => 'لا توجد سيارات متاحة حاليًا.',
     'view_more' => 'عرض المزيد',
+    'spec_automatic' => 'أوتوماتيكي',
+    'spec_electric' => 'كهربائي',
+    'spec_seats' => 'مقاعد',
+
 
     'how_it_works_subtitle' => 'كيف نعمل',
     'how_it_works_title' => 'نقدم لك تجربتك الجديدة<br>والمفضلة لتأجير السيارات',

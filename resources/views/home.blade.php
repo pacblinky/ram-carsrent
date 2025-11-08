@@ -93,9 +93,9 @@
                         : asset('images/logo.png');
                     $specs = [
                         ['icon' => 'mileage', 'text' => __('home.spec_unlimited')],
-                        ['icon' => 'transmission', 'text' => ucfirst($car->transmission)],
-                        ['icon' => 'fuel', 'text' => ucfirst($car->fuel_type)],
-                        ['icon' => 'seats', 'text' => $car->number_of_seats . ' ' . __('home.spec_seats')],
+                        ['icon' => 'transmission', 'text' => __('home.spec_automatic')],
+                        ['icon' => 'fuel', 'text' => __('home.spec_electric')],
+                        ['icon' => 'seats', 'text' => '4 ' . __('home.spec_seats')],
                     ];
                     $delay = $index * 150; 
                 @endphp
