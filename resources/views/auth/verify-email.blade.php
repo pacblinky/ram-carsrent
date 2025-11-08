@@ -9,12 +9,12 @@
 
                 @if (session('status') == 'verification-link-sent')
                     <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                        {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+                        {{ __('auth_pages.verification_sent') }}
                     </div>
                 @endif
 
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                    {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+                    {{ __('auth_pages.verify_email_text_1') }} {{ __('auth_pages.verify_email_text_2') }}
                 </p>
 
                 <div class="space-y-4">
@@ -22,14 +22,14 @@
                         @csrf
                         <button type="submit"
                                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-200 ease-in-out">
-                            {{ __('Resend Verification Email') }}
+                            {{ __('auth_pages.resend_verification') }}
                         </button>
                     </form>
 
                     <form method="POST" action="{{ route('logout') }}" class="text-center">
                         @csrf
                         <button type="submit" class="w-full text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700 transition-all">
-                            {{ __('Log Out') }}
+                            {{ __('auth_pages.logout') }}
                         </button>
                     </form>
                 </div>

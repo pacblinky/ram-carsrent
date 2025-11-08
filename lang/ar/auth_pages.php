@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 return [
     // login.blade.php
@@ -19,13 +19,13 @@ return [
     'confirm_password' => 'تأكيد كلمة المرور',
     'already_registered' => 'مسجل بالفعل؟',
     'register' => 'إنشاء حساب',
+    
     // --- Placeholders ---
     'name_placeholder' => 'اسمك بالكامل',
     'email_placeholder' => 'name@example.com',
     'phone_placeholder' => '+1234567890',
     'government_id_placeholder' => 'الرقم القومي أو رقم جواز السفر',
     'password_placeholder' => '••••••••',
-
 
     // forgot-password.blade.php
     'forgot_password_title' => 'هل نسيت كلمة المرور؟',
@@ -48,4 +48,11 @@ return [
     'confirm_password_title' => 'تأكيد كلمة المرور',
     'confirm_password_text' => 'هذه منطقة آمنة في التطبيق. يرجى تأكيد كلمة المرور الخاصة بك قبل المتابعة.',
     'confirm' => 'تأكيد',
+
+    // --- المفاتيح الجديدة ---
+    'your_email' => 'بريدك الإلكتروني',
+    'new_password' => 'كلمة المرور الجديدة',
+    'confirm_new_password' => 'تأكيد كلمة المرور الجديدة',
+    'remember_password' => 'هل تذكرت كلمة المرور؟',
+    'sign_in' => 'تسجيل الدخول',
 ];

@@ -48,4 +48,11 @@ return [
     'confirm_password_title' => 'Confirm Password',
     'confirm_password_text' => 'This is a secure area of the application. Please confirm your password before continuing.',
     'confirm' => 'Confirm',
+
+    // --- NEW KEYS ---
+    'your_email' => 'Your Email',
+    'new_password' => 'New Password',
+    'confirm_new_password' => 'Confirm New Password',
+    'remember_password' => 'Remember your password?',
+    'sign_in' => 'Sign In',
 ];

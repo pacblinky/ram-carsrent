@@ -7,7 +7,7 @@
                     {{ __('auth_pages.confirm_password_title') }}
                 </h2>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400 mb-6">
-                    {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+                    {{ __('auth_pages.confirm_password_text') }}
                 </p>
 
                 <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('password.confirm') }}">
@@ -32,7 +32,7 @@
 
                     <button type="submit"
                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-200 ease-in-out">
-                        {{ __('Confirm') }}
+                        {{ __('auth_pages.confirm') }}
                     </button>
                 </form>
             </div>
