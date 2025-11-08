@@ -1,18 +1,18 @@
 <?php
 
 return [
+    'brand' => 'رام | لتأجير السيارات',
+    'current_lang' => 'العربية',
+    
+    'open_user_menu' => 'فتح قائمة المستخدم',
+    'my_reservations' => 'حجوزاتي',
+    'profile' => 'الملف الشخصي',
+    'admin_panel' => 'لوحة الإدارة',
+    'sign_out' => 'تسجيل الخروج',
+
+    'open_main_menu' => 'فتح القائمة الرئيسية',
     'home' => 'الرئيسية',
     'cars' => 'السيارات',
     'about' => 'عنا',
     'contact' => 'اتصل بنا',
-    'login' => 'تسجيل الدخول',
-    'register' => 'إنشاء حساب',
-    'my_reservations' => 'حجوزاتي',
-    'profile' => 'الملف الشخصي',
-    'admin_panel' => 'لوحة التحكم',
-    'sign_out' => 'تسجيل الخروج',
-    'language' => 'اللغة',
-    'english' => 'الإنجليزية',
-    'arabic' => 'العربية',
-    'language_toggle' => 'English'
 ];

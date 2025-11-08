@@ -1,18 +1,18 @@
 <?php
 
 return [
-    'home' => 'Home',
-    'cars' => 'Cars',
-    'about' => 'About',
-    'contact' => 'Contact',
-    'login' => 'Log in',
-    'register' => 'Sign up',
+    'brand' => 'Ram | Car Rental',
+    'current_lang' => 'English',
+
+    'open_user_menu' => 'Open user menu',
     'my_reservations' => 'My Reservations',
     'profile' => 'Profile',
     'admin_panel' => 'Admin Panel',
     'sign_out' => 'Sign out',
-    'language' => 'Language',
-    'english' => 'English',
-    'arabic' => 'Arabic',
-    'language_toggle' => 'العربية', // <-- ADD THIS
+
+    'open_main_menu' => 'Open main menu',
+    'home' => 'Home',
+    'cars' => 'Cars',
+    'about' => 'About',
+    'contact' => 'Contact',
 ];

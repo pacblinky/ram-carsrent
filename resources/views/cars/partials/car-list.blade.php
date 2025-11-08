@@ -1,13 +1,17 @@
 {{-- Sorting & Pagination Controls --}}
 <div class="flex flex-col md:flex-row justify-between items-center mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
     <span class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 md:mb-0">
-        Showing {{ $carsPaginator->firstItem() }}-{{ $carsPaginator->lastItem() }} of {{ $carsPaginator->total() }} results
+        {{ __('cars_page.showing_results', [
+            'start' => $carsPaginator->firstItem() ?? 0,
+            'end' => $carsPaginator->lastItem() ?? 0,
+            'total' => $carsPaginator->total()
+        ]) }}
     </span>
 
     <div class="flex items-center space-x-4">
         {{-- Per Page Dropdown --}}
         <button id="showDropdownButton" data-dropdown-toggle="showDropdown" class="text-gray-900 dark:text-white font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center border dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700" type="button">
-            Show: {{ request('per_page', 10) }}
+            {{ __('cars_page.show') }} {{ request('per_page', 10) }}
             <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg>
@@ -17,8 +21,8 @@
                 @foreach([10, 20, 30, 50] as $count)
                 <li>
                     <a href="{{ route('cars.index', array_merge(request()->query(), ['per_page' => $count, 'page' => 1])) }}"
-                       class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white {{ request('per_page') == $count ? 'font-bold bg-gray-50 dark:bg-gray-600' : '' }}">
-                        Show: {{ $count }}
+                       class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white {{ request('per_page', 10) == $count ? 'font-bold bg-gray-50 dark:bg-gray-600' : '' }}">
+                        {{ __('cars_page.show') }} {{ $count }}
                     </a>
                 </li>
                 @endforeach
@@ -26,17 +30,24 @@
         </div>
 
         {{-- Sort Dropdown --}}
+        @php
+            $sortText = match(request('sort', 'newest')) {
+                'price_asc' => __('cars_page.price_low_high'),
+                'price_desc' => __('cars_page.price_high_low'),
+                default => __('cars_page.newest'),
+            };
+        @endphp
         <button id="sortDropdownButton" data-dropdown-toggle="sortDropdown" class="text-gray-900 dark:text-white font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center border dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700" type="button">
-            Sort by: {{ ucfirst(str_replace('_', ' ', request('sort', 'Newest'))) }}
+            {{ __('cars_page.sort_by') }} {{ $sortText }}
             <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg>
         </button>
         <div id="sortDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="sortDropdownButton">
-                <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'newest', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Newest First</a></li>
-                <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'price_asc', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Price: Low to High</a></li>
-                <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'price_desc', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Price: High to Low</a></li>
+                <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'newest', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('cars_page.newest') }}</a></li>
+                <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'price_asc', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('cars_page.price_low_high') }}</a></li>
+                <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'price_desc', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('cars_page.price_high_low') }}</a></li>
             </ul>
         </div>
     </div>
@@ -51,7 +62,7 @@
                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
                 <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span class="sr-only">{{ __('cars_page.loading') }}</span>
         </div>
     </div>
 
@@ -114,10 +125,10 @@
                 <div class="flex items-center justify-between mt-auto">
                     <div>
                         <span class="text-3xl font-bold text-gray-900 dark:text-white">${{ number_format($car['price'], 0) }}</span>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">/ day</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('cars_page.per_day') }}</span>
                     </div>
                     <a href="{{ route('cars.show', $car['id']) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
-                        View Details
+                        {{ __('cars_page.view_details') }}
                     </a>
                 </div>
             </div>
@@ -127,11 +138,11 @@
             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No vehicles found</h3>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Try adjusting your search or filters.</p>
+            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.no_vehicles_found') }}</h3>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('cars_page.no_vehicles_found_desc') }}</P>
             <div class="mt-6">
                 <a href="{{ route('cars.index') }}" class="ajax-filter-link inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Clear all filters
+                    {{ __('cars_page.clear_all_filters') }}
                 </a>
             </div>
         </div>

@@ -1,0 +1,67 @@
+<?php
+
+return [
+    // === Cars Index Page ===
+    'hero_badge' => 'ابحث عن سيارات للبيع والإيجار بالقرب منك',
+    'hero_title' => 'ابحث عن سيارتك المثالية',
+    'hero_subtitle' => 'ابحث واعثر على أفضل سيارة للإيجار بطريقة سهلة',
+    'pickup_location' => 'موقع الاستلام',
+    'all_locations' => 'جميع المواقع',
+    'pickup_datetime' => 'تاريخ ووقت الاستلام',
+    'dropoff_datetime' => 'تاريخ ووقت التسليم',
+    'find_vehicle' => 'ابحث عن سيارة',
+    'fleet_title' => 'أسطول سياراتنا',
+    'fleet_subtitle' => 'نحول الأحلام إلى حقيقة بمركبات متنوعة.',
+    'price_range' => 'نطاق السعر / اليوم',
+    'min_price' => 'الأدنى',
+    'max_price' => 'الأعلى',
+    'apply_price' => 'تطبيق السعر',
+    'brand' => 'العلامة التجارية',
+    'categories' => 'الفئات',
+    'clear' => 'مسح',
+
+    // === Car Detail Page ===
+    'show_on_map' => 'عرض على الخريطة',
+    'previous' => 'السابق',
+    'next' => 'التالي',
+    'vehicle_features' => 'مواصفات المركبة',
+    'rent_this_vehicle' => 'استأجر هذه المركبة',
+    'pickup_date' => 'تاريخ الاستلام',
+    'dropoff_date' => 'تاريخ التسليم',
+    'select_date' => 'اختر التاريخ',
+    'start_time' => 'وقت البدء *',
+    'end_time' => 'وقت الانتهاء *',
+    'booking_pickup_location' => 'موقع الاستلام',
+    'booking_dropoff_location' => 'موقع التسليم',
+    'total' => 'الإجمالي',
+    'pay_on_pickup' => 'الدفع عند استلام السيارة',
+    'pay_on_pickup_desc' => 'أنا أفهم أن الدفع مستحق عند استلام المركبة.',
+    'book_now' => 'احجز الآن',
+    'js_past' => '(فات)',
+    'js_booked' => '(محجوز)',
+    'js_days' => 'يوم / أيام',
+
+    // === Car List Partial ===
+    'showing_results' => 'عرض :start - :end من أصل :total نتائج',
+    'show' => 'عرض:',
+    'sort_by' => 'ترتيب حسب:',
+    'newest' => 'الأحدث',
+    'price_low_high' => 'السعر: من الأقل إلى الأعلى',
+    'price_high_low' => 'السعر: من الأعلى إلى الأقل',
+    'no_vehicles_found' => 'لم يتم العثور على مركبات',
+    'no_vehicles_found_desc' => 'حاول تعديل البحث أو الفلاتر.',
+    'loading' => 'جاري التحميل...',
+    'per_day' => '/ اليوم',
+    'view_details' => 'عرض التفاصيل',
+    'clear_all_filters' => 'مسح كل الفلاتر',
+
+    // === Feature Specs (Corrected) ===
+    'feat_seats' => ':count مقاعد',
+    'feat_doors' => ':count أبواب',
+    'feat_transmission_automatic' => 'أوتوماتيك', // Corrected key
+    'feat_transmission_manual' => 'يدوي',
+    'feat_fuel_gasoline' => 'بنزين',
+    'feat_fuel_diesel' => 'ديزل',
+    'feat_fuel_electric' => 'كهرباء',
+    'feat_mileage' => ':mileage كم', // Added missing key
+];

@@ -79,11 +79,11 @@ class CarsListController extends Controller
                     'image'     => $car->images && count($car->images) > 0 ? asset('storage/' . $car->images[0]) : asset('images/logo.png'),
                     'price'     => $car->price_per_day,
                     'location'  => $car->location?->name ?? 'Not specified',
-                    'specs'     => [
-                        ['icon' => 'mileage',      'text' => ($car->mileage ?? 'N/A')],
-                        ['icon' => 'transmission', 'text' => ucfirst($car->transmission)],
-                        ['icon' => 'seats',        'text' => $car->number_of_seats . ' Seats'],
-                        ['icon' => 'fuel',         'text' => ucfirst($car->fuel_type)],
+                    'specs'    => [
+                        ['icon' => 'mileage',      'text' => $car->mileage ? __('cars_page.feat_mileage', ['mileage' => $car->mileage]) : 'N/A'],
+                        ['icon' => 'transmission', 'text' => __('cars_page.feat_transmission_' . $car->transmission)],
+                        ['icon' => 'seats',        'text' => __('cars_page.feat_seats', ['count' => $car->number_of_seats])],
+                        ['icon' => 'fuel',         'text' => __('cars_page.feat_fuel_' . $car->fuel_type)],
                     ],
                 ];
             })
@@ -125,10 +125,10 @@ class CarsListController extends Controller
         $thumbnails = $images;
 
         $specs = [
-            ['icon' => 'doors',        'text' => $car->number_of_doors . ' Doors'],
-            ['icon' => 'transmission', 'text' => ucfirst($car->transmission)],
-            ['icon' => 'seats',        'text' => $car->number_of_seats . ' Seats'],
-            ['icon' => 'fuel',         'text' => ucfirst($car->fuel_type)],
+            ['icon' => 'doors', 'text' => __('cars_page.feat_doors', ['count' => $car->number_of_doors])],
+            ['icon' => 'transmission', 'text' => __('cars_page.feat_transmission_' . $car->transmission)],
+            ['icon' => 'seats', 'text' => __('cars_page.feat_seats', ['count' => $car->number_of_seats])],
+            ['icon' => 'fuel', 'text' => __('cars_page.feat_fuel_' . $car->fuel_type)],
         ];
 
         $timeOptions = [];
