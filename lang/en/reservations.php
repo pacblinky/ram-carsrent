@@ -1,35 +1,38 @@
 <?php
 
 return [
-    'my_reservations' => 'Reservations',
-    'manage_desc' => 'Manage your upcoming and past vehicle rentals.',
+    // Page Hero
+    'my_reservations' => 'My Reservations',
+    'manage_desc' => 'Manage, view, or cancel your car reservations all in one place.',
+    'reservation_created_success' => 'Reservation created successfully! awaiting confirmation.',
+
+    // Alerts
     'alert_success' => 'Success!',
     'alert_error' => 'Error!',
 
-    'upcoming' => 'Upcoming',
-    'past' => 'Past',
-    'cancelled' => 'Cancelled',
+    // Card Details
+    'status' => 'Status',
+    'from' => 'From',
+    'to' => 'To',
+    'total_price' => 'Total Price',
+    'view_details' => 'View Details',
+    'cancel_reservation' => 'Cancel Reservation',
 
+    // Statuses (From your dynamic logic)
     'status_pending' => 'Pending',
     'status_confirmed' => 'Confirmed',
     'status_completed' => 'Completed',
-    'status_canceled' => 'Canceled', // Matched to your Enum 'Canceled'
+    'status_canceled' => 'Canceled',
     'status_overdue' => 'Overdue',
 
-    'no_reservations' => 'You have no :type reservations.',
-    'no_reservations_yet' => 'No reservations yet',
-    'no_reservations_desc' => 'Ready to hit the road? Find your perfect car today.',
+    // Cancellation Modal
+    'cancel_modal_title' => 'Are you sure you want to cancel this reservation?',
+    'cancel_modal_desc' => 'Once canceled, this action cannot be undone. Please confirm you want to proceed.',
+    'no_keep_it' => 'No, Keep It',
+    'yes_cancel_it' => 'Yes, Cancel It',
 
-    'from' => 'Pickup',
-    'to' => 'Dropoff',
-    'total_price' => 'Total Price',
-    'status' => 'Status',
-    'view_details' => 'View Details',
-    
-    'cancel_reservation' => 'Cancel Reservation',
-    'cancel_modal_title' => 'Are you sure?',
-    'cancel_modal_desc' => 'Are you sure you want to cancel this reservation? This action cannot be undone.',
-    'no_keep_it' => 'No, keep it',
-    'yes_cancel_it' => 'Yes, cancel it',
-    'book_new_car' => 'Book a new car',
+    // Empty State
+    'no_reservations_yet' => 'No reservations yet',
+    'no_reservations_desc' => 'You haven\'t made any bookings. Start by finding your perfect car.',
+    'book_new_car' => 'Book a New Car',
 ];

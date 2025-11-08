@@ -73,7 +73,7 @@ class ReservationController extends Controller
 
         // Redirect to the new reservations index page with a success message
         return redirect()->route('reservations.index')
-            ->with('success', 'Reservation created successfully! awaiting confirmation.');
+            ->with('success', __('reservations.reservation_created_success'));
     }
 
     // Cancel a reservation
