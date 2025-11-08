@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -25,7 +26,8 @@ class User extends Authenticatable implements FilamentUser
         'password',
         'phone_number',
         "government_id",
-        'is_admin'
+        'is_admin',
+        'profile_photo_path',
     ];
 
     /**
@@ -51,6 +53,21 @@ class User extends Authenticatable implements FilamentUser
             'is_admin' => 'boolean'
         ];
     }
+
+    /**
+     * Get the URL to the user's profile photo.
+     */
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        if ($this->profile_photo_path) {
+            
+            return asset('storage/' . $this->profile_photo_path) . '?v=' . $this->updated_at->timestamp;
+        }
+
+        // Return a default image or placeholder
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
+    }
+
 
     public function reservations()
     {

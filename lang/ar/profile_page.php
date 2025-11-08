@@ -18,6 +18,12 @@ return [
     'save' => 'حفظ',
     'saved' => 'تم الحفظ.',
 
+    'profile_photo' => 'الصورة الشخصية',
+    'select_new_photo' => 'اختر صورة جديدة',
+    'remove_photo' => 'إزالة الصورة',
+
+    'removing' => 'جارِ الحذف...',
+
     // update-password-form.blade.php
     'update_password_title' => 'تحديث كلمة المرور',
     'update_password_desc' => 'تأكد من أن حسابك يستخدم كلمة مرور طويلة وعشوائية ليبقى آمنًا.',

@@ -18,6 +18,12 @@ return [
     'save' => 'Save',
     'saved' => 'Saved.',
 
+    'profile_photo' => 'Profile Photo',
+    'select_new_photo' => 'Select a New Photo',
+    'remove_photo' => 'Remove Photo',
+
+    'removing' => 'Removing...',
+
     // update-password-form.blade.php
     'update_password_title' => 'Update Password',
     'update_password_desc' => 'Ensure your account is using a long, random password to stay secure.',

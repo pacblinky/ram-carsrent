@@ -13,10 +13,99 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    {{-- *** NEW: This is a separate, hidden form just for deleting the photo *** --}}
+    <form
+        method="POST"
+        action="{{ route('profile.photo.destroy') }}"
+        id="delete_photo_form"
+        class="hidden"
+    >
+        @csrf
+        @method('DELETE')
+    </form>
+
+
+    <form
+        method="post"
+        action="{{ route('profile.update') }}"
+        class="mt-6 space-y-6"
+        enctype="multipart/form-data"
+    >
         @csrf
         @method('patch')
 
+        {{-- *** UPDATED X-DATA: All 'fetch' logic is removed *** --}}
+        <div
+            x-data="{
+                photoPreview: '{{ $user->profile_photo_url }}',
+                hasPhoto: {{ $user->profile_photo_path ? 'true' : 'false' }},
+                isDeleting: false, // Loading state for delete button
+
+                updatePreview(files) {
+                    if (files.length === 0) { return; }
+                    let file = files[0];
+                    const reader = new FileReader();
+                    reader.onload = (e) => { this.photoPreview = e.target.result; };
+                    reader.readAsDataURL(file);
+                    this.hasPhoto = true;
+                }
+            }"
+            class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6"
+        >
+            <div class="flex-shrink-0">
+                <span class="block w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+                    <img x-bind:src="photoPreview" alt="Profile Photo" class="object-cover w-full h-full">
+                </span>
+            </div>
+
+            <div class="flex-grow mt-2 sm:mt-0">
+                
+                {{-- The hidden input is no longer needed here --}}
+
+                <input
+                    type="file"
+                    id="profile_photo"
+                    name="profile_photo"
+                    class="hidden"
+                    x-on:change="updatePreview($event.target.files)"
+                    accept="image/png, image/jpeg, image/jpg"
+                >
+
+                <x-input-label for="profile_photo" :value="__('profile_page.profile_photo')" class="sr-only" />
+
+                {{-- Select New Photo Button --}}
+                <button
+                    type="button"
+                    x-on:click.prevent="document.getElementById('profile_photo').click()"
+                    class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150"
+                >
+                    {{ __('profile_page.select_new_photo') }}
+                </button>
+
+                {{-- *** UPDATED REMOVE BUTTON *** --}}
+                <button
+                    type="button"
+                    x-show="hasPhoto"
+                    {{-- This now submits the hidden form --}}
+                    x-on:click.prevent="isDeleting = true; document.getElementById('delete_photo_form').submit();"
+                    x-bind:disabled="isDeleting"
+                    class="inline-flex items-center px-4 py-2 ms-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 disabled:opacity-50"
+                >
+                    {{-- This uses the new translation key --}}
+                    <span x-show="!isDeleting">{{ __('profile_page.remove_photo') }}</span>
+                    <span x-show="isDeleting">{{ __('profile_page.removing') }}</span>
+                </button>
+
+                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    PNG, JPG or JPEG. Max 2MB.
+                </p>
+
+                <x-input-error class="mt-2" :messages="$errors->get('profile_photo')" />
+            </div>
+        </div>
+        
+        {{-- ... (Rest of your form: Name, Email, etc.) ... --}}
+        
         {{-- Name --}}
         <div>
             <x-input-label for="name" :value="__('profile_page.name')" />
@@ -68,7 +157,6 @@
         <div>
             <x-input-label for="phone_number" :value="__('profile_page.phone_number')" />
              <div class="relative mt-1">
-                {{-- Icon --}}
                 <div class="absolute inset-y-0 flex items-center pointer-events-none ltr:left-3 rtl:right-3">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

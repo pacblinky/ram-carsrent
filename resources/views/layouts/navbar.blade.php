@@ -55,9 +55,9 @@
                 {{-- Authenticated User Dropdown --}}
                 <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                     <span class="sr-only">{{ __('navbar.open_user_menu') }}</span>
-                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
-                        {{ substr(Auth::user()->name, 0, 1) }}
-                    </div>
+                    
+                    <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}">
+
                 </button>
                 
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
@@ -140,7 +140,7 @@
                     </li>
                     <li>
                         <a href="{{ url('locale/ar') }}"
-                            class="block px-4 py-2 text-sm {{ app()->getLocale() == 'ar' ? 'text-blue-7J00 dark:text-blue-500' : 'text-gray-700 dark:text-gray-200' }} hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            class="block px-4 py-2 text-sm {{ app()->getLocale() == 'ar' ? 'text-blue-700 dark:text-blue-500' : 'text-gray-700 dark:text-gray-200' }} hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                             role="menuitem">
                             العربية
                         </a>
