@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-// We no longer need JsonResponse
-// use Illuminate\Http\JsonResponse; 
+use Illuminate\Http\JsonResponse; // <-- 1. ADD THIS IMPORT
 
 class ProfileController extends Controller
 {
