@@ -148,100 +148,8 @@
                         </button>
                     </form>
                 </div>
-                
-                {{-- 2. Fuel Type Filter --}}
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.fuel_type') }}</h3>
-                        @if(request('fuel_type'))
-                            <a href="{{ route('cars.index', request()->except(['fuel_type', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
-                        @endif
-                    </div>
-                    <ul class="space-y-3">
-                        @foreach($fuelTypes as $type)
-                        <li>
-                            <a href="{{ route('cars.index', array_merge(request()->query(), ['fuel_type' => $type['name'], 'page' => 1])) }}" 
-                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('fuel_type') == $type['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
-                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $type['label'] }}</span>
-                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
-                                    {{ $type['count'] }}
-                                </span>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
 
-                {{-- 3. Transmission Filter --}}
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.transmission') }}</h3>
-                        @if(request('transmission'))
-                            <a href="{{ route('cars.index', request()->except(['transmission', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
-                        @endif
-                    </div>
-                    <ul class="space-y-3">
-                        @foreach($transmissions as $trans)
-                        <li>
-                            <a href="{{ route('cars.index', array_merge(request()->query(), ['transmission' => $trans['name'], 'page' => 1])) }}" 
-                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('transmission') == $trans['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
-                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $trans['label'] }}</span>
-                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
-                                    {{ $trans['count'] }}
-                                </span>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                {{-- 4. Number of Seats Filter --}}
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.seats') }}</h3>
-                        @if(request('seats'))
-                            <a href="{{ route('cars.index', request()->except(['seats', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
-                        @endif
-                    </div>
-                    <ul class="space-y-3">
-                        @foreach($seats as $seat)
-                        <li>
-                            <a href="{{ route('cars.index', array_merge(request()->query(), ['seats' => $seat['name'], 'page' => 1])) }}" 
-                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('seats') == $seat['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
-                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $seat['label'] }}</span>
-                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
-                                    {{ $seat['count'] }}
-                                </span>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                
-                {{-- 5. Number of Doors Filter --}}
-                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.doors') }}</h3>
-                        @if(request('doors'))
-                            <a href="{{ route('cars.index', request()->except(['doors', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
-                        @endif
-                    </div>
-                    <ul class="space-y-3">
-                        @foreach($doors as $door)
-                        <li>
-                            <a href="{{ route('cars.index', array_merge(request()->query(), ['doors' => $door['name'], 'page' => 1])) }}" 
-                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('doors') == $door['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
-                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $door['label'] }}</span>
-                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
-                                    {{ $door['count'] }}
-                                </span>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                {{-- 6. Brand Filter --}}
+                {{-- 2. Brand Filter --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.brand') }}</h3>
@@ -264,7 +172,7 @@
                     </ul>
                 </div>
 
-                {{-- 7. Category Filter --}}
+                {{-- 3. Category Filter --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.categories') }}</h3>
@@ -280,6 +188,98 @@
                                 <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $cat['label'] }}</span>
                                 <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
                                     {{ $cat['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+                
+                {{-- 4. Fuel Type Filter --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.fuel_type') }}</h3>
+                        @if(request('fuel_type'))
+                            <a href="{{ route('cars.index', request()->except(['fuel_type', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($fuelTypes as $type)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['fuel_type' => $type['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('fuel_type') == $type['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $type['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $type['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                {{-- 5. Transmission Filter --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.transmission') }}</h3>
+                        @if(request('transmission'))
+                            <a href="{{ route('cars.index', request()->except(['transmission', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($transmissions as $trans)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['transmission' => $trans['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('transmission') == $trans['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $trans['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $trans['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                {{-- 6. Number of Seats Filter --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.seats') }}</h3>
+                        @if(request('seats'))
+                            <a href="{{ route('cars.index', request()->except(['seats', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($seats as $seat)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['seats' => $seat['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('seats') == $seat['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $seat['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $seat['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+                
+                {{-- 7. Number of Doors Filter --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.doors') }}</h3>
+                        @if(request('doors'))
+                            <a href="{{ route('cars.index', request()->except(['doors', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($doors as $door)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['doors' => $door['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('doors') == $door['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $door['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $door['count'] }}
                                 </span>
                             </a>
                         </li>
