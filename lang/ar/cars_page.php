@@ -40,6 +40,7 @@ return [
     'js_past' => '(فات)',
     'js_booked' => '(محجوز)',
     'js_days' => 'يوم / أيام',
+    'vehicle_description' => 'وصف المركبة',
 
     // === Car List Partial ===
     'showing_results' => 'عرض :start - :end من أصل :total نتائج',
