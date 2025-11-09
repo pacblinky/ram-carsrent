@@ -41,6 +41,8 @@ return [
     'js_booked' => '(Booked)',
     'js_days' => 'day(s)',
 
+    'vehicle_description' => 'Vehicle Description',
+
     // === Car List Partial ===
     'showing_results' => 'Showing :start - :end of :total results',
     'show' => 'Show:',
