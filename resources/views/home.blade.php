@@ -254,10 +254,11 @@
             <div class="relative h-64 overflow-hidden rounded-2xl shadow-lg md:h-96 lg:h-[500px]">
                 @foreach($videos as $index => $video)
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <video class="absolute block w-full h-full object-cover top-0 left-0" 
+                        <video class="absolute block w-full h-full object-cover top-0 left-0 z-10" 
                                poster="{{ $video->thumbnail ? asset('storage/' . $video->thumbnail) : '' }}" 
                                controls 
                                preload="metadata"
+                               muted
                                playsinline>
                             <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
                             {{-- Add other video types if you support them, e.g., video/webm --}}
