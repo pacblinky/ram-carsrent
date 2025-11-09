@@ -97,17 +97,19 @@
 
         <div class="relative w-full py-4 opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
             <div class="flex space-x-8 rtl:space-x-reverse animate-scroll whitespace-nowrap" style="width: fit-content;">
-                {{-- Wrapped each brand item in an <a> tag --}}
+                
+                {{-- *** FIX: Changed href to use 'brand_id' => $brand->id *** --}}
                 @foreach($brands as $brand)
-                    <a href="{{ route('cars.index', ['brands[]' => $brand->name]) }}" class="flex-none">
+                    <a href="{{ route('cars.index', ['brand_id' => $brand->id]) }}" class="flex-none">
                         <div class="w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
                             <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
                         </div>
                     </a>
                 @endforeach
-                {{-- Also wrapped the duplicated items for the infinite scroll --}}
+                
+                {{-- *** FIX: Also updated the duplicated items for the infinite scroll *** --}}
                 @foreach($brands as $brand)
-                    <a href="{{ route('cars.index', ['brands[]' => $brand->name]) }}" class="flex-none">
+                    <a href="{{ route('cars.index', ['brand_id' => $brand->id]) }}" class="flex-none">
                         <div class="w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
                             <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
                         </div>
