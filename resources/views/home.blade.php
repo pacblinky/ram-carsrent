@@ -84,7 +84,9 @@
         </div>
     </section>
 
-    {{-- PREMIUM BRANDS SECTION (No changes here) --}}
+    {{-- ======================================================= --}}
+    {{-- MODIFIED PREMIUM BRANDS SECTION --}}
+    {{-- ======================================================= --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4 overflow-hidden">
         <div class="flex justify-between items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
             <div>
@@ -95,19 +97,29 @@
 
         <div class="relative w-full py-4 opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
             <div class="flex space-x-8 rtl:space-x-reverse animate-scroll whitespace-nowrap" style="width: fit-content;">
+                {{-- Wrapped each brand item in an <a> tag --}}
                 @foreach($brands as $brand)
-                    <div class="flex-none w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
-                        <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
-                    </div>
+                    <a href="{{ route('cars.index', ['brands[]' => $brand->name]) }}" class="flex-none">
+                        <div class="w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
+                            <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
+                        </div>
+                    </a>
                 @endforeach
+                {{-- Also wrapped the duplicated items for the infinite scroll --}}
                 @foreach($brands as $brand)
-                    <div class="flex-none w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
-                        <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
-                    </div>
+                    <a href="{{ route('cars.index', ['brands[]' => $brand->name]) }}" class="flex-none">
+                        <div class="w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
+                            <img src="{{ asset('storage/' . $brand->logo_path) }}" alt="{{ $brand->name }} Logo" class="max-h-full max-w-full object-contain dark:filter dark:invert opacity-80 hover:opacity-100 transition-opacity">
+                        </div>
+                    </a>
                 @endforeach
             </div>
         </div>
     </section>
+    {{-- ======================================================= --}}
+    {{-- END OF MODIFIED PREMIUM BRANDS SECTION --}}
+    {{-- ======================================================= --}}
+
 
     {{-- RECENT VEHICLES SECTION (No changes here) --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4">
