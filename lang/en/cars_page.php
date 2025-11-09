@@ -63,7 +63,7 @@ return [
     'feat_doors' => ':count Doors',
     'feat_transmission_automatic' => 'Automatic',
     'feat_transmission_manual' => 'Manual',
-    'feat_transmission_semiautomatic' => 'Semi-Automatic',
+    'feat_transmission_semi-automatic' => 'Semi-Automatic',
     'feat_fuel_gasoline' => 'Gasoline',
     'feat_fuel_diesel'   => 'Diesel',
     'feat_fuel_petrol'   => 'Petrol',

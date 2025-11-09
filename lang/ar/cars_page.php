@@ -65,7 +65,7 @@ return [
     'feat_doors' => ':count أبواب',
     'feat_transmission_automatic' => 'أوتوماتيك', // Corrected key
     'feat_transmission_manual' => 'يدوي',
-    'feat_transmission_semiautomatic' => 'شبه أوتوماتيكي',
+    'feat_transmission_semi-automatic' => 'شبه أوتوماتيكي',
     'feat_fuel_gasoline' => 'بنزين',
     'feat_fuel_diesel'   => 'ديزل',
     'feat_fuel_petrol'   => 'بنزين',
