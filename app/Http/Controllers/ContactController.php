@@ -46,6 +46,6 @@ class ContactController extends Controller
 
         // For this example, we'll just redirect back with a success message.
         return Redirect::route('contact.index')
-            ->with('success', 'Your message has been sent successfully! We will get back to you soon.');
+            ->with('success_message_key', 'contact.message_sent_details');
     }
 }

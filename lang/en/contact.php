@@ -24,6 +24,7 @@ return [
     'hero_subtitle' => "We're here to help. Send us a message or visit one of our locations.",
     'form_title' => 'Send Us a Message',
     'alert_success' => 'Success!',
+    'message_sent_details' => 'Your message has been sent successfully! We will get back to you soon.', // <-- ADD THIS
     'form_name' => 'Full Name',
     'form_email' => 'Email Address',
     'form_subject' => 'Subject',

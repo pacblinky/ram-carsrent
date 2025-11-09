@@ -32,10 +32,9 @@
                 <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 md:p-8 z-20 opacity-0 translate-y-8 transition-all duration-1000 delay-100 ease-out animate-on-scroll">
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">{{ __('contact.form_title') }}</h2>
 
-                    {{-- Success Message --}}
-                    @if (session('success'))
+                    @if (session('success_message_key'))
                         <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                            <span class="font-medium">{{ __('contact.alert_success') }}</span> {{ session('success') }}
+                            <span class="font-medium">{{ __('contact.alert_success') }}</span> {{ __(session('success_message_key')) }}
                         </div>
                     @endif
 
