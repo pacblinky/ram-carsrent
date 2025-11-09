@@ -1,5 +1,5 @@
 <x-app-layout>
-    {{-- HERO SEARCH SECTION --}}
+    {{-- HERO SEARCH SECTION (No changes here) --}}
     <section class="relative bg-gray-900 flex flex-col items-center justify-center gap-8 py-24">
         <div class="absolute inset-0">
             <img src="{{ asset('images/driving.gif') }}" alt="Background" class="w-full h-full object-cover opacity-50">
@@ -84,7 +84,7 @@
         </div>
     </section>
 
-    {{-- PREMIUM BRANDS SECTION --}}
+    {{-- PREMIUM BRANDS SECTION (No changes here) --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4 overflow-hidden">
         <div class="flex justify-between items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
             <div>
@@ -109,7 +109,7 @@
         </div>
     </section>
 
-    {{-- RECENT VEHICLES SECTION --}}
+    {{-- RECENT VEHICLES SECTION (No changes here) --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4">
         <div class="flex justify-between items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
             <div>
@@ -170,7 +170,7 @@
                             <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('home.per_day') }}</span>
                         </div>
                         <a href="{{ route('cars.show', $car->id) }}" 
-                           class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-all duration-200 ease-in-out hover:scale-105">
+                             class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-all duration-200 ease-in-out hover:scale-105">
                             {{ __('home.book_now') }}
                         </a>
                     </div>
@@ -191,7 +191,7 @@
         </div>
     </section>
 
-    {{-- HOW IT WORKS SECTION --}}
+    {{-- HOW IT WORKS SECTION (No changes here) --}}
     <section class="py-16 px-4">
         <div class="max-w-screen-xl mx-auto text-center">
             <div class="opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
@@ -206,29 +206,29 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-100 ease-out animate-on-scroll">
                     <div class="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-full mb-4">
-                         <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+                       <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step1_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step1_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
-                     <div class="p-4 bg-green-50 dark:bg-green-900/30 rounded-full mb-4">
-                         <svg class="w-8 h-8 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                     </div>
+                       <div class="p-4 bg-green-50 dark:bg-green-900/30 rounded-full mb-4">
+                           <svg class="w-8 h-8 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                       </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step2_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step2_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-300 ease-out animate-on-scroll">
-                     <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-full mb-4">
-                         <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
-                     </div>
+                       <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-full mb-4">
+                           <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
+                       </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step3_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step3_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-500 ease-out animate-on-scroll">
-                     <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full mb-4">
-                         <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12.75A3.375 3.375 0 0112.375 9H17.25a3.375 3.375 0 013.375 3.375v5.25a3.375 3.375 0 01-3.375 3.375H12.375A3.375 3.375 0 019 18v-5.25z" /></svg>
-                     </div>
+                       <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full mb-4">
+                           <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12.75A3.375 3.375 0 0112.375 9H17.25a3.375 3.375 0 013.375 3.375v5.25a3.375 3.375 0 01-3.375 3.375H12.375A3.375 3.375 0 019 18v-5.25z" /></svg>
+                       </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step4_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step4_desc') }}</p>
                 </div>
@@ -236,10 +236,10 @@
         </div>
     </section>
 
-    {{-- BOTTOM CTA SECTIONS --}}
+    {{-- BOTTOM CTA SECTIONS (MODIFIED) --}}
 <section class="max-w-screen-xl mx-auto py-16 px-4">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {{-- First CTA: Start Renting --}}
+        {{-- First CTA: Start Renting (Now with Search Icon) --}}
         <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 -translate-x-8 rtl:translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
             <div class="md:w-1/2 z-10 mb-8 md:mb-0">
                 <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_rent_title') }}</h2>
@@ -253,12 +253,15 @@
                     </svg>
                 </a>
             </div>
-            <div class="relative md:w-1/2">
-                <img class="relative md:absolute md:-bottom-12 md:-end-12 w-full max-w-sm md:max-w-md lg:max-w-lg transition-transform duration-700 hover:scale-105" src="https://carento.botble.com/storage/cars/img-1.png" alt="Grey SUV">
+            {{-- REPLACED IMAGE with Large Search Icon --}}
+            <div class="md:w-1/2 flex justify-center items-center">
+                <svg class="w-32 h-32 text-blue-600/70 dark:text-blue-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
             </div>
         </div>
 
-        {{-- Second CTA: Manage Reservations --}}
+        {{-- Second CTA: Manage Reservations (Now with clearer Calendar/Clock Icon) --}}
         <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 translate-x-8 rtl:-translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
             <div class="md:w-1/2 z-10 mb-8 md:mb-0">
                 <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_manage_title') }}</h2>
@@ -272,8 +275,12 @@
                     </svg>
                 </a>
             </div>
-            <div class="relative md:w-1/2">
-                <img class="relative md:absolute md:-bottom-12 md:-end-12 w-full max-w-sm md:max-w-md lg:max-w-lg transition-transform duration-700 hover:scale-105" src="https://carento.botble.com/storage/cars/img-2.png" alt="Grey BMW">
+            {{-- UPDATED SVG ICON: Calendar/Clock for Reservations --}}
+            <div class="md:w-1/2 flex justify-center items-center">
+                <svg class="w-32 h-32 text-yellow-800/70 dark:text-yellow-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5m15 7.5v-7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 7.5h.008v.008H15V7.5zm.008 4.5H15v.008h.008V12zm.008 4.5H15v.008h.008v-.008zM12 7.5h.008v.008H12V7.5zm.008 4.5H12v.008h.008V12zm.008 4.5H12v.008h.008v-.008zM9 7.5h.008v.008H9V7.5zm.008 4.5H9v.008h.008V12zM9.75 16.5a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                </svg>
             </div>
         </div>
     </div>
