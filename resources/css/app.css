@@ -3,17 +3,61 @@
 @tailwind utilities;
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Animation for the brand logo scroller */
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-250px * 7)); /* Adjust based on number of logos and logo width */ }
+/* --- MODIFIED: Animation for the brand logo scroller --- */
+/*
+  We define the animation rules inside a @layer so Tailwind
+  can process them correctly.
+*/
+@layer utilities {
+  .animate-scroll {
+    /*
+      - The animation moves the content from 0% to -50%.
+      - Since the content is duplicated in the HTML, this creates a seamless loop.
+      - We use var(--scroll-duration) to make it customizable, defaulting to 40s.
+    */
+    animation: scroll-ltr var(--scroll-duration, 40s) linear infinite;
+  }
+
+  /* Handle RTL layouts */
+  html[dir="rtl"] .animate-scroll {
+    animation-name: scroll-rtl;
+  }
+
+  /* Pause animation on hover for better user experience */
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
 }
 
-.animate-scroll {
-    animation: scroll 30s linear infinite; /* Adjust duration as needed */
+/* * Define the keyframes for Left-to-Right (LTR) scrolling 
+ */
+@keyframes scroll-ltr {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /*
+      This must be -50% because the content is duplicated.
+      The animation ends at the *start* of the duplicated list.
+    */
+    transform: translateX(-50%);
+  }
 }
 
-/* --- ADDED FOR CONTACT PAGE --- */
+/* * Define the keyframes for Right-to-Left (RTL) scrolling 
+ */
+@keyframes scroll-rtl {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* For RTL, we move in the opposite direction */
+    transform: translateX(50%);
+  }
+}
+
+
+/* --- ADDED FOR CONTACT PAGE (Unchanged) --- */
 /* Simple page-load fade-in */
 @keyframes fadeIn {
     from {
