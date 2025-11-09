@@ -97,9 +97,9 @@
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                         @foreach($car['specs'] as $spec)
                             <div class="flex items-center space-x-2 text-gray-700 dark:text-gray-300" title="{{ ucfirst($spec['icon']) }}">
-                                @if($spec['icon'] == 'mileage')
-                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                @if($spec['icon'] == 'doors')
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"/>
                                     </svg>
                                 @elseif($spec['icon'] == 'transmission')
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

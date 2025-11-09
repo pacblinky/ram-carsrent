@@ -17,15 +17,16 @@
         </div>
 
         {{-- =================================== --}}
-        {{-- MODIFIED MAIN SEARCH FORM --}}
+        {{-- MAIN SEARCH FORM (4-column layout) --}}
         {{-- =================================== --}}
         <div class="absolute -bottom-40 md:-bottom-24 z-20 w-full max-w-screen-lg mx-auto px-4">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
                 <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-4 gap-4 items-end" id="cars-search-form">
                     
-                    {{-- Hidden fields for submission --}}
-                    <input type="hidden" name="pickup_datetime" id="hidden_pickup_datetime_cars">
-                    <input type="hidden" name="dropoff_datetime" id="hidden_dropoff_datetime_cars">
+                    {{-- Hidden fields for submission (FULL DATETIME VALUES) --}}
+                    {{-- These are pre-filled with the request values, which may contain times from the homepage --}}
+                    <input type="hidden" name="pickup_datetime" id="hidden_pickup_datetime_cars" value="{{ request('pickup_datetime') }}">
+                    <input type="hidden" name="dropoff_datetime" id="hidden_dropoff_datetime_cars" value="{{ request('dropoff_datetime') }}">
 
                     {{-- Location Dropdown --}}
                     <div>
@@ -51,7 +52,7 @@
                         </div>
                     </div>
 
-                    {{-- Pickup Date --}}
+                    {{-- Pickup Date (Date-only filter display) --}}
                     <div>
                         <label for="search_start_date_cars" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_date') }}</label>
                         <div class="relative">
@@ -65,13 +66,14 @@
                                 datepicker-autohide
                                 datepicker-format="yyyy-mm-dd"
                                 datepicker-min-date="{{ date('Y-m-d') }}"
+                                {{-- Extract date part from full datetime string for display --}}
                                 value="{{ request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('Y-m-d') : '' }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
                     
-                    {{-- Dropoff Date --}}
+                    {{-- Dropoff Date (Date-only filter display) --}}
                     <div>
                         <label for="search_end_date_cars" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_date') }}</label>
                         <div class="relative">
@@ -85,6 +87,7 @@
                                 datepicker-autohide
                                 datepicker-format="yyyy-mm-dd"
                                 datepicker-min-date="{{ date('Y-m-d') }}"
+                                {{-- Extract date part from full datetime string for display --}}
                                 value="{{ request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('Y-m-d') : '' }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
@@ -92,9 +95,11 @@
                     </div>
 
                     {{-- Submit Button --}}
-                    <button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                        {{ __('cars_page.find_vehicle') }}
-                    </button>
+                    <div>
+                        <button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                            {{ __('cars_page.find_vehicle') }}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -188,6 +193,98 @@
                         @endforeach
                     </ul>
                 </div>
+                
+                {{-- 4. Fuel Type Filter --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.fuel_type') }}</h3>
+                        @if(request('fuel_type'))
+                            <a href="{{ route('cars.index', request()->except(['fuel_type', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($fuelTypes as $type)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['fuel_type' => $type['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('fuel_type') == $type['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $type['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $type['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                {{-- 5. Transmission Filter --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.transmission') }}</h3>
+                        @if(request('transmission'))
+                            <a href="{{ route('cars.index', request()->except(['transmission', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($transmissions as $trans)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['transmission' => $trans['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('transmission') == $trans['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $trans['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $trans['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                {{-- 6. Number of Seats Filter --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.seats') }}</h3>
+                        @if(request('seats'))
+                            <a href="{{ route('cars.index', request()->except(['seats', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($seats as $seat)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['seats' => $seat['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('seats') == $seat['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $seat['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $seat['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+                
+                {{-- 7. Number of Doors Filter (NEW) --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ __('cars_page.doors') }}</h3>
+                        @if(request('doors'))
+                            <a href="{{ route('cars.index', request()->except(['doors', 'page'])) }}" class="ajax-filter-link text-xs text-red-500 hover:underline">{{ __('cars_page.clear') }}</a>
+                        @endif
+                    </div>
+                    <ul class="space-y-3">
+                        @foreach($doors as $door)
+                        <li>
+                            <a href="{{ route('cars.index', array_merge(request()->query(), ['doors' => $door['name'], 'page' => 1])) }}" 
+                               class="ajax-filter-link flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 {{ request('doors') == $door['name'] ? 'bg-blue-50 dark:bg-gray-700 ring-2 ring-blue-300 dark:ring-blue-500' : '' }}">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $door['label'] }}</span>
+                                <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
+                                    {{ $door['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
             </aside>
 
             {{-- MAIN CONTENT CONTAINER (AJAX will update this) --}}
@@ -198,7 +295,7 @@
     </section>
 
     {{-- =================================== --}}
-    {{-- MODIFIED AJAX SCRIPT --}}
+    {{-- AJAX SCRIPT --}}
     {{-- =================================== --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -207,6 +304,10 @@
             // --- Datepicker Logic Setup ---
             const startDateEl = document.getElementById("search_start_date_cars");
             const endDateEl   = document.getElementById("search_end_date_cars");
+
+            // Element References for hidden fields
+            const hiddenPickup = document.getElementById("hidden_pickup_datetime_cars");
+            const hiddenDropoff = document.getElementById("hidden_dropoff_datetime_cars");
 
             if (startDateEl && endDateEl) {
                 const startDatePicker = new Datepicker(startDateEl, {
@@ -310,16 +411,14 @@
                     const form = e.target;
 
                     // --- Populate hidden date fields before creating FormData ---
-                    const startDateInput = form.querySelector("#search_start_date_cars");
-                    const endDateInput = form.querySelector("#search_end_date_cars");
-                    const hiddenPickup = form.querySelector("#hidden_pickup_datetime_cars");
-                    const hiddenDropoff = form.querySelector("#hidden_dropoff_datetime_cars");
-
-                    if (startDateInput && endDateInput && hiddenPickup && hiddenDropoff) {
-                        if (startDateInput.value && endDateInput.value) {
-                            hiddenPickup.value = `${startDateInput.value}T00:00`;
-                            hiddenDropoff.value = `${endDateInput.value}T23:59`;
+                    const formId = form.getAttribute('id');
+                    if (formId === 'cars-search-form' && startDateEl && endDateEl && hiddenPickup && hiddenDropoff) {
+                        if (startDateEl.value && endDateEl.value) {
+                            // Combine date with default times (T00:00 and T23:59)
+                            hiddenPickup.value = `${startDateEl.value}T00:00`;
+                            hiddenDropoff.value = `${endDateEl.value}T23:59`;
                         } else {
+                            // Clear hidden fields if visual date pickers are empty
                             hiddenPickup.value = '';
                             hiddenDropoff.value = '';
                         }
@@ -331,13 +430,14 @@
                     
                     const currentParams = new URLSearchParams(window.location.search);
                     currentParams.forEach((value, key) => {
+                        // Preserve existing params unless they are being overwritten by the current form
                         if (!formData.has(key)) {
                              url.searchParams.append(key, value);
                         }
                     });
 
                     formData.forEach((value, key) => {
-                        // Remove datepicker inputs from query, use hidden fields instead
+                        // Remove datepicker inputs from query, rely on hidden fields
                         if (key === 'search_start_date_cars' || key === 'search_end_date_cars') {
                             return;
                         }

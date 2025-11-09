@@ -20,7 +20,7 @@ class CarsListController extends Controller
             $query->where('location_id', $request->location_id);
         }
 
-        // Date/Quantity Availability Filter
+        // Availability Filter (Implicitly handled by passing datetime if available, but not used as an availability filter here)
         if ($request->filled('pickup_datetime') && $request->filled('dropoff_datetime')) {
             try {
                 $reqStart = Carbon::parse($request->pickup_datetime);
@@ -61,6 +61,21 @@ class CarsListController extends Controller
             $query->where('category', $request->category);
         }
 
+        // NEW FILTERS ADDED (from previous steps)
+        if ($request->filled('fuel_type')) {
+            $query->where('fuel_type', $request->fuel_type);
+        }
+        if ($request->filled('transmission')) {
+            $query->where('transmission', $request->transmission);
+        }
+        if ($request->filled('seats')) {
+            $query->where('number_of_seats', $request->seats);
+        }
+        // NEW FILTER: Number of Doors
+        if ($request->filled('doors')) {
+            $query->where('number_of_doors', $request->doors);
+        }
+
         // --- 2. SORTING ---
         match ($request->input('sort', 'newest')) {
             'price_asc'  => $query->orderBy('price_per_day', 'asc'),
@@ -80,7 +95,8 @@ class CarsListController extends Controller
                     'price'     => $car->price_per_day,
                     'location'  => $car->location?->name ?? 'Not specified',
                     'specs'    => [
-                        ['icon' => 'mileage',      'text' => $car->mileage ? __('cars_page.feat_mileage', ['mileage' => $car->mileage]) : 'N/A'],
+                        // Updated to use doors
+                        ['icon' => 'doors',        'text' => $car->number_of_doors ? __('cars_page.feat_doors', ['count' => $car->number_of_doors]) : 'N/A'],
                         ['icon' => 'transmission', 'text' => __('cars_page.feat_transmission_' . $car->transmission)],
                         ['icon' => 'seats',        'text' => __('cars_page.feat_seats', ['count' => $car->number_of_seats])],
                         ['icon' => 'fuel',         'text' => __('cars_page.feat_fuel_' . $car->fuel_type)],
@@ -93,6 +109,12 @@ class CarsListController extends Controller
             return view('cars.partials.car-list', compact('carsPaginator'))->render();
         }
 
+        // Fetching common variables
+        $locations = Location::all();
+        $minPriceInDb = Car::min('price_per_day') ?? 0;
+        $maxPriceInDb = Car::max('price_per_day') ?? 500;
+        
+        // Fetch Filter options for Brand and Category
         $brands = Brand::withCount(['cars' => fn($q) => $q->where('is_available', true)])->get();
         $categories = Car::where('is_available', true)
             ->select('category', DB::raw('count(*) as count'))
@@ -103,11 +125,52 @@ class CarsListController extends Controller
                 'label' => ucfirst(str_replace('_', ' ', $item->category)),
                 'count' => $item->count
             ]);
-        $locations = Location::all();
-        $minPriceInDb = Car::min('price_per_day') ?? 0;
-        $maxPriceInDb = Car::max('price_per_day') ?? 500;
 
-        return view('cars.index', compact('carsPaginator', 'brands', 'categories', 'locations', 'minPriceInDb', 'maxPriceInDb'));
+        // Fetch filter options for specs (fuel, transmission, seats, doors)
+        $fuelTypes = Car::where('is_available', true)
+            ->select('fuel_type', DB::raw('count(*) as count'))
+            ->groupBy('fuel_type')
+            ->get()
+            ->map(fn($item) => [
+                'name'  => $item->fuel_type,
+                'label' => __('cars_page.feat_fuel_' . $item->fuel_type),
+                'count' => $item->count
+            ]);
+
+        $transmissions = Car::where('is_available', true)
+            ->select('transmission', DB::raw('count(*) as count'))
+            ->groupBy('transmission')
+            ->get()
+            ->map(fn($item) => [
+                'name'  => $item->transmission,
+                'label' => __('cars_page.feat_transmission_' . $item->transmission),
+                'count' => $item->count
+            ]);
+            
+        $seats = Car::where('is_available', true)
+            ->select('number_of_seats', DB::raw('count(*) as count'))
+            ->groupBy('number_of_seats')
+            ->orderBy('number_of_seats', 'asc')
+            ->get()
+            ->map(fn($item) => [
+                'name'  => $item->number_of_seats,
+                'label' => $item->number_of_seats . ' ' . __('cars_page.seats'),
+                'count' => $item->count
+            ]);
+            
+        // NEW: Fetch filter options for Number of Doors
+        $doors = Car::where('is_available', true)
+            ->select('number_of_doors', DB::raw('count(*) as count'))
+            ->groupBy('number_of_doors')
+            ->orderBy('number_of_doors', 'asc')
+            ->get()
+            ->map(fn($item) => [
+                'name'  => $item->number_of_doors,
+                'label' => $item->number_of_doors . ' ' . __('cars_page.doors'),
+                'count' => $item->count
+            ]);
+
+        return view('cars.index', compact('carsPaginator', 'brands', 'categories', 'locations', 'minPriceInDb', 'maxPriceInDb', 'fuelTypes', 'transmissions', 'seats', 'doors'));
     }
 
     /**

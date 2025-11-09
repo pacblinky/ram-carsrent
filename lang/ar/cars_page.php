@@ -18,6 +18,10 @@ return [
     'apply_price' => 'تطبيق السعر',
     'brand' => 'العلامة التجارية',
     'categories' => 'الفئات',
+    'fuel_type' => 'نوع الوقود',
+    'transmission' => 'نوع المحرك',
+    'seats' => 'عدد المقاعد',
+    'doors' => 'عدد الأبواب',
     'clear' => 'مسح',
 
     // === Car Detail Page ===
@@ -61,8 +65,10 @@ return [
     'feat_doors' => ':count أبواب',
     'feat_transmission_automatic' => 'أوتوماتيك', // Corrected key
     'feat_transmission_manual' => 'يدوي',
+    'feat_transmission_semiautomatic' => 'شبه أوتوماتيكي',
     'feat_fuel_gasoline' => 'بنزين',
-    'feat_fuel_diesel' => 'ديزل',
+    'feat_fuel_diesel'   => 'ديزل',
+    'feat_fuel_petrol'   => 'بنزين',
     'feat_fuel_electric' => 'كهرباء',
-    'feat_mileage' => ':mileage كم', // Added missing key
+    'feat_fuel_hybrid'   => 'هجين',
 ];

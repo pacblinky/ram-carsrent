@@ -18,7 +18,10 @@ return [
     'apply_price' => 'Apply Price',
     'brand' => 'Brand',
     'categories' => 'Categories',
-    'clear' => 'Clear',
+    'fuel_type' => 'Fuel Type',
+    'transmission' => 'Transmission',
+    'seats' => 'Seats',
+    'doors' => 'Doors',
 
     // === Car Detail Page ===
     'show_on_map' => 'Show on map',
@@ -60,7 +63,10 @@ return [
     'feat_doors' => ':count Doors',
     'feat_transmission_automatic' => 'Automatic',
     'feat_transmission_manual' => 'Manual',
+    'feat_transmission_semiautomatic' => 'Semi-Automatic',
     'feat_fuel_gasoline' => 'Gasoline',
-    'feat_fuel_diesel' => 'Diesel',
+    'feat_fuel_diesel'   => 'Diesel',
+    'feat_fuel_petrol'   => 'Petrol',
     'feat_fuel_electric' => 'Electric',
+    'feat_fuel_hybrid'   => 'Hybrid',
 ];
