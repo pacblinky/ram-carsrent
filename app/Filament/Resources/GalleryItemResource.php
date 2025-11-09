@@ -21,7 +21,7 @@ class GalleryItemResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
     protected static ?string $navigationGroup = 'Media';
-    protected static ?string $navigationLabel = 'Gallery Items';
+    protected static ?string $navigationLabel = 'Images';
 
     public static function form(Form $form): Form
     {
