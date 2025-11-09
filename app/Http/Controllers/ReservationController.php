@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use App\Models\Car;
+use App\Models\User;
 use App\Enums\ReservationStatus;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -70,6 +71,15 @@ class ReservationController extends Controller
             'end_datetime'        => $end,
             'status'              => 'pending',
         ]);
+
+        $admins = User::where('is_admin', true)->get();
+        foreach ($admins as $admin) {
+            sendPushNotification(
+                $admin,
+                'New Reservation Created',
+                "A new reservation has been made for {$car->name} from {$start->format('Y-m-d H:i')} to {$end->format('Y-m-d H:i')}."
+            );
+        }
 
         // Redirect to the new reservations index page with a success message
         return redirect()->route('reservations.index')

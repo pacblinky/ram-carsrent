@@ -11,6 +11,8 @@ use App\Http\Controllers\ContactController; // <-- ADD THIS
 use App\Models\Car;
 use App\Models\Location;
 use App\Models\Brand;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     $locations = Location::all();
@@ -53,6 +55,23 @@ Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->mid
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 // ------------------------------------
+
+Route::post('/save-fcm-token', function (Request $request) {
+    // Validate the incoming token from the frontend
+    $request->validate(['token' => 'required|string']);
+    
+    // Get the currently authenticated user
+    $user = Auth::user();
+
+    // If user is logged in, update their record with the FCM token
+    if ($user) {
+        $user->update(['fcm_token' => $request->token]);
+    }
+
+    // Respond with success
+    return response()->json(['success' => true]);
+})->middleware('auth');
+
 
 Route::fallback(function () {
     return redirect()->route('home');

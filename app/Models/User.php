@@ -28,6 +28,7 @@ class User extends Authenticatable implements FilamentUser
         "government_id",
         'is_admin',
         'profile_photo_path',
+        'fcm_token'
     ];
 
     /**
