@@ -23,7 +23,7 @@ export async function requestNotificationPermission() {
 
     if (permission === "granted") {
       const token = await getToken(messaging, {
-        vapidKey: "YOUR_VAPID_KEY", // from Firebase Cloud Messaging > Web Push certificates
+        vapidKey: "BHrnD1XXXvFAX3REC0PAkKfaMrrs-pMOiNva_4YckeG9AQfr8ud42HGnSFCv9Mmh0W0Og4Oz7LtNwfQH-NeSdl0", // from Firebase Cloud Messaging > Web Push certificates
       });
 
       console.log("🔑 FCM Token:", token);
