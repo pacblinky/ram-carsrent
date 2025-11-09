@@ -247,7 +247,10 @@
             <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('home.video_subtitle') ?? 'Explore our vehicles inside and out.' }}</p>
         </div>
 
-        <div id="video-carousel" class="relative w-full opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll" data-carousel="slide">
+        {{-- ========================================================================= --}}
+        {{-- MODIFICATION HERE: Changed data-carousel="slide" to data-carousel="static" --}}
+        {{-- ========================================================================= --}}
+        <div id="video-carousel" class="relative w-full opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll" data-carousel="static">
             <div class="relative h-64 overflow-hidden rounded-2xl shadow-lg md:h-96 lg:h-[500px]">
                 @foreach($videos as $index => $video)
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
@@ -260,7 +263,17 @@
                             {{-- Add other video types if you support them, e.g., video/webm --}}
                             {{ __('home.video_unsupported') ?? 'Your browser does not support the video tag.' }}
                         </video>
+                        @if($video->title)
+                            <div class="absolute bottom-4 start-4 z-10 p-3 bg-black/50 rounded-lg">
+                                <h3 class="text-white text-lg font-semibold">{{ $video->title }}</h3>
+                            </div>
+                        @endif
                     </div>
+                @endforeach
+            </div>
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                @foreach($videos as $index => $video)
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="{{ $index == 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}" data-carousel-slide-to="{{ $index }}"></button>
                 @endforeach
             </div>
             <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
