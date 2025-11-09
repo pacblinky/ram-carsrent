@@ -41,4 +41,6 @@ return [
     'cta_manage_title' => 'Manage your reservations now',
     'cta_manage_desc' => 'If you haven not already, sign in to access and manage all your reservations easily in one place.',
     'get_started_now' => 'Get Started Now',
+    'video_title' => 'Watch the Drive Come Alive',
+    'video_subtitle' => 'Experience our cars in action — power, style, and motion in every frame.',
 ];

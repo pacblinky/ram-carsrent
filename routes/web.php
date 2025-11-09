@@ -11,6 +11,7 @@ use App\Http\Controllers\ContactController; // <-- ADD THIS
 use App\Models\Car;
 use App\Models\Location;
 use App\Models\Brand;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,11 @@ Route::get('/', function () {
     // Fetch all brands from the database
     $brands = Brand::all();
 
-    return view('home', compact('locations', 'recentCars', 'brands'));
+    $videos = Video::where('is_active', true) // Or 'is_active' based on your VideoResource
+        ->orderBy('order', 'asc')
+        ->get();
+
+    return view('home', compact('locations', 'recentCars', 'brands', 'videos'));
 })->name('home');
 
 Route::get('/locale/{locale}', function ($locale) {

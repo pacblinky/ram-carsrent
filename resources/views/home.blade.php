@@ -237,71 +237,122 @@
     </section>
 
     {{-- ======================================================= --}}
+    {{-- NEW VIDEO SLIDESHOW SECTION --}}
+    {{-- ======================================================= --}}
+    @if(isset($videos) && $videos->isNotEmpty())
+    <section class="max-w-screen-xl mx-auto py-16 px-4">
+        <div class="text-center mb-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
+            {{-- NOTE: You will need to add these translation keys to your lang files --}}
+            <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('home.video_title') ?? 'Watch Our Fleet in Action' }}</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('home.video_subtitle') ?? 'Explore our vehicles inside and out.' }}</p>
+        </div>
+
+        <div id="video-carousel" class="relative w-full opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll" data-carousel="slide">
+            <div class="relative h-64 overflow-hidden rounded-2xl shadow-lg md:h-96 lg:h-[500px]">
+                @foreach($videos as $index => $video)
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <video class="absolute block w-full h-full object-cover top-0 left-0" 
+                               poster="{{ $video->thumbnail ? asset('storage/' . $video->thumbnail) : '' }}" 
+                               controls 
+                               preload="metadata"
+                               playsinline>
+                            <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
+                            {{-- Add other video types if you support them, e.g., video/webm --}}
+                            {{ __('home.video_unsupported') ?? 'Your browser does not support the video tag.' }}
+                        </video>
+                    </div>
+                @endforeach
+            </div>
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                    </svg>
+                    <span class="sr-only">Previous</span>
+                </span>
+            </button>
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                    <svg class="w-4 h-4 text-white dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    </svg>
+                    <span class="sr-only">Next</span>
+                </span>
+            </button>
+        </div>
+    </section>
+    @endif
+    {{-- ======================================================= --}}
+    {{-- END OF NEW VIDEO SLIDESHOW SECTION --}}
+    {{-- ======================================================= --}}
+
+
+    {{-- ======================================================= --}}
     {{-- MODIFIED BOTTOM CTA SECTIONS --}}
     {{-- ======================================================= --}}
-<section class="max-w-screen-xl mx-auto py-16 px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        {{-- First CTA: Start Renting (Grid Layout) --}}
-        <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 -translate-x-8 rtl:translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+    <section class="max-w-screen-xl mx-auto py-16 px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
-            {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
-            <div class="z-10 order-1 md:col-start-1 md:row-start-1">
-                <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_rent_title') }}</h2>
-                <p class="text-base text-gray-800 dark:text-gray-200">
-                    {{ __('home.cta_rent_desc') }}
-                </p>
-            </div>
-            
-            {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
-            <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
-                <svg class="w-32 h-32 text-blue-600/70 dark:text-blue-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
+            {{-- First CTA: Start Renting (Grid Layout) --}}
+            <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 -translate-x-8 rtl:translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+                
+                {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
+                <div class="z-10 order-1 md:col-start-1 md:row-start-1">
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_rent_title') }}</h2>
+                    <p class="text-base text-gray-800 dark:text-gray-200">
+                        {{ __('home.cta_rent_desc') }}
+                    </p>
+                </div>
+                
+                {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
+                <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
+                    <svg class="w-32 h-32 text-blue-600/70 dark:text-blue-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+
+                {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
+                <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
+                    <a href="{{ route('cars.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
+                        {{ __('home.get_started_now') }}
+                        <svg class="w-5 h-5 ms-2 rtl:me-2 rtl:ms-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
             </div>
 
-            {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
-            <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
-                <a href="{{ route('cars.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
-                    {{ __('home.get_started_now') }}
-                    <svg class="w-5 h-5 ms-2 rtl:me-2 rtl:ms-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            {{-- Second CTA: Manage Reservations (Grid Layout) --}}
+            <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 translate-x-8 rtl:-translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+                
+                {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
+                <div class="z-10 order-1 md:col-start-1 md:row-start-1">
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_manage_title') }}</h2>
+                    <p class="text-base text-gray-800 dark:text-gray-200">
+                        {{ __('home.cta_manage_desc') }}
+                    </p>
+                </div>
+                
+                {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
+                <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
+                    <svg class="w-32 h-32 text-yellow-800/70 dark:text-yellow-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5m15 7.5v-7.5" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 7.5h.008v.008H15V7.5zm.008 4.5H15v.008h.008V12zm.008 4.5H15v.008h.008v-.008zM12 7.5h.008v.008H12V7.5zm.008 4.5H12v.008h.008V12zm.008 4.5H12v.008h.008v-.008zM9 7.5h.008v.008H9V7.5zm.008 4.5H9v.008h.008V12zM9.75 16.5a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
-                </a>
+                </div>
+
+                {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
+                <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
+                    <a href="{{ route('reservations.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
+                        {{ __('home.get_started_now') }}
+                        <svg class="w-5 h-5 ms-2 rtl:me-2 rtl:ms-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
-
-        {{-- Second CTA: Manage Reservations (Grid Layout) --}}
-        <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 translate-x-8 rtl:-translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
-            
-            {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
-            <div class="z-10 order-1 md:col-start-1 md:row-start-1">
-                <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_manage_title') }}</h2>
-                <p class="text-base text-gray-800 dark:text-gray-200">
-                    {{ __('home.cta_manage_desc') }}
-                </p>
-            </div>
-            
-            {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
-            <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
-                <svg class="w-32 h-32 text-yellow-800/70 dark:text-yellow-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5m15 7.5v-7.5" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 7.5h.008v.008H15V7.5zm.008 4.5H15v.008h.008V12zm.008 4.5H15v.008h.008v-.008zM12 7.5h.008v.008H12V7.5zm.008 4.5H12v.008h.008V12zm.008 4.5H12v.008h.008v-.008zM9 7.5h.008v.008H9V7.5zm.008 4.5H9v.008h.008V12zM9.75 16.5a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                </svg>
-            </div>
-
-            {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
-            <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
-                <a href="{{ route('reservations.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
-                    {{ __('home.get_started_now') }}
-                    <svg class="w-5 h-5 ms-2 rtl:me-2 rtl:ms-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
     {{-- ======================================================= --}}
     {{-- MODIFIED SCRIPT: Merged Animation + Date-Only Logic --}}
@@ -349,46 +400,46 @@
 
             // *** FIX: Initialize datepickers ONCE and store instances ***
             // This assumes Flowbite's Datepicker object is available globally
-            const startDatePicker = new Datepicker(startDateEl);
-            const endDatePicker = new Datepicker(endDateEl);
+            if (startDateEl && endDateEl) { // Check if elements exist
+                const startDatePicker = new Datepicker(startDateEl);
+                const endDatePicker = new Datepicker(endDateEl);
 
-            // Helper: Convert "Y-m-d" string into a Date object
-            const toDate = (str) => {
-                if (!str) return null;
-                // Datepicker value is "yyyy-mm-dd"
-                const [y, m, d] = str.split("-").map(Number);
-                if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
-                // Note: Month is 0-indexed in JS (0 = Jan, 11 = Dec)
-                return new Date(y, m - 1, d);
-            };
+                // Helper: Convert "Y-m-d" string into a Date object
+                const toDate = (str) => {
+                    if (!str) return null;
+                    // Datepicker value is "yyyy-mm-dd"
+                    const [y, m, d] = str.split("-").map(Number);
+                    if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
+                    // Note: Month is 0-indexed in JS (0 = Jan, 11 = Dec)
+                    return new Date(y, m - 1, d);
+                };
 
-            // *** FIX: Revised logic for syncing pickers ***
-            const syncPickers = () => {
-                const startDate = toDate(startDateEl.value);
-                const endDate = toDate(endDateEl.value);
+                // *** FIX: Revised logic for syncing pickers ***
+                const syncPickers = () => {
+                    const startDate = toDate(startDateEl.value);
+                    const endDate = toDate(endDateEl.value);
 
-                if (startDate) {
-                    // 1. Update the minDate of the end datepicker
-                    // This is the correct way to update an existing instance
-                    endDatePicker.setOptions({
-                        minDate: startDateEl.value
-                    });
+                    if (startDate) {
+                        // 1. Update the minDate of the end datepicker
+                        // This is the correct way to update an existing instance
+                        endDatePicker.setOptions({
+                            minDate: startDateEl.value
+                        });
 
-                    // 2. If end date is now invalid (before start), set it to the start date
-                    if (endDate && endDate < startDate) {
-                        // Use the datepicker's own method to set the date
-                        // This updates the UI and internal value without loops
-                        endDatePicker.setDate(startDateEl.value);
+                        // 2. If end date is now invalid (before start), set it to the start date
+                        if (endDate && endDate < startDate) {
+                            // Use the datepicker's own method to set the date
+                            // This updates the UI and internal value without loops
+                            endDatePicker.setDate(startDateEl.value);
+                        }
                     }
-                }
-            };
+                };
+                
+                // Add listeners to date inputs
+                // We use 'changeDate' as this is the custom event Flowbite Datepicker fires
+                startDateEl.addEventListener("changeDate", syncPickers);
+            }
             
-            // Add listeners to date inputs
-            // We use 'changeDate' as this is the custom event Flowbite Datepicker fires
-            startDateEl.addEventListener("changeDate", syncPickers);
-            
-            // No listener needed for endDate, as it's controlled by startDate
-
             // Add listener to the form submission
             if (searchForm) {
                 searchForm.addEventListener("submit", (e) => {
@@ -403,6 +454,31 @@
                         // Allow submission if fields are empty (for non-filtered search)
                         console.log("Date fields are empty, submitting without date filter.");
                     }
+                });
+            }
+
+            // --- 3. SCRIPT FOR VIDEO CAROUSEL ---
+            // Stop videos when sliding to the next item
+            const videoCarousel = document.getElementById('video-carousel');
+            if (videoCarousel) {
+                
+                const handleSlideChange = () => {
+                     videoCarousel.querySelectorAll('video').forEach(video => {
+                        if (!video.paused) {
+                            video.pause();
+                        }
+                    });
+                }
+                
+                // Find all carousel control buttons (prev, next, and indicators)
+                const prevButton = videoCarousel.querySelector('[data-carousel-prev]');
+                const nextButton = videoCarousel.querySelector('[data-carousel-next]');
+                const indicators = videoCarousel.querySelectorAll('[data-carousel-slide-to]');
+
+                if(prevButton) prevButton.addEventListener('click', handleSlideChange);
+                if(nextButton) nextButton.addEventListener('click', handleSlideChange);
+                indicators.forEach(indicator => {
+                    indicator.addEventListener('click', handleSlideChange);
                 });
             }
         });
