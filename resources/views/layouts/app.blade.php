@@ -41,11 +41,16 @@
         @include('layouts.footer')
 
     <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/js/firebase-sw.js')
-            .then(reg => console.log('✅ Service Worker registered:', reg))
-            .catch(err => console.error('❌ Service Worker failed:', err));
-        }
+        window.userIsLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
     </script>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+            .then(reg => console.log("✅ Firebase SW registered"))
+            .catch(err => console.error("❌ SW Failed:", err));
+    }
+    </script>
+    
     </body>
 </html>
