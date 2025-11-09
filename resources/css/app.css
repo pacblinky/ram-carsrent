@@ -27,6 +27,11 @@
   .animate-scroll:hover {
     animation-play-state: paused;
   }
+
+  /* --- ADDED: Improved splash screen animation --- */
+  .animate-zoom-in-out {
+    animation: zoom-in-out 2s ease-in-out infinite;
+  }
 }
 
 /* * Define the keyframes for Left-to-Right (LTR) scrolling 
@@ -53,6 +58,18 @@
   100% {
     /* For RTL, we move in the opposite direction */
     transform: translateX(50%);
+  }
+}
+
+/* --- ADDED: Keyframes for the improved splash screen --- */
+@keyframes zoom-in-out {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
   }
 }
 
