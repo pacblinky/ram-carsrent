@@ -79,10 +79,10 @@
                             <x-input-error class="mt-2" :messages="$errors->get('message')" />
                         </div>
 
-                        {{-- Submit Button --}}
-                        <div class="text-end">
+                        {{-- Submit Button (MODIFIED: text-end changed to text-center) --}}
+                        <div class="text-center px-0">
                             <button type="submit"
-                                    class="inline-flex items-center px-6 py-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-200 ease-in-out hover:scale-105">
+                                    class="w-full items-center px-6 py-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-200 ease-in-out hover:scale-105">
                                 {{ __('contact.form_send') }}
                             </button>
                         </div>
