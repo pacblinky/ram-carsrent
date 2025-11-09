@@ -170,7 +170,7 @@
                             <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('home.per_day') }}</span>
                         </div>
                         <a href="{{ route('cars.show', $car->id) }}" 
-                             class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-all duration-200 ease-in-out hover:scale-105">
+                           class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-all duration-200 ease-in-out hover:scale-105">
                             {{ __('home.book_now') }}
                         </a>
                     </div>
@@ -212,23 +212,23 @@
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step1_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
-                       <div class="p-4 bg-green-50 dark:bg-green-900/30 rounded-full mb-4">
-                           <svg class="w-8 h-8 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                       </div>
+                        <div class="p-4 bg-green-50 dark:bg-green-900/30 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step2_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step2_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-300 ease-out animate-on-scroll">
-                       <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-full mb-4">
-                           <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
-                       </div>
+                        <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
+                        </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step3_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step3_desc') }}</p>
                 </div>
                 <div class="flex flex-col items-center opacity-0 translate-y-8 transition-all duration-1000 delay-500 ease-out animate-on-scroll">
-                       <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full mb-4">
-                           <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12.75A3.375 3.375 0 0112.375 9H17.25a3.375 3.375 0 013.375 3.375v5.25a3.375 3.375 0 01-3.375 3.375H12.375A3.375 3.375 0 019 18v-5.25z" /></svg>
-                       </div>
+                        <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12.75A3.375 3.375 0 0112.375 9H17.25a3.375 3.375 0 013.375 3.375v5.25a3.375 3.375 0 01-3.375 3.375H12.375A3.375 3.375 0 019 18v-5.25z" /></svg>
+                        </div>
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('home.step4_title') }}</h3>
                     <p class="text-base text-gray-600 dark:text-gray-400">{{ __('home.step4_desc') }}</p>
                 </div>
@@ -236,16 +236,32 @@
         </div>
     </section>
 
-    {{-- BOTTOM CTA SECTIONS (MODIFIED) --}}
+    {{-- ======================================================= --}}
+    {{-- MODIFIED BOTTOM CTA SECTIONS --}}
+    {{-- ======================================================= --}}
 <section class="max-w-screen-xl mx-auto py-16 px-4">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {{-- First CTA: Start Renting (Now with Search Icon) --}}
-        <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 -translate-x-8 rtl:translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
-            <div class="md:w-1/2 z-10 mb-8 md:mb-0">
+        
+        {{-- First CTA: Start Renting (Grid Layout) --}}
+        <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 -translate-x-8 rtl:translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+            
+            {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
+            <div class="z-10 order-1 md:col-start-1 md:row-start-1">
                 <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_rent_title') }}</h2>
-                <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
+                <p class="text-base text-gray-800 dark:text-gray-200">
                     {{ __('home.cta_rent_desc') }}
                 </p>
+            </div>
+            
+            {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
+            <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
+                <svg class="w-32 h-32 text-blue-600/70 dark:text-blue-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </div>
+
+            {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
+            <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
                 <a href="{{ route('cars.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
                     {{ __('home.get_started_now') }}
                     <svg class="w-5 h-5 ms-2 rtl:me-2 rtl:ms-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -253,34 +269,35 @@
                     </svg>
                 </a>
             </div>
-            {{-- REPLACED IMAGE with Large Search Icon --}}
-            <div class="md:w-1/2 flex justify-center items-center">
-                <svg class="w-32 h-32 text-blue-600/70 dark:text-blue-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-            </div>
         </div>
 
-        {{-- Second CTA: Manage Reservations (Now with clearer Calendar/Clock Icon) --}}
-        <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between overflow-hidden opacity-0 translate-x-8 rtl:-translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
-            <div class="md:w-1/2 z-10 mb-8 md:mb-0">
+        {{-- Second CTA: Manage Reservations (Grid Layout) --}}
+        <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 translate-x-8 rtl:-translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+            
+            {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
+            <div class="z-10 order-1 md:col-start-1 md:row-start-1">
                 <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_manage_title') }}</h2>
-                <p class="text-base text-gray-800 dark:text-gray-200 mb-6">
+                <p class="text-base text-gray-800 dark:text-gray-200">
                     {{ __('home.cta_manage_desc') }}
                 </p>
+            </div>
+            
+            {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
+            <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
+                <svg class="w-32 h-32 text-yellow-800/70 dark:text-yellow-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5m15 7.5v-7.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 7.5h.008v.008H15V7.5zm.008 4.5H15v.008h.008V12zm.008 4.5H15v.008h.008v-.008zM12 7.5h.008v.008H12V7.5zm.008 4.5H12v.008h.008V12zm.008 4.5H12v.008h.008v-.008zM9 7.5h.008v.008H9V7.5zm.008 4.5H9v.008h.008V12zM9.75 16.5a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                </svg>
+            </div>
+
+            {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
+            <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
                 <a href="{{ route('reservations.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
                     {{ __('home.get_started_now') }}
                     <svg class="w-5 h-5 ms-2 rtl:me-2 rtl:ms-0 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                     </svg>
                 </a>
-            </div>
-            {{-- UPDATED SVG ICON: Calendar/Clock for Reservations --}}
-            <div class="md:w-1/2 flex justify-center items-center">
-                <svg class="w-32 h-32 text-yellow-800/70 dark:text-yellow-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5m15 7.5v-7.5" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 7.5h.008v.008H15V7.5zm.008 4.5H15v.008h.008V12zm.008 4.5H15v.008h.008v-.008zM12 7.5h.008v.008H12V7.5zm.008 4.5H12v.008h.008V12zm.008 4.5H12v.008h.008v-.008zM9 7.5h.008v.008H9V7.5zm.008 4.5H9v.008h.008V12zM9.75 16.5a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                </svg>
             </div>
         </div>
     </div>
