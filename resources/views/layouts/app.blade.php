@@ -38,7 +38,6 @@
             {{ $slot }}
         </main>
         
-        @include('layouts.footer')
 
     <script>
         window.userIsLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
