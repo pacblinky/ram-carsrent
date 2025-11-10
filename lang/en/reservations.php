@@ -35,4 +35,9 @@ return [
     'no_reservations_yet' => 'No reservations yet',
     'no_reservations_desc' => 'You haven\'t made any bookings. Start by finding your perfect car.',
     'book_new_car' => 'Book a New Car',
+
+    'cancel_success' => 'Reservation canceled successfully.',
+    'cancel_unauthorized' => 'You are not authorized to cancel this reservation.',
+    'cancel_already_started' => 'Cannot cancel a reservation that has already started.',
+    'cancel_wrong_status' => 'This reservation cannot be canceled.',
 ];

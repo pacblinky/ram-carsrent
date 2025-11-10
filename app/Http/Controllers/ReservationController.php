@@ -90,22 +90,20 @@ class ReservationController extends Controller
     // Cancel a reservation
     public function cancel(Request $request, Reservation $reservation)
     {
-        // Ensure the user owns this reservation
         if ($request->user()->id !== $reservation->user_id) {
-            abort(403);
+            abort(403, __('reservations.cancel_unauthorized'));
         }
 
-        // Only allow cancellation if it hasn't started yet and isn't already completed/cancelled
         if ($reservation->start_datetime->isPast()) {
-            return back()->with('error', 'Cannot cancel a reservation that has already started.');
+            return back()->with('error', __('reservations.cancel_already_started'));
         }
         
         if (in_array($reservation->status->value, ['completed', 'canceled'])) {
-             return back()->with('error', 'This reservation cannot be canceled.');
+            return back()->with('error', __('reservations.cancel_wrong_status'));
         }
 
         $reservation->update(['status' => 'canceled']);
 
-        return back()->with('success', 'Reservation canceled successfully.');
+        return back()->with('success', __('reservations.cancel_success'));
     }
 }

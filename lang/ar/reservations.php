@@ -35,4 +35,9 @@ return [
     'no_reservations_yet' => 'لا توجد حجوزات بعد',
     'no_reservations_desc' => 'لم تقم بأي حجوزات. ابدأ بالبحث عن سيارتك المثالية.',
     'book_new_car' => 'احجز سيارة جديدة',
+
+    'cancel_success' => 'تم إلغاء الحجز بنجاح.',
+    'cancel_unauthorized' => 'ليس لديك الصلاحية لإلغاء هذا الحجز.',
+    'cancel_already_started' => 'لا يمكن إلغاء حجز قد بدأ بالفعل.',
+    'cancel_wrong_status' => 'هذا الحجز لا يمكن إلغاؤه.',
 ];
