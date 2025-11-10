@@ -138,9 +138,10 @@
                     <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('reservations.no_reservations_yet') }}</h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('reservations.no_reservations_desc') }}</p>
                     <div class="mt-6">
-                        <x-primary-button as="a" href="{{ route('cars.index') }}">
+                        <a href="{{ route('cars.index') }}" 
+                            class="inline-flex items-center justify-center px-4 py-2 bg-blue-700 dark:bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                             {{ __('reservations.book_new_car') }}
-                        </x-primary-button>
+                        </a>
                     </div>
                 </div>
             @endforelse
