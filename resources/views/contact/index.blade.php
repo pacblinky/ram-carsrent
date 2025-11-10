@@ -129,33 +129,6 @@
                                     </div>
                                 @endforeach
                             </div>
-
-                            {{-- Google Maps Embed --}}
-                            @php
-                                // Use the first location's map link for the embed
-                                $mapUrl = $locations->first()->google_maps_link;
-                            @endphp
-
-                            @if($mapUrl && Str::contains($mapUrl, '/embed'))
-                                <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                                    <iframe
-                                        src="{{ $mapUrl }}"
-                                        width="100%"
-                                        height="300"
-                                        style="border:0;"
-                                        allowfullscreen=""
-                                        loading="lazy"
-                                        referrerpolicy="no-referrer-when-downgrade">
-                                    </iframe>
-                                </div>
-                            @elseif($mapUrl)
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
-                                    {{ __('contact.locations_visit_branch') }}
-                                    <a href="{{ $mapUrl }}" target="_blank" class="text-blue-600 hover:underline dark:text-blue-500">
-                                        {{ $locations->first()->name }}
-                                    </a>
-                                </p>
-                            @endif
                         @else
                             <p class="text-gray-500 dark:text-gray-400">{{ __('contact.locations_none') }}</p>
                         @endif
