@@ -7,7 +7,7 @@ return [
     'password' => 'Password',
     'remember_me' => 'Remember me',
     'forgot_password' => 'Forgot your password?',
-    'login' => 'Sign In',
+    'login' => 'Login',
     'dont_have_account' => "Don't have an account?",
     'signup' => 'Sign Up',
 
