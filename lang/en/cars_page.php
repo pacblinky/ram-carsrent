@@ -2,7 +2,7 @@
 
 return [
     // === Cars Index Page ===
-    'hero_badge' => 'Find cars for sale and for rent near you',
+    'hero_badge' => 'Find cars for rent near you',
     'hero_title' => 'Find Your Perfect Car',
     'hero_subtitle' => 'Search and find your best car rental with easy way',
     'pickup_location' => 'Pick up Location',
