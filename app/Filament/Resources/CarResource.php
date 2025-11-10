@@ -132,23 +132,35 @@ class CarResource extends Resource
                         ->required(),
                 ]),
 
-            Section::make('Media & Description')
-                ->icon('heroicon-o-photo')
-                ->schema([
-                    FileUpload::make('images')
-                        ->label('Car Images')
-                        ->directory('cars')
-                        ->multiple()
-                        ->reorderable()
-                        ->image()
-                        ->maxFiles(5)
-                        ->helperText('Upload up to 5 images of the car'),
-                    
-                    Textarea::make('description')
-                        ->rows(4)
-                        ->maxLength(1000)
-                        ->placeholder('Brief description, features, or notes about the car...'),
-                ]),
+            Section::make('Media')
+            ->icon('heroicon-o-photo')
+            ->schema([
+                FileUpload::make('images')
+                    ->label('Car Images')
+                    ->directory('cars')
+                    ->multiple()
+                    ->reorderable()
+                    ->image()
+                    ->maxFiles(5)
+                    ->helperText('Upload up to 5 images of the car'),
+            ]),
+
+        Section::make('Description (Multilingual)')
+            ->icon('heroicon-o-chat-bubble-bottom-center-text')
+            ->schema([
+                Textarea::make('description.en')
+                    ->label('Description (English)')
+                    ->rows(4)
+                    ->maxLength(1000)
+                    ->placeholder('English description, features, or notes...'),
+                
+                Textarea::make('description.ar')
+                    ->label('Description (Arabic)')
+                    ->rows(4)
+                    ->maxLength(1000)
+                    ->placeholder('Arabic description, features, or notes...'),
+            ])
+            ->columns(2),
         ]);
     }
 

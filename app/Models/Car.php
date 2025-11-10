@@ -24,7 +24,8 @@ class Car extends Model
 
     protected $casts = [
         'is_available' => 'boolean',
-        'images' => 'array'
+        'images' => 'array',
+        'description' => 'array'
     ];
 
     public function brand()

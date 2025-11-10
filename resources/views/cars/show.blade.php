@@ -71,16 +71,21 @@
                     @endforeach
                 </div>
 
-                @if($car->description)
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
-                    {{ __('cars_page.vehicle_description') }}
-                </h2>
-                <div class="w-full pt-0 px-6 pb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                        {{ trim($car->description) }}
-                    </p>
-                </div>
-                @endif
+                @php
+                $locale = App::getLocale(); 
+                $displayDescription = $car->description[$locale] ?? $car->description['en'] ?? null;
+            @endphp
+
+            @if($displayDescription)
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
+                {{ __('cars_page.vehicle_description') }}
+            </h2>
+            <div class="w-full pt-0 px-6 pb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                    {{ trim($displayDescription) }}
+                </p>
+            </div>
+            @endif
     
             </div>
     
