@@ -99,34 +99,6 @@
                                 </div>
                             @endforeach
                         </div>
-
-                        {{-- Google Maps Embed (using first location) --}}
-                        <div>
-                            @php
-                                $mapUrl = $locations->first()->google_maps_link;
-                            @endphp
-
-                            @if($mapUrl && Str::contains($mapUrl, '/embed'))
-                                <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 h-full min-h-[300px]">
-                                    <iframe
-                                        src="{{ $mapUrl }}"
-                                        width="100%"
-                                        height="100%"
-                                        style="border:0;"
-                                        allowfullscreen=""
-                                        loading="lazy"
-                                        referrerpolicy="no-referrer-when-downgrade">
-                                    </iframe>
-                                </div>
-                            @elseif($mapUrl)
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
-                                    {{ __('about.locations_visit_branch') }}
-                                    <a href="{{ $mapUrl }}" target="_blank" class="text-blue-600 hover:underline dark:text-blue-500">
-                                        {{ $locations->first()->name }}
-                                    </a>
-                                </p>
-                            @endif
-                        </div>
                     </div>
                 @else
                     <p class="text-center text-gray-500 dark:text-gray-400">{{ __('about.locations_none') }}</p>

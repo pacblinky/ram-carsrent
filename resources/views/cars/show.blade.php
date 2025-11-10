@@ -10,8 +10,7 @@
                     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">{{ $car->name }}</h1>
                     <div class="flex items-center text-gray-600 dark:text-gray-400">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-                        <span>{{ $car->location->name }}</span>
-                        <a href="{{ $car->location->google_maps_link }}" target="_blank" class="ml-2 text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('cars_page.show_on_map') }}</a>
+                        <a href="{{ $car->location->google_maps_link }}" target="_blank" class="ml-2 text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ $car->location->name }}</a>
                     </div>
                 </div>
     
