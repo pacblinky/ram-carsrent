@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\CarsListController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ContactController; // <-- ADD THIS
+use App\Http\Controllers\AboutController;
 use App\Models\Car;
 use App\Models\Location;
 use App\Models\Brand;
@@ -60,6 +61,8 @@ Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->mid
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 // ------------------------------------
+
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
 Route::post('/save-fcm-token', function (Request $request) {
     // Validate the incoming token from the frontend
