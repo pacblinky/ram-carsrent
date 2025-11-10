@@ -1,5 +1,5 @@
 <x-app-layout>
-    {{-- HERO SEARCH SECTION (No changes here) --}}
+    {{-- HERO SEARCH SECTION --}}
     <section class="relative bg-gray-900 flex flex-col items-center justify-center gap-8 py-24">
         <div class="absolute inset-0">
             <img src="{{ asset('images/driving.gif') }}" alt="Background" class="w-full h-full object-cover opacity-50">
@@ -85,20 +85,22 @@
     </section>
 
     {{-- ======================================================= --}}
-    {{-- MODIFIED PREMIUM BRANDS SECTION --}}
+    {{-- PREMIUM BRANDS SECTION --}}
     {{-- ======================================================= --}}
-    <section class="max-w-screen-xl mx-auto py-16 px-4 overflow-hidden">
-        <div class="flex justify-between items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
-            <div>
+    {{-- FIXED: Removed overflow-hidden from here --}}
+    <section class="max-w-screen-xl mx-auto py-16 px-4">
+        
+        <div class="flex flex-col items-center md:flex-row md:justify-between md:items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
+            <div class="text-center md:text-start">
                 <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('home.brands_title') }}</h2>
                 <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('home.brands_subtitle') }}</p>
             </div>
         </div>
 
-        <div class="relative w-full py-4 opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll">
+        {{-- FIXED: Added overflow-hidden here --}}
+        <div class="relative w-full py-4 opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll overflow-hidden">
             <div class="flex space-x-8 rtl:space-x-reverse animate-scroll whitespace-nowrap" style="width: fit-content;">
                 
-                {{-- *** FIX: Changed href to use 'brand_id' => $brand->id *** --}}
                 @foreach($brands as $brand)
                     <a href="{{ route('cars.index', ['brand_id' => $brand->id]) }}" class="flex-none">
                         <div class="w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
@@ -107,7 +109,6 @@
                     </a>
                 @endforeach
                 
-                {{-- *** FIX: Also updated the duplicated items for the infinite scroll *** --}}
                 @foreach($brands as $brand)
                     <a href="{{ route('cars.index', ['brand_id' => $brand->id]) }}" class="flex-none">
                         <div class="w-[200px] h-32 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm flex items-center justify-center p-4 hover:shadow-md transition-shadow">
@@ -119,14 +120,14 @@
         </div>
     </section>
     {{-- ======================================================= --}}
-    {{-- END OF MODIFIED PREMIUM BRANDS SECTION --}}
+    {{-- END OF PREMIUM BRANDS SECTION --}}
     {{-- ======================================================= --}}
 
 
-    {{-- RECENT VEHICLES SECTION (No changes here) --}}
+    {{-- RECENT VEHICLES SECTION (This section was already correct) --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4">
-        <div class="flex justify-between items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
-            <div>
+        <div class="flex flex-col items-center md:flex-row md:justify-between md:items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
+            <div class="text-center md:text-start">
                 <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('home.recent_title') }}</h2>
                 <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('home.recent_subtitle') }}</p>
             </div>
@@ -155,7 +156,7 @@
                     </a>
                 </div>
 
-                <div class="p-5 flex-grow flex flex-col justify-between">
+                <div class="p-5 flex-grow flex flex-col justify-between text-start">
                     <div>
                         <a href="{{ route('cars.show', $car->id) }}">
                             <h5 class="mb-4 text-xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-1 hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ $car->name }}</h5>
@@ -205,7 +206,7 @@
         </div>
     </section>
 
-    {{-- HOW IT WORKS SECTION (No changes here) --}}
+    {{-- HOW IT WORKS SECTION --}}
     <section class="py-16 px-4">
         <div class="max-w-screen-xl mx-auto text-center">
             <div class="opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
@@ -256,14 +257,10 @@
     @if(isset($videos) && $videos->isNotEmpty())
     <section class="max-w-screen-xl mx-auto py-16 px-4">
         <div class="text-center mb-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
-            {{-- NOTE: You will need to add these translation keys to your lang files --}}
             <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('home.video_title') ?? 'Watch Our Fleet in Action' }}</h2>
             <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('home.video_subtitle') ?? 'Explore our vehicles inside and out.' }}</p>
         </div>
 
-        {{-- ========================================================================= --}}
-        {{-- MODIFICATION HERE: Changed data-carousel="slide" to data-carousel="static" --}}
-        {{-- ========================================================================= --}}
         <div id="video-carousel" class="relative w-full opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll" data-carousel="static">
             <div class="relative h-64 overflow-hidden rounded-2xl shadow-lg md:h-96 lg:h-[500px]">
                 @foreach($videos as $index => $video)
@@ -275,7 +272,6 @@
                                muted
                                playsinline>
                             <source src="{{ asset('storage/' . $video->video_path) }}" type="video/mp4">
-                            {{-- Add other video types if you support them, e.g., video/webm --}}
                             {{ __('home.video_unsupported') ?? 'Your browser does not support the video tag.' }}
                         </video>
                     </div>
@@ -306,30 +302,27 @@
 
 
     {{-- ======================================================= --}}
-    {{-- MODIFIED BOTTOM CTA SECTIONS --}}
+    {{-- BOTTOM CTA SECTIONS --}}
     {{-- ======================================================= --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
-            {{-- First CTA: Start Renting (Grid Layout) --}}
-            <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 -translate-x-8 rtl:translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+            {{-- First CTA: Start Renting --}}
+            <div class="relative bg-blue-300 dark:bg-blue-800 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 -translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
                 
-                {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
-                <div class="z-10 order-1 md:col-start-1 md:row-start-1">
+                <div class="z-10 order-1 md:col-start-1 md:row-start-1 text-center md:text-start">
                     <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_rent_title') }}</h2>
                     <p class="text-base text-gray-800 dark:text-gray-200">
                         {{ __('home.cta_rent_desc') }}
                     </p>
                 </div>
                 
-                {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
                 <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
                     <svg class="w-32 h-32 text-blue-600/70 dark:text-blue-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </div>
 
-                {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
                 <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
                     <a href="{{ route('cars.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
                         {{ __('home.get_started_now') }}
@@ -340,18 +333,16 @@
                 </div>
             </div>
 
-            {{-- Second CTA: Manage Reservations (Grid Layout) --}}
-            <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 translate-x-8 rtl:-translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
+            {{-- Second CTA: Manage Reservations --}}
+            <div class="relative bg-yellow-200 dark:bg-yellow-700 rounded-2xl p-8 md:p-12 flex flex-col md:grid md:grid-cols-2 md:items-center gap-8 md:gap-x-8 overflow-hidden opacity-0 translate-x-8 transition-all duration-1000 ease-out animate-on-scroll">
                 
-                {{-- 1. Text Block (Mobile: Order 1 / Desktop: Col 1, Row 1) --}}
-                <div class="z-10 order-1 md:col-start-1 md:row-start-1">
+                <div class="z-10 order-1 md:col-start-1 md:row-start-1 text-center md:text-start">
                     <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">{{ __('home.cta_manage_title') }}</h2>
                     <p class="text-base text-gray-800 dark:text-gray-200">
                         {{ __('home.cta_manage_desc') }}
                     </p>
                 </div>
                 
-                {{-- 2. Icon Block (Mobile: Order 2 / Desktop: Col 2, Row 1-2) --}}
                 <div class="flex justify-center items-center order-2 md:col-start-2 md:row-start-1 md:row-span-2">
                     <svg class="w-32 h-32 text-yellow-800/70 dark:text-yellow-400/70 transition-transform duration-700 hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5m15 7.5v-7.5" />
@@ -359,7 +350,6 @@
                     </svg>
                 </div>
 
-                {{-- 3. Button Block (Mobile: Order 3 / Desktop: Col 1, Row 2) --}}
                 <div class="z-10 order-3 md:col-start-1 md:row-start-2 md:mt-6">
                     <a href="{{ route('reservations.index') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 transition-transform hover:scale-105">
                         {{ __('home.get_started_now') }}
@@ -373,12 +363,12 @@
     </section>
 
     {{-- ======================================================= --}}
-    {{-- MODIFIED SCRIPT: Merged Animation + Date-Only Logic --}}
+    {{-- MODIFIED SCRIPT: Simplified & Fixed Animation Logic --}}
     {{-- ======================================================= --}}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- 1. ORIGINAL ANIMATION SCRIPT ---
+            // --- 1. HERO ANIMATION ---
             setTimeout(() => {
                 const heroContent = document.querySelectorAll('.animate-load');
                 heroContent.forEach(el => {
@@ -387,6 +377,7 @@
                 });
             }, 100); 
 
+            // --- 2. SCROLL ANIMATION (FIXED) ---
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
@@ -396,8 +387,25 @@
             const scrollObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.remove('opacity-0', 'translate-y-8', '-translate-x-8', 'translate-x-8', 'translate-y-12');
-                        entry.target.classList.add('opacity-100', 'translate-y-0', 'translate-x-0');
+                        
+                        const classesToRemove = ['opacity-0'];
+                        const classesToAdd = ['opacity-100'];
+
+                        // Check for Y-axis animations
+                        if (entry.target.classList.contains('translate-y-8') || entry.target.classList.contains('translate-y-12')) {
+                            classesToRemove.push('translate-y-8', 'translate-y-12');
+                            classesToAdd.push('translate-y-0');
+                        }
+
+                        // Check for X-axis animations
+                        if (entry.target.classList.contains('translate-x-8') || entry.target.classList.contains('-translate-x-8')) {
+                            classesToRemove.push('translate-x-8', '-translate-x-8');
+                            classesToAdd.push('translate-x-0'); 
+                        }
+
+                        entry.target.classList.remove(...classesToRemove);
+                        entry.target.classList.add(...classesToAdd);
+
                         observer.unobserve(entry.target);
                     }
                 });
@@ -407,76 +415,51 @@
                 scrollObserver.observe(el);
             });
 
-            // --- 2. NEW DATE-ONLY SCRIPT FOR HERO FORM (BUG FIXED) ---
-
-            // Element References
+            // --- 3. DATE-ONLY SCRIPT FOR HERO FORM ---
             const searchForm = document.getElementById("hero-search-form");
             const startDateEl = document.getElementById("search_start_date");
             const endDateEl   = document.getElementById("search_end_date");
             const hiddenPickup = document.getElementById("hidden_pickup_datetime");
             const hiddenDropoff = document.getElementById("hidden_dropoff_datetime");
 
-            // *** FIX: Initialize datepickers ONCE and store instances ***
-            // This assumes Flowbite's Datepicker object is available globally
-            if (startDateEl && endDateEl) { // Check if elements exist
+            if (startDateEl && endDateEl) { 
                 const startDatePicker = new Datepicker(startDateEl);
                 const endDatePicker = new Datepicker(endDateEl);
 
-                // Helper: Convert "Y-m-d" string into a Date object
                 const toDate = (str) => {
                     if (!str) return null;
-                    // Datepicker value is "yyyy-mm-dd"
                     const [y, m, d] = str.split("-").map(Number);
                     if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
-                    // Note: Month is 0-indexed in JS (0 = Jan, 11 = Dec)
                     return new Date(y, m - 1, d);
                 };
 
-                // *** FIX: Revised logic for syncing pickers ***
                 const syncPickers = () => {
                     const startDate = toDate(startDateEl.value);
                     const endDate = toDate(endDateEl.value);
 
                     if (startDate) {
-                        // 1. Update the minDate of the end datepicker
-                        // This is the correct way to update an existing instance
                         endDatePicker.setOptions({
                             minDate: startDateEl.value
                         });
-
-                        // 2. If end date is now invalid (before start), set it to the start date
                         if (endDate && endDate < startDate) {
-                            // Use the datepicker's own method to set the date
-                            // This updates the UI and internal value without loops
                             endDatePicker.setDate(startDateEl.value);
                         }
                     }
                 };
                 
-                // Add listeners to date inputs
-                // We use 'changeDate' as this is the custom event Flowbite Datepicker fires
                 startDateEl.addEventListener("changeDate", syncPickers);
             }
             
-            // Add listener to the form submission
             if (searchForm) {
                 searchForm.addEventListener("submit", (e) => {
-                    // Check if date fields are filled
                     if (startDateEl.value && endDateEl.value) {
-                        // Combine date with default times to create a full day range
-                        // Pickup: Start of the selected day (T00:00)
                         hiddenPickup.value = `${startDateEl.value}T00:00`;
-                        // Dropoff: End of the selected day (T23:59)
                         hiddenDropoff.value = `${endDateEl.value}T23:59`;
-                    } else {
-                        // Allow submission if fields are empty (for non-filtered search)
-                        console.log("Date fields are empty, submitting without date filter.");
                     }
                 });
             }
 
-            // --- 3. SCRIPT FOR VIDEO CAROUSEL ---
-            // Stop videos when sliding to the next item
+            // --- 4. SCRIPT FOR VIDEO CAROUSEL ---
             const videoCarousel = document.getElementById('video-carousel');
             if (videoCarousel) {
                 
@@ -488,7 +471,6 @@
                     });
                 }
                 
-                // Find all carousel control buttons (prev, next, and indicators)
                 const prevButton = videoCarousel.querySelector('[data-carousel-prev]');
                 const nextButton = videoCarousel.querySelector('[data-carousel-next]');
                 const indicators = videoCarousel.querySelectorAll('[data-carousel-slide-to]');
