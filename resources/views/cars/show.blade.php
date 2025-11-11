@@ -244,16 +244,14 @@
                         </div>
     
                         {{-- Total Price Display --}}
-                        <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <span class="text-lg font-medium text-gray-900 dark:text-white">{{ __('cars_page.total') }}</span>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-2xl font-bold text-gray-900 dark:text-white">$<span id="total_price">0</span></span>
-                                </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <span class="text-lg font-medium text-gray-900 dark:text-white">{{ __('cars_page.total') }}</span>
+                            <div class="text-right">
+                                <span class="text-2xl font-bold text-gray-900 dark:text-white">
+                                    $<span id="total_price">0</span>
+                                </span>
+                                 <div id="price_breakdown" class="text-sm text-gray-500 dark:text-gray-400 mt-1"></div>
                             </div>
-                            <div id="price_breakdown" class="text-sm text-gray-500 dark:text-gray-400 mt-1 text-right"></div>
                         </div>
     
                         {{-- Terms Checkbox --}}
