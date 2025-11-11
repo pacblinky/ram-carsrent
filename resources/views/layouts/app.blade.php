@@ -37,6 +37,8 @@
         <main>
             {{ $slot }}
         </main>
+
+        @include('layouts.footer')
         
 
     <script>

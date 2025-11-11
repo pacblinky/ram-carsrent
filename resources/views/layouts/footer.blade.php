@@ -1,90 +1,82 @@
-<footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-    <div class="mx-auto w-full max-w-screen-xl p-4 py-8 lg:py-10">
+{{-- resources/views/layouts/footer.blade.php --}}
+
+{{-- 
+    NEW DESIGN:
+    - Dark background (bg-gray-800) for a more "premium" feel.
+    - Full-width layout.
+    - Organized links into "Resources" and "Legal" columns.
+    - Copyright and social media are now in a separate bottom bar.
+--}}
+
+<footer class="bg-gray-800 dark:bg-gray-900">
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
-          <div class="mb-8 md:mb-0 max-w-sm">
-              <a href="{{ route('home') }}" class="flex items-center mb-4">
-                  <svg class="w-8 h-8 mr-3 text-blue-700 dark:text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" />
-                  </svg>
-                  <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ __('navbar.brand') }}</span>
-              </a>
-              <p class="text-gray-500 dark:text-gray-400">
-                  {{ __('footer.brand_slogan') }}
-              </p>
-          </div>
-          <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-              <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('footer.heading_quick_links') }}</h2>
-                  <ul class="text-gray-600 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
-                          <a href="{{ route('home') }}" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('navbar.home') }}</a>
-                      </li>
-                      <li class="mb-4">
-                          <a href="{{ route('cars.index') }}" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('footer.link_fleet') }}</a>
-                      </li>
-                      <li>
-                          <a href="#" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('navbar.about') }}</a>
-                      </li>
-                  </ul>
-              </div>
-              <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('footer.heading_support') }}</h2>
-                  <ul class="text-gray-600 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
-                          <a href="{{ route('contact.index') }}" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('navbar.contact') }}</a>
-                      </li>
-                      <li class="mb-4">
-                          <a href="#" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('footer.link_faqs') }}</a>
-                      </li>
-                       <li>
-                          <a href="#" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('footer.link_help_center') }}</a>
-                      </li>
-                  </ul>
-              </div>
-              <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('footer.heading_legal') }}</h2>
-                  <ul class="text-gray-600 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
-                          <a href="#" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('footer.link_privacy') }}</a>
-                      </li>
-                      <li>
-                          <a href="#" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('footer.link_terms') }}</a>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-      <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-      <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {{ date('Y') }} <a href="{{ route('home') }}" class="hover:underline hover:text-blue-600 dark:hover:text-blue-500 transition-colors">{{ __('footer.copyright_brand') }}</a>. {{ __('footer.copyright_rights') }}
-          </span>
-          <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5 rtl:space-x-reverse">
-              <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
-                        <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+            
+            {{-- Logo and Company Name (Main Section) --}}
+            <div class="mb-6 md:mb-0">
+                <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="{{ asset('images/logo.png') }}" class="h-8" alt="{{ __('footer.company_name') }} Logo" />
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">{{ __('footer.company_name') }}</span>
+                </a>
+            </div>
+            
+            {{-- Link Columns --}}
+            <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-2">
+                {{-- Resources Links --}}
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-100 uppercase dark:text-white">{{ __('footer.resources_links') }}</h2>
+                    <ul class="text-gray-400 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="{{ route('cars.index') }}" class="hover:underline">{{ __('footer.cars') }}</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="{{ route('about.index') }}" class="hover:underline">{{ __('footer.about') }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('contact.index') }}" class="hover:underline">{{ __('footer.contact') }}</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                {{-- Legal Links --}}
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-100 uppercase dark:text-white">{{ __('footer.legal_links') }}</h2>
+                    <ul class="text-gray-400 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="#" class="hover:underline">{{ __('footer.privacy_policy') }}</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:underline">{{ __('footer.terms') }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <hr class="my-6 border-gray-600 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        
+        {{-- Bottom Bar: Copyright & Socials --}}
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <span class="text-sm text-gray-400 sm:text-center dark:text-gray-400">© {{ date('Y') }} <a href="{{ route('home') }}" class="hover:underline">{{ __('footer.company_name') }}™</a>. {{ __('footer.copyright') }}
+            </span>
+            <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5 rtl:space-x-reverse">
+                <a href="#" class="text-gray-400 hover:text-white dark:hover:text-white" aria-label="Facebook page">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                        <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V4.142A1.14 1.14 0 0 1 6.135 3Z" clip-rule="evenodd"/>
                     </svg>
-                  <span class="sr-only">{{ __('footer.social_facebook') }}</span>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l6.933 10.19L1 20.994h3.066l5.395-6.507 4.715 6.506h6.69l-7.07-10.46zm-2.382 2.954-.305-.436-6.564-9.418h2.441l5.384 7.721.306.436 7.288 10.454h-2.442l-6.108-8.757z"/>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white dark:hover:text-white" aria-label="Instagram profile">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 21 21">
+                        <path fill-rule="evenodd" d="M10.034 1.25a8.78 8.78 0 0 1 8.78 8.78c0 2.846-1.42 5.36-3.568 6.868A8.78 8.78 0 0 1 10.034 18.78a8.78 8.78 0 0 1-8.78-8.78c0-2.846 1.42-5.36 3.568-6.868A8.78 8.78 0 0 1 10.034 1.25ZM5.06 5.06a.75.75 0 0 1 .75-.75h8.378a.75.75 0 0 1 .75.75v8.378a.75.75 0 0 1-.75.75H5.81a.75.75 0 0 1-.75-.75V5.06Zm2.57 2.57a.75.75 0 0 1 .75-.75h3.15a.75.75 0 0 1 .75.75v3.15a.75.75 0 0 1-.75.75h-3.15a.75.75 0 0 1-.75-.75V7.63Zm1.5 1.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z" clip-rule="evenodd"/>
+                        <path d="M10.034 5.333a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.9a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Z"/>
                     </svg>
-                  <span class="sr-only">{{ __('footer.social_twitter') }}</span>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 0 1 1.772 1.153 4.902 4.902 0 0 1 1.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 0 1-1.153 1.772 4.902 4.902 0 0 1-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 0 1-1.772-1.153 4.902 4.902 0 0 1-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 0 1 1.153-1.772A4.902 4.902 0 0 1 5.451 2.52c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 0 0-.748-1.15 3.098 3.098 0 0 0-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 1 1 0 10.27 5.135 5.135 0 0 1 0-10.27zm0 1.802a3.333 3.333 0 1 0 0 6.666 3.333 3.333 0 0 0 0-6.666zm5.338-3.205a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z" clip-rule="evenodd"/>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white dark:hover:text-white" aria-label="Twitter page">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">
+                        <path fill-rule="evenodd" d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.3 1.3a4.12 4.12 0 0 0 1.27 5.479A4.07 4.07 0 0 1 .4 6.084v.05a4.068 4.068 0 0 0 3.282 3.982 4.09 4.09 0 0 1-1.853.07 4.068 4.068 0 0 0 3.794 2.817 8.18 8.18 0 0 1-5.058 1.71c-.32 0-.63-.016-.94-.052A11.647 11.647 0 0 0 6.29 16c7.552 0 11.683-6.143 11.683-11.536 0-.174 0-.347-.012-.52A8.349 8.349 0 0 0 20 1.892Z" clip-rule="evenodd"/>
                     </svg>
-                  <span class="sr-only">{{ __('footer.social_instagram') }}</span>
-              </a>
-               <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                  <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                      <path fill-rule="evenodd" d="M12.51 8.796v1.697a3.738 3.738 0 0 1 3.288-1.684c3.455 0 4.202 2.16 4.202 4.97V19.5h-3.2v-5.072c0-1.21-.244-2.766-2.128-2.766-1.827 0-2.139 1.317-2.139 2.676V19.5h-3.19V8.796h3.168ZM7.2 6.106a1.61 1.61 0 0 1-.988 1.483 1.595 1.595 0 0 1-1.743-.348A1.607 1.607 0 0 1 5.6 4.5a1.601 1.601 0 0 1 1.6 1.606Z" clip-rule="evenodd"/>
-                      <path d="M7.2 19.5H4.0V8.796h3.2V19.5Z"/>
-                </svg>
-                  <span class="sr-only">{{ __('footer.social_linkedin') }}</span>
-              </a>
-          </div>
-      </div>
+                </a>
+            </div>
+        </div>
     </div>
 </footer>
