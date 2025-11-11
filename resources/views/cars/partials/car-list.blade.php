@@ -68,24 +68,13 @@
 
     @forelse($carsPaginator as $car)
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow">
-            
-            {{-- ========================================================== --}}
-            {{--                MODIFIED IMAGE LINKS START                --}}
-            {{-- ========================================================== --}}
-
-            {{-- Desktop Image Link --}}
-            <a href="{{ route('cars.show', $car['id']) }}" class="md:w-1/3 relative">
+            <div class="md:w-1/3 relative">
                 <img class="h-full w-full object-cover absolute inset-0" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
-            </a>
-            {{-- Mobile Image Link --}}
-            <a href="{{ route('cars.show', $car['id']) }}" class="md:hidden h-48">
+            </div>
+            {{-- Spacer for aspect ratio on mobile --}}
+            <div class="md:hidden h-48">
                 <img class="h-full w-full object-cover" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
-            </a>
-            
-            {{-- ========================================================== --}}
-            {{--                 MODIFIED IMAGE LINKS END                 --}}
-            {{-- ========================================================== --}}
-
+            </div>
 
             <div class="md:w-2/3 p-6 flex flex-col justify-between">
                 <div>
@@ -135,7 +124,11 @@
 
                 <div class="flex items-center justify-between mt-auto">
                     <div>
-                        <span class="text-3xl font-bold text-gray-900 dark:text-white">${{ number_format($car['price'], 0) }}</span>
+                        <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                            <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                                <img src="{{ asset('images/currency.png') }}" style="width: 15px; display: inline-block; vertical-align: baseline;" class="dark:invert">{{ number_format($car['price'], 0) }}
+                            </span>
+                        </span>
                         <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('cars_page.per_day') }}</span>
                     </div>
                     <a href="{{ route('cars.show', $car['id']) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
