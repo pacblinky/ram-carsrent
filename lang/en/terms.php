@@ -2,7 +2,7 @@
 
 return [
 
-    'title' => 'Terms and Conditions for Ram Car Rental',
+    'title' => 'Terms and Conditions',
     'last_updated' => 'Last updated: :date',
     'intro' => 'Please read these terms and conditions carefully before using our Service.',
 
