@@ -86,8 +86,8 @@
                                 </div>
                                 <div>
                                     <span class="font-semibold text-gray-500 dark:text-gray-400 block">{{ __('reservations.total_price') }}</span>
-                                    <span class="font-bold text-gray-900 dark:text-white">${{ number_format($reservation->total_price, 2) }}</span>
-                                </div>
+                                    <img src="{{ asset('images/currency.png') }}" style="width: 15px; display: inline-block; vertical-align: baseline;" class="dark:invert"> {{ number_format($reservation->total_price, 2) }} 
+                               </div>
                             </div>
                         </div>
 

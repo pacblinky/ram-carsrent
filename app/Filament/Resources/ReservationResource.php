@@ -63,7 +63,7 @@ class ReservationResource extends Resource
                 TextInput::make('total_price')
                     ->label('Total Price')
                     ->numeric()
-                    ->prefix('$')
+                    ->prefix('SAR')
                     ->disabled()
                     ->dehydrated(false)
                     ->helperText('Automatically calculated when saved'),
@@ -94,7 +94,7 @@ class ReservationResource extends Resource
                   . "- Drop-off: {$record->dropoff->name}\n"
                   . "- From: {$record->start_datetime->format('Y-m-d H:i')}\n"
                   . "- To: {$record->end_datetime->format('Y-m-d H:i')}\n\n"
-                  . "Total Price: \${$record->total_price}\n\n"
+                  . "Total Price: SAR{$record->total_price}\n\n"
                   . "Thank you!"
               )
             : null;
@@ -107,7 +107,7 @@ class ReservationResource extends Resource
                 TextColumn::make('dropoff.name')->label('Drop-off')->sortable(),
                 TextColumn::make('start_datetime')->dateTime()->label('Start'),
                 TextColumn::make('end_datetime')->dateTime()->label('End'),
-                TextColumn::make('total_price')->money('usd', true)->sortable(),
+                TextColumn::make('total_price')->money('sar', true)->sortable(),
                 BadgeColumn::make('status')
                     ->colors([
                         'warning' => 'pending',

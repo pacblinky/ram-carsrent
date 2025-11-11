@@ -127,7 +127,7 @@ class CarResource extends Resource
                 ->schema([
                     TextInput::make('price_per_day')
                         ->numeric()
-                        ->prefix('$')
+                        ->prefix("SAR")
                         ->label('Price per Day')
                         ->required(),
                 ]),
@@ -143,7 +143,7 @@ class CarResource extends Resource
                     ->image()
                     ->maxFiles(5)
                     ->helperText('Upload up to 5 images of the car'),
-            ]),
+            ]), 
 
         Section::make('Description (Multilingual)')
             ->icon('heroicon-o-chat-bubble-bottom-center-text')
@@ -194,7 +194,7 @@ class CarResource extends Resource
                 }),
 
             TextColumn::make('price_per_day')
-                ->money('usd', true)
+                ->money('sar', true)
                 ->label('Price/Day')
                 ->sortable(),
 
