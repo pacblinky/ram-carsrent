@@ -22,7 +22,8 @@ return [
     'transmission' => 'نوع المحرك',
     'seats' => 'عدد المقاعد',
     'doors' => 'عدد الأبواب',
-    'clear' => 'مسح',
+    'show_filters' => 'إظهار الفلاتر',
+    'hide_filters' => 'إخفاء الفلاتر',
 
     // === Car Detail Page ===
     'show_on_map' => 'عرض على الخريطة',

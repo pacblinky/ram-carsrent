@@ -22,6 +22,8 @@ return [
     'transmission' => 'Transmission',
     'seats' => 'Seats',
     'doors' => 'Doors',
+    'show_filters' => 'Show Filters',
+    'hide_filters' => 'Hide Filters',
 
     // === Car Detail Page ===
     'show_on_map' => 'Show on map',
