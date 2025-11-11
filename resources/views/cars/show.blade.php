@@ -1,4 +1,24 @@
 <x-app-layout>
+    {{-- ========================================================== --}}
+    {{--                 NEW ANIMATION STYLE BLOCK                --}}
+    {{-- ========================================================== --}}
+    <style>
+        /* This ensures the slider track (all images) is in one line
+          and the transition is handled by CSS for max performance.
+        */
+        #slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.7s ease-in-out; /* This is the "beautiful" animation */
+        }
+        .slider-image {
+            width: 100%;
+            height: 100%;
+            object-cover: cover;
+            flex-shrink: 0; /* Prevents images from shrinking */
+        }
+    </style>
+
     <div class="max-w-screen-xl mx-auto py-12 px-4">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             
@@ -14,48 +34,67 @@
                     </div>
                 </div>
     
-                {{-- Gallery Carousel --}}
-                <div id="gallery" class="relative w-full" data-carousel="slide">
+                {{-- ========================================================== --}}
+                {{--             ANIMATED GALLERY SECTION (MODIFIED)            --}}
+                {{-- ========================================================== --}}
+                <div id="gallery" class="relative w-full">
                     <div class="relative h-96 overflow-hidden rounded-lg">
-                        @forelse($thumbnails as $index => $image)
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item="{{ $index == 0 ? 'active' : '' }}">
-                            <img src="{{ $image }}" class="absolute block w-full h-full object-cover" alt="Car image {{ $index + 1 }}">
-                        </div>
-                        @empty
-                        <div class="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-700 rounded-lg">
-                             <img src="{{ asset('images/logo.png') }}" class="w-1/2 h-1/2 object-contain opacity-50" alt="Default car image">
-                        </div>
-                        @endforelse
+                        @if(count($thumbnails) > 0)
+                            
+                            <div id="slider-track">
+                                @foreach($thumbnails as $index => $thumb)
+                                    <img src="{{ $thumb }}" class="slider-image" alt="Car image {{ $index + 1 }}">
+                                @endforeach
+                            </div>
+
+                            @if(count($thumbnails) > 1)
+                                <button id="prev-btn" type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                        <svg class="w-4 h-4 text-white dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                        </svg>
+                                        <span class="sr-only">Previous</span>
+                                    </span>
+                                </button>
+                                <button id="next-btn" type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                        <svg class="w-4 h-4 text-white dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                        </svg>
+                                        <span class="sr-only">Next</span>
+                                    </span>
+                                </button>
+                            @endif
+
+                        @else
+                            {{-- Fallback --}}
+                            <div class="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                <img src="{{ asset('images/logo.png') }}" class="w-1/2 h-1/2 object-contain opacity-50" alt="Default car image">
+                            </div>
+                        @endif
                     </div>
-                    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/></svg>
-                            <span class="sr-only">{{ __('cars_page.previous') }}</span>
-                        </span>
-                    </button>
-                    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/></svg>
-                            <span class="sr-only">{{ __('cars_page.next') }}</span>
-                        </span>
-                    </button>
                 </div>
-                
+                {{-- ========================================================== --}}
+                {{--                END MODIFIED GALLERY SECTION                --}}
+                {{-- ========================================================== --}}
+
+
                 {{-- Thumbnails --}}
+                @if(count($thumbnails) > 1)
                 <div class="grid grid-cols-6 gap-2 mt-2">
                     @foreach($thumbnails as $index => $thumb)
-                    <button data-carousel-slide-to="{{ $index }}" class="rounded-lg overflow-hidden border-2 border-transparent hover:border-blue-500 focus:border-blue-500">
-                        <img src="{{ $thumb }}" class="h-16 w-full object-cover" alt="Car thumbnail {{ $index + 1 }}">
-                    </button>
+                        <button class="thumb-btn rounded-lg overflow-hidden border-2 border-transparent hover:border-blue-500 focus:border-blue-500" data-src="{{ $thumb }}">
+                            <img src="{{ $thumb }}" class="h-16 w-full object-cover" alt="Car thumbnail {{ $index + 1 }}">
+                        </button>
                     @endforeach
                 </div>
+                @endif
     
                 {{-- Features --}}
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">{{ __('cars_page.vehicle_features') }}</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     @foreach($specs as $spec)
                     <div class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                        {{-- Simple icon logic based on 'icon' key --}}
                         @if($spec['icon'] == 'electric' || $spec['icon'] == 'fuel')
                             <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
                         @elseif($spec['icon'] == 'manual' || $spec['icon'] == 'auto' || $spec['icon'] == 'transmission')
@@ -73,18 +112,18 @@
                 @php
                 $locale = App::getLocale(); 
                 $displayDescription = $car->description[$locale] ?? $car->description['en'] ?? null;
-            @endphp
+                @endphp
 
-            @if($displayDescription)
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
-                {{ __('cars_page.vehicle_description') }}
-            </h2>
-            <div class="w-full pt-0 px-6 pb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                    {{ trim($displayDescription) }}
-                </p>
-            </div>
-            @endif
+                @if($displayDescription)
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
+                    {{ __('cars_page.vehicle_description') }}
+                </h2>
+                <div class="w-full pt-0 px-6 pb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                        {{ trim($displayDescription) }}
+                    </p>
+                </div>
+                @endif
     
             </div>
     
@@ -234,9 +273,9 @@
                                 id="book-now-button"
                                 disabled {{-- Button is disabled by default --}}
                                 class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300
-                                    font-medium rounded-lg text-sm px-5 py-3 text-center
-                                    dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800
-                                    disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out">
+                                   font-medium rounded-lg text-sm px-5 py-3 text-center
+                                   dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800
+                                   disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out">
                             {{ __('cars_page.book_now') }}
                         </button>
                     </form>
@@ -256,6 +295,9 @@
         };
     </script>
     
+    {{-- ========================================================== --}}
+    {{--                BOOKING FORM SCRIPT (UNCHANGED)             --}}
+    {{-- ========================================================== --}}
     <script>
     document.addEventListener("DOMContentLoaded", () => {
     
@@ -306,7 +348,7 @@
             end:   toLocalDate(r.end),
         })).filter(b => b.start && b.end); 
     
-        // Check if a specific datetime is inside a booked block
+        // Check if a specific datetime is inside a- booked block
         const isBlocked = dt => {
             if (!dt) return false;
             const t = dt.getTime();
@@ -342,7 +384,7 @@
                     opt.textContent += ` ${translations.booked}`;
                     opt.classList.add('text-red-400');
                 } else {
-                    opt.classList.remove('text-gray-400', 'text-red-400');
+                    opt.classList.remove('text-gray-400', 'text-red-440');
                 }
             });
         };
@@ -450,6 +492,105 @@
         updateTimeOptions(startDate, startTime);
         updateTimeOptions(endDate, endTime);
         calculatePrice();
+    });
+    </script>
+
+    {{-- ========================================================== --}}
+    {{--          ANIMATED SLIDER SCRIPT (MODIFIED)                 --}}
+    {{-- ========================================================== --}}
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // --- NEW: Get the slider track ---
+        const sliderTrack = document.getElementById("slider-track");
+        
+        const thumbs = document.querySelectorAll(".thumb-btn");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const gallery = document.getElementById("gallery"); // Get gallery container
+        
+        let autoSlideInterval = null; // To store the interval
+
+        // --- NEW: Check if slider track exists ---
+        if (sliderTrack && thumbs.length > 0) {
+            
+            const totalImages = thumbs.length;
+            let currentIndex = 0;
+
+            // --- NEW: Rewritten updateGallery for horizontal slide ---
+            const updateGallery = (index) => {
+                if (index < 0 || index >= totalImages) return; 
+                
+                currentIndex = index;
+
+                // 1. Calculate the offset
+                const offset = -currentIndex * 100;
+                
+                // 2. Move the track
+                // The animation is handled by the CSS transition!
+                sliderTrack.style.transform = `translateX(${offset}%)`;
+
+                // 3. Update active thumbnail border
+                thumbs.forEach((btn, i) => {
+                    if (i === currentIndex) {
+                        btn.classList.add("border-blue-500");
+                    } else {
+                        btn.classList.remove("border-blue-500");
+                    }
+                });
+            };
+
+            // --- Functions to start/stop the timer (no change) ---
+            const stopAutoSlide = () => {
+                clearInterval(autoSlideInterval);
+            };
+
+            const startAutoSlide = () => {
+                stopAutoSlide(); // Clear any existing interval first
+                if (totalImages <= 1) return; // Don't slide if only one image
+                
+                autoSlideInterval = setInterval(() => {
+                    const newIndex = (currentIndex + 1) % totalImages;
+                    updateGallery(newIndex);
+                }, 2000); // 2000 milliseconds = 2 seconds
+            };
+
+
+            // --- Event listeners (no change, they just work) ---
+            thumbs.forEach((btn, index) => {
+                btn.addEventListener("click", () => {
+                    updateGallery(index);
+                    startAutoSlide(); // Reset timer on click
+                });
+            });
+
+            if (prevBtn && nextBtn && totalImages > 1) {
+                prevBtn.addEventListener("click", () => {
+                    const newIndex = (currentIndex - 1 + totalImages) % totalImages;
+                    updateGallery(newIndex);
+                    startAutoSlide(); // Reset timer on click
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    const newIndex = (currentIndex + 1) % totalImages;
+                    updateGallery(newIndex);
+                    startAutoSlide(); // Reset timer on click
+                });
+            }
+
+            // Set the initial active thumbnail on load
+            if(thumbs[0]) {
+                thumbs[0].classList.add("border-blue-500");
+            }
+            
+            // Start the auto-slide on page load
+            startAutoSlide();
+            
+            // Pause auto-slide on hover
+            if (gallery) {
+                gallery.addEventListener('mouseenter', stopAutoSlide);
+                gallery.addEventListener('mouseleave', startAutoSlide);
+            }
+        }
     });
     </script>
 </x-app-layout>

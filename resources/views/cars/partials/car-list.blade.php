@@ -68,13 +68,24 @@
 
     @forelse($carsPaginator as $car)
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow">
-            <div class="md:w-1/3 relative">
+            
+            {{-- ========================================================== --}}
+            {{--                MODIFIED IMAGE LINKS START                --}}
+            {{-- ========================================================== --}}
+
+            {{-- Desktop Image Link --}}
+            <a href="{{ route('cars.show', $car['id']) }}" class="md:w-1/3 relative">
                 <img class="h-full w-full object-cover absolute inset-0" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
-            </div>
-            {{-- Spacer for aspect ratio on mobile --}}
-            <div class="md:hidden h-48">
+            </a>
+            {{-- Mobile Image Link --}}
+            <a href="{{ route('cars.show', $car['id']) }}" class="md:hidden h-48">
                 <img class="h-full w-full object-cover" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
-            </div>
+            </a>
+            
+            {{-- ========================================================== --}}
+            {{--                 MODIFIED IMAGE LINKS END                 --}}
+            {{-- ========================================================== --}}
+
 
             <div class="md:w-2/3 p-6 flex flex-col justify-between">
                 <div>
