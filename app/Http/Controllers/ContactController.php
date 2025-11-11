@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
-use App\Models\MapEmbed; // <-- 1. CHANGE THIS (was Setting)
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Mail; // Future: You can use this to send emails
 use Illuminate\Support\Facades\Redirect;
 
 class ContactController extends Controller
 {
+    /**
+     * Display the contact page.
+     */
     public function index()
     {
-        // This one variable has all the data we need
-        $contactItems = MapEmbed::where('page', 'contact')
-                                ->orderBy('sort_order', 'asc')
-                                ->get();
+        // Fetch all locations to display on the page
+        $locations = Location::all();
         
-        // Pass the new variable to the view
+        // Pass locations and the authenticated user (if any) to the view
         return view('contact.index', [
-            'user' => Auth::user(),
-            'contactItems' => $contactItems // <-- This is the new variable
+            'locations' => $locations,
+            'user' => Auth::user()
         ]);
     }
 
