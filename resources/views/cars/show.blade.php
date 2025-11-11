@@ -35,7 +35,7 @@
                 </div>
     
                 {{-- ========================================================== --}}
-                {{--             ANIMATED GALLERY SECTION (MODIFIED)            --}}
+                {{--            ANIMATED GALLERY SECTION (RTL FIXED)            --}}
                 {{-- ========================================================== --}}
                 <div id="gallery" class="relative w-full">
                     <div class="relative h-96 overflow-hidden rounded-lg">
@@ -48,17 +48,20 @@
                             </div>
 
                             @if(count($thumbnails) > 1)
-                                <button id="prev-btn" type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                                {{-- PREV BUTTON: Changed left-0 to start-0 and added rtl:rotate-180 to SVG --}}
+                                <button id="prev-btn" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
                                     <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                        <svg class="w-4 h-4 text-white dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <svg class="w-4 h-4 text-white dark:text-gray-300 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                                         </svg>
                                         <span class="sr-only">Previous</span>
                                     </span>
                                 </button>
-                                <button id="next-btn" type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                                
+                                {{-- NEXT BUTTON: Changed right-0 to end-0 and added rtl:rotate-180 to SVG --}}
+                                <button id="next-btn" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
                                     <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                        <svg class="w-4 h-4 text-white dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <svg class="w-4 h-4 text-white dark:text-gray-300 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                         </svg>
                                         <span class="sr-only">Next</span>
@@ -76,7 +79,7 @@
                 </div>
                 {{-- ========================================================== --}}
                 {{--                END MODIFIED GALLERY SECTION                --}}
-                {{-- ========================================================== --}}
+                {{-- ========================================================== --}
 
 
                 {{-- Thumbnails --}}
@@ -518,15 +521,18 @@
             let currentIndex = 0;
 
             // --- NEW: Rewritten updateGallery for horizontal slide ---
+            // --- NEW: Rewritten updateGallery for horizontal slide ---
             const updateGallery = (index) => {
                 if (index < 0 || index >= totalImages) return; 
                 
                 currentIndex = index;
 
-                // 1. Calculate the offset
-                const offset = -currentIndex * 100;
+                // --- FIX: Check if the document direction is RTL (Right-to-Left) ---
+                const isRTL = document.documentElement.dir === 'rtl';
+                const multiplier = isRTL ? 1 : -1;
+
+                const offset = multiplier * currentIndex * 100;
                 
-                // 2. Move the track
                 // The animation is handled by the CSS transition!
                 sliderTrack.style.transform = `translateX(${offset}%)`;
 
