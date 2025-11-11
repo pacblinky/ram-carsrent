@@ -181,7 +181,7 @@
 
                     <div class="flex items-center justify-between mt-4">
                         <div>
-                            <span class="text-2xl font-bold text-gray-900 dark:text-white">${{ number_format($car->price_per_day, 0) }}</span>
+                            <span class="text-2xl font-bold text-gray-900 dark:text-white"><img src="{{ asset('images/currency.png') }}" style="width: 15px; display: inline-block; vertical-align: baseline;" class="dark:invert"> {{ number_format($car->price_per_day, 0) }}</span>
                             <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('home.per_day') }}</span>
                         </div>
                         <a href="{{ route('cars.show', $car->id) }}" 
