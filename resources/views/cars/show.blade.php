@@ -244,14 +244,16 @@
                         </div>
     
                         {{-- Total Price Display --}}
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <span class="text-lg font-medium text-gray-900 dark:text-white">{{ __('cars_page.total') }}</span>
-                            <div class="text-right">
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">
-                                    <img src="{{ asset('images/currency.png') }}" style="width: 15px; display: inline-block; vertical-align: baseline;" class="dark:invert"><span id="total_price">0</span>
-                                </span>
-                                 <div id="price_breakdown" class="text-sm text-gray-500 dark:text-gray-400 mt-1"></div>
+                        <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-lg font-medium text-gray-900 dark:text-white">{{ __('cars_page.total') }}</span>
+                                </div>
+                                <div class="text-right">
+                                    <img src="{{ asset('images/currency.png') }}" style="width: 15px; display: inline-block; vertical-align: baseline;" class="dark:invert"> <span id="total_price" class="dark:text-white">0</span>
+                                </div>
                             </div>
+                            <div id="price_breakdown" class="text-sm text-gray-500 dark:text-gray-400 mt-1 text-right"></div>
                         </div>
     
                         {{-- Terms Checkbox --}}
@@ -310,11 +312,11 @@
         const endTime   = document.getElementById("end_time");
         const totalPriceEl = document.getElementById("total_price");
         const breakdownEl  = document.getElementById("price_breakdown");
+        const currencySymbol = '<img src="{{ asset('images/currency.png') }}" style="width: 12px; display: inline-block; vertical-align: baseline;" class="dark:invert">';
     
         // --- Checkbox and Button elements ---
         const termsCheckbox = document.getElementById("terms_agree");
         const bookNowButton = document.getElementById("book-now-button");
-        const currencySymbol = '<img src="{{ asset('images/currency.png') }}" style="width: 12px; display: inline-block; vertical-align: baseline;" class="dark:invert">';
     
         // 1. Generate 30-minute time intervals for select boxes
         const generateTimes = (select) => {
@@ -445,8 +447,8 @@
     
             if (breakdownEl) {
                 breakdownEl.innerHTML = `
-                    ${billableDays} ${translations.days} × ${currencySymbol}${pricePerDay.toLocaleString()} =
-                    <strong>$${total.toLocaleString()}</strong>
+                    ${billableDays} ${translations.days} × ${currencySymbol} ${pricePerDay.toLocaleString()} =
+                    <strong>${currencySymbol} ${total.toLocaleString()}</strong>
                 `;
             }
         };
