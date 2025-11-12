@@ -17,6 +17,26 @@
             object-cover: cover;
             flex-shrink: 0; /* Prevents images from shrinking */
         }
+
+        /* ========================================================== */
+        /* NEW FADE-IN ANIMATION                */
+        /* ========================================================== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px); /* A slight "up" motion */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Base class to apply the animation */
+        .section-fade-in {
+            animation: fadeIn 0.7s ease-out forwards;
+            opacity: 0; /* Start hidden, animation will make it visible */
+        }
     </style>
 
     <div class="max-w-screen-xl mx-auto py-12 px-4">
@@ -26,7 +46,7 @@
             <div class="lg:col-span-2">
                 
                 {{-- Header --}}
-                <div class="mb-4">
+                <div class="mb-4 section-fade-in" style="animation-delay: 0.1s;">
                     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">{{ $car->name }}</h1>
                     <div class="flex items-center text-gray-600 dark:text-gray-400">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
@@ -37,7 +57,7 @@
                 {{-- ========================================================== --}}
                 {{--            ANIMATED GALLERY SECTION (RTL FIXED)            --}}
                 {{-- ========================================================== --}}
-                <div id="gallery" class="relative w-full">
+                <div id="gallery" class="relative w-full section-fade-in" style="animation-delay: 0.2s;">
                     <div class="relative h-96 overflow-hidden rounded-lg">
                         @if(count($thumbnails) > 0)
                             
@@ -84,7 +104,7 @@
 
                 {{-- Thumbnails --}}
                 @if(count($thumbnails) > 1)
-                <div class="grid grid-cols-6 gap-2 mt-2">
+                <div class="grid grid-cols-6 gap-2 mt-2 section-fade-in" style="animation-delay: 0.3s;">
                     @foreach($thumbnails as $index => $thumb)
                         <button class="thumb-btn rounded-lg overflow-hidden border-2 border-transparent hover:border-blue-500 focus:border-blue-500" data-src="{{ $thumb }}">
                             <img src="{{ $thumb }}" class="h-16 w-full object-cover" alt="Car thumbnail {{ $index + 1 }}">
@@ -94,22 +114,24 @@
                 @endif
     
                 {{-- Features --}}
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">{{ __('cars_page.vehicle_features') }}</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    @foreach($specs as $spec)
-                    <div class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                        @if($spec['icon'] == 'electric' || $spec['icon'] == 'fuel')
-                            <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
-                        @elseif($spec['icon'] == 'manual' || $spec['icon'] == 'auto' || $spec['icon'] == 'transmission')
-                             <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527c.477-.34.994-.142 1.246.317l.545 1.03c.25.46.07.994-.317 1.246l-.527.737c-.25.35-.272.806-.108 1.204.165.397.505.71.93.78l.893.15c.542.09.94.56.94 1.11v1.093c0 .55-.398 1.02-.94 1.11l-.893.149c-.425.07-.764.384-.93.78-.164.398-.142.855.108 1.205l.527.737c.34.477.142.994-.317 1.246l1.03-.545c.46-.25.994-.07 1.246.317l.737.527c.35.25.806.272 1.204.108.397-.165.71-.505.78-.93l.15-.893zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>
-                        @elseif($spec['icon'] == 'seats' || $spec['icon'] == 'doors')
-                            <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.5 1.5 0 0118 21.75H6a1.5 1.5 0 01-1.499-1.632z" /></svg>
-                        @else
-                            <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        @endif
-                        <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $spec['text'] }}</span>
+                <div class="section-fade-in" style="animation-delay: 0.4s;">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">{{ __('cars_page.vehicle_features') }}</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        @foreach($specs as $spec)
+                        <div class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                            @if($spec['icon'] == 'electric' || $spec['icon'] == 'fuel')
+                                <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                            @elseif($spec['icon'] == 'manual' || $spec['icon'] == 'auto' || $spec['icon'] == 'transmission')
+                                 <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527c.477-.34.994-.142 1.246.317l.545 1.03c.25.46.07.994-.317 1.246l-.527.737c-.25.35-.272.806-.108 1.204.165.397.505.71.93.78l.893.15c.542.09.94.56.94 1.11v1.093c0 .55-.398 1.02-.94 1.11l-.893.149c-.425.07-.764.384-.93.78-.164.398-.142.855.108 1.205l.527.737c.34.477.142.994-.317 1.246l1.03-.545c.46-.25.994-.07 1.246.317l.737.527c.35.25.806.272 1.204.108.397-.165.71-.505.78-.93l.15-.893zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>
+                            @elseif($spec['icon'] == 'seats' || $spec['icon'] == 'doors')
+                                <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.5 1.5 0 0118 21.75H6a1.5 1.5 0 01-1.499-1.632z" /></svg>
+                            @else
+                                <svg class="w-6 h-6 text-gray-700 dark:text-gray-300 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            @endif
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $spec['text'] }}</span>
+                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
 
                 @php
@@ -118,13 +140,15 @@
                 @endphp
 
                 @if($displayDescription)
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
-                    {{ __('cars_page.vehicle_description') }}
-                </h2>
-                <div class="w-full pt-0 px-6 pb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                        {{ trim($displayDescription) }}
-                    </p>
+                <div class="section-fade-in" style="animation-delay: 0.5s;">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
+                        {{ __('cars_page.vehicle_description') }}
+                    </h2>
+                    <div class="w-full pt-0 px-6 pb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                            {{ trim($displayDescription) }}
+                        </p>
+                    </div>
                 </div>
                 @endif
     
@@ -132,7 +156,7 @@
     
             {{-- ================= RIGHT COLUMN: BOOKING FORM ================= --}}
             <div class="lg:col-span-1">
-                <div class="sticky top-24 p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+                <div class="sticky top-24 p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 section-fade-in" style="animation-delay: 0.3s;">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-5">{{ __('cars_page.rent_this_vehicle') }}</h2>
                     
                     <form action="{{ route('reservations.store', $car->id) }}" method="POST" class="space-y-4">
