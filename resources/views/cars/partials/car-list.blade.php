@@ -1,4 +1,4 @@
-{{-- MODIFIED: Added .fade-in-sortbar class and inline style for delay --}}
+{{-- Sorting & Pagination Controls --}}
 <div class="flex flex-col md:flex-row justify-between items-center mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 fade-in-sortbar" 
      style="animation-delay: 100ms">
     <span class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 md:mb-0">
@@ -68,16 +68,18 @@
     </div>
 
     @forelse($carsPaginator as $car)
-        {{-- MODIFIED: Adjusted animation delay to start after the sort bar --}}
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow fade-in-card"
              style="animation-delay: {{ 200 + ($loop->index * 75) }}ms">
             
             <div class="md:w-1/3 relative">
-                <img class="h-full w-full object-cover absolute inset-0" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
+                <a href="{{ route('cars.show', $car['id']) }}">
+                    <img class="h-full w-full object-cover absolute inset-0" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
+                </a>
             </div>
-            {{-- Spacer for aspect ratio on mobile --}}
             <div class="md:hidden h-48">
-                <img class="h-full w-full object-cover" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
+                <a href="{{ route('cars.show', $car['id']) }}">
+                    <img class="h-full w-full object-cover" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
+                </a>
             </div>
 
             <div class="md:w-2/3 p-6 flex flex-col justify-between">
@@ -119,7 +121,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4-6v2m0 0v2m0-2h2m-2 0H8m8-2v2m0 0v2m0-2h2m-2 0h-2" />
                                     </svg>
-                                @endif
+                                @endif {{-- <== THIS IS THE FIX --}}
                                 <span class="text-sm truncate">{{ $spec['text'] }}</span>
                             </div>
                         @endforeach
