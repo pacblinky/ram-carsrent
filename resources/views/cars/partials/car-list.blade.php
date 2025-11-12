@@ -1,5 +1,6 @@
-{{-- Sorting & Pagination Controls --}}
-<div class="flex flex-col md:flex-row justify-between items-center mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+{{-- MODIFIED: Added .fade-in-sortbar class and inline style for delay --}}
+<div class="flex flex-col md:flex-row justify-between items-center mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 fade-in-sortbar" 
+     style="animation-delay: 100ms">
     <span class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 md:mb-0">
         {{ __('cars_page.showing_results', [
             'start' => $carsPaginator->firstItem() ?? 0,
@@ -67,9 +68,9 @@
     </div>
 
     @forelse($carsPaginator as $car)
-        {{-- MODIFIED: Added .fade-in-card class and inline style for animation delay --}}
+        {{-- MODIFIED: Adjusted animation delay to start after the sort bar --}}
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow fade-in-card"
-             style="animation-delay: {{ $loop->index * 75 }}ms">
+             style="animation-delay: {{ 200 + ($loop->index * 75) }}ms">
             
             <div class="md:w-1/3 relative">
                 <img class="h-full w-full object-cover absolute inset-0" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">

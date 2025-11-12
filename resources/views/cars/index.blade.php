@@ -28,7 +28,7 @@
             animation-delay: 0.2s; 
         }
 
-        /* ADDED: Classes for Main Content Title and Filters */
+        /* For Main Content Title and Filters */
         .fade-in-main-title, .fade-in-filters {
             opacity: 0;
             animation: fadeIn 0.6s ease-out forwards;
@@ -40,6 +40,12 @@
         
         .fade-in-filters {
             animation-delay: 0.4s; /* After main title */
+        }
+
+        /* ADDED: Class for the Sort Bar */
+        .fade-in-sortbar {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
         }
 
     </style>
@@ -146,7 +152,7 @@
 
     {{-- MAIN CONTENT --}}
     <section class="max-w-screen-xl mx-auto pt-48 md:pt-32 pb-12 px-4">
-        {{-- MODIFIED: Added 'fade-in-main-title' class --}}
+        {{-- Added 'fade-in-main-title' class --}}
         <div class="mb-8 fade-in-main-title">
             <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('cars_page.fleet_title') }}</h2>
             <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('cars_page.fleet_subtitle') }}</p>
@@ -168,7 +174,7 @@
             {{-- =================================== --}}
             {{-- MODIFIED: SIDEBAR FILTERS --}}
             {{-- =================================== --}}
-            {{-- MODIFIED: Added 'fade-in-filters' class --}}
+            {{-- Added 'fade-in-filters' class --}}
             <aside class="hidden lg:block lg:col-span-1 space-y-6 fade-in-filters" id="sidebar-filters">
                 
                 {{-- 1. Price Filter Form (Unchanged) --}}
