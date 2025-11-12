@@ -1,5 +1,5 @@
 <x-app-layout>
-    {{-- MODIFIED: Style block for fade-in animation --}}
+    {{-- Style block (Unchanged from last time) --}}
     <style>
         @keyframes fadeIn {
             from {
@@ -11,54 +11,39 @@
                 transform: translateY(0);
             }
         }
-        
-        /* For the car cards */
         .fade-in-card {
             opacity: 0; 
             animation: fadeIn 0.5s ease-out forwards;
         }
-
-        /* For the hero section */
         .fade-in-hero-content, .fade-in-hero-search {
             opacity: 0;
             animation: fadeIn 0.6s ease-out forwards;
         }
-        
         .fade-in-hero-search {
             animation-delay: 0.2s; 
         }
-
-        /* For Main Content Title and Filters */
         .fade-in-main-title, .fade-in-filters {
             opacity: 0;
             animation: fadeIn 0.6s ease-out forwards;
         }
-
         .fade-in-main-title {
-            animation-delay: 0.3s; /* After hero search */
+            animation-delay: 0.3s;
         }
-        
         .fade-in-filters {
-            animation-delay: 0.4s; /* After main title */
+            animation-delay: 0.4s;
         }
-
-        /* ADDED: Class for the Sort Bar */
         .fade-in-sortbar {
             opacity: 0;
             animation: fadeIn 0.5s ease-out forwards;
         }
-
     </style>
-    {{-- END MODIFIED BLOCK --}}
 
-    {{-- HERO SEARCH SECTION --}}
+    {{-- HERO SEARCH SECTION (Unchanged) --}}
     <section class="relative bg-gray-900 flex flex-col items-center justify-center pt-24 pb-48">
         <div class="absolute inset-0">
             <img src="{{ asset('images/driving.gif') }}" alt="Background" class="w-full h-full object-cover opacity-50">
             <div class="absolute inset-0 bg-black opacity-50"></div>
         </div>
-
-        {{-- Added 'fade-in-hero-content' class --}}
         <div class="relative z-10 text-center px-4 fade-in-hero-content">
             <span class="inline-block bg-green-100 text-green-800 text-sm font-medium px-4 py-1.5 rounded-full dark:bg-green-900 dark:text-green-300">
                 {{ __('cars_page.hero_badge') }}
@@ -68,11 +53,6 @@
                 {{ __('cars_page.hero_subtitle') }}
             </p>
         </div>
-
-        {{-- =================================== --}}
-        {{-- MAIN SEARCH FORM (4-column layout) --}}
-        {{-- =================================== --}}
-        {{-- Added 'fade-in-hero-search' class --}}
         <div class="absolute -bottom-40 md:-bottom-24 z-20 w-full max-w-screen-lg mx-auto px-4 fade-in-hero-search">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
                 <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-4 gap-4 items-end" id="cars-search-form">
@@ -152,7 +132,6 @@
 
     {{-- MAIN CONTENT --}}
     <section class="max-w-screen-xl mx-auto pt-48 md:pt-32 pb-12 px-4">
-        {{-- Added 'fade-in-main-title' class --}}
         <div class="mb-8 fade-in-main-title">
             <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('cars_page.fleet_title') }}</h2>
             <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('cars_page.fleet_subtitle') }}</p>
@@ -160,12 +139,9 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-            {{-- =================================== --}}
-            {{-- NEW: MOBILE FILTER TOGGLE BUTTON --}}
-            {{-- =================================== --}}
-            <div class="lg:hidden"> {{-- Only show on screens smaller than lg --}}
+            {{-- Mobile Filter Toggle Button (Unchanged) --}}
+            <div class="lg:hidden">
                 <button type="button" id="filter-toggle-button" class="flex items-center justify-between w-full p-4 font-medium text-left text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700">
-                    {{-- Text will be updated by JS --}}
                     <span>{{ __('cars_page.show_filters') ?? 'Show Filters' }}</span> 
                     <svg id="filter-toggle-icon" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
@@ -174,9 +150,17 @@
             {{-- =================================== --}}
             {{-- MODIFIED: SIDEBAR FILTERS --}}
             {{-- =================================== --}}
-            {{-- Added 'fade-in-filters' class --}}
             <aside class="hidden lg:block lg:col-span-1 space-y-6 fade-in-filters" id="sidebar-filters">
                 
+                {{-- ADDED: Clear Filters Button (Above) --}}
+                <a href="{{ route('cars.index') }}" 
+                   class="ajax-filter-link block w-full text-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg shadow-sm hover:bg-red-50 dark:bg-gray-800 dark:border-gray-700 dark:text-red-500 dark:hover:bg-gray-700">
+                    <svg class="inline-block w-4 h-4 me-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{ __('cars_page.clear_all_filters') ?? 'Clear All Filters' }}
+                </a>
+
                 {{-- 1. Price Filter Form (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.price_range') }}</h3>
@@ -347,6 +331,16 @@
                         @endforeach
                     </ul>
                 </div>
+                
+                {{-- ADDED: Clear Filters Button (Below) --}}
+                <a href="{{ route('cars.index') }}" 
+                   class="ajax-filter-link block w-full text-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg shadow-sm hover:bg-red-50 dark:bg-gray-800 dark:border-gray-700 dark:text-red-500 dark:hover:bg-gray-700">
+                    <svg class="inline-block w-4 h-4 me-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {{ __('cars_page.clear_all_filters') ?? 'Clear All Filters' }}
+                </a>
+
             </aside>
 
             {{-- MAIN CONTENT CONTAINER (AJAX will update this) --}}
@@ -357,13 +351,13 @@
     </section>
 
     {{-- =================================== --}}
-    {{-- AJAX SCRIPT (Unchanged) --}}
+    {{-- AJAX SCRIPT (MODIFIED) --}}
     {{-- =================================== --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('car-list-container');
 
-            // --- Function to bind the mobile toggle button ---
+            // --- Function to bind the mobile toggle button (Unchanged) ---
             function bindMobileToggle() {
                 const sidebar = document.getElementById('sidebar-filters');
                 const toggleButton = document.getElementById('filter-toggle-button');
@@ -389,7 +383,7 @@
                 }
             }
             
-            // --- Click handler for the toggle button ---
+            // --- Click handler for the toggle button (Unchanged) ---
             function handleToggleClick() {
                 const sidebar = document.getElementById('sidebar-filters');
                 const toggleButton = document.getElementById('filter-toggle-button');
@@ -411,11 +405,10 @@
                 }
             }
 
-            // --- Initial bind on page load ---
+            // --- Initial bind on page load (Unchanged) ---
             bindMobileToggle();
 
-            // --- DATETIME-LOCAL SCRIPT ---
-            // Set min attribute for datetime-local inputs to current time
+            // --- DATETIME-LOCAL SCRIPT (Unchanged) ---
             const setMinDateTime = (selector) => {
                 const el = document.querySelector(selector);
                 if (el) {
@@ -434,7 +427,6 @@
                     }
                 }
             };
-            
             const bindDateTimeSync = () => {
                 setMinDateTime("#pickup_datetime");
                 setMinDateTime("#dropoff_datetime");
@@ -463,15 +455,9 @@
                     syncDropoffMin(); // Run on init
                 }
             }
-            
-            // Initial bind
             bindDateTimeSync();
             
-            // --- End of Datepicker Logic Setup ---
-
-
             // --- rebindPartialEvents (Unchanged) ---
-            // This is for the "Sort By" dropdown inside the partial
             function rebindPartialEvents() {
                 document.querySelectorAll('.ajax-filter-link-select').forEach(select => {
                     const newSelect = select.cloneNode(true);
@@ -486,7 +472,7 @@
                 });
             }
 
-            // --- fetchCars Function (MODIFIED) ---
+            // --- fetchCars Function (Unchanged) ---
             function fetchCars(url) {
                 const currentCarListContainer = document.getElementById('car-list-container');
                 const currentSidebarContainer = document.getElementById('sidebar-filters');
@@ -500,7 +486,6 @@
                 
                 if (!url) return;
 
-                // --- MODIFICATION: Preserve sidebar visibility state on mobile ---
                 const oldSidebar = document.getElementById('sidebar-filters');
                 const isMobileHidden = (window.innerWidth < 1024) && oldSidebar && oldSidebar.classList.contains('hidden');
 
@@ -521,7 +506,6 @@
                         currentSidebarContainer.innerHTML = newSidebarContent.innerHTML;
                     }
 
-                    // --- MODIFICATION: Re-apply hidden state if it was hidden on mobile ---
                     if (isMobileHidden) {
                         const newSidebar = document.getElementById('sidebar-filters');
                         if (newSidebar) newSidebar.classList.add('hidden');
@@ -533,10 +517,9 @@
                         initFlowbite();
                     }
                     
-                    // --- Re-bind events for new content ---
                     rebindPartialEvents(); 
-                    bindMobileToggle(); // <-- RE-BIND THE TOGGLE BUTTON
-                    bindDateTimeSync(); // <-- RE-BIND THE DATETIME SYNC
+                    bindMobileToggle();
+                    bindDateTimeSync();
                 })
                 .catch(error => console.error('Error fetching cars:', error))
                 .finally(() => {
@@ -549,13 +532,22 @@
                 });
             }
 
-            // --- Click listener (Unchanged) ---
+            // --- MODIFIED: Click listener ---
             document.addEventListener('click', function(e) {
+                // Check for pagination links
                 const pageLink = e.target.closest('#pagination-container a');
                 if (pageLink) {
                     e.preventDefault();
                     fetchCars(pageLink.href);
                     container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    return; // Exit
+                }
+
+                // Check for generic AJAX filter links (for sorting, per_page, and clear)
+                const filterLink = e.target.closest('a.ajax-filter-link');
+                if (filterLink) {
+                    e.preventDefault();
+                    fetchCars(filterLink.href);
                 }
             });
 
@@ -577,16 +569,11 @@
                 }
             });
 
-            // --- Form Submit listener (MODIFIED) ---
+            // --- Form Submit listener (Unchanged) ---
             document.addEventListener('submit', function(e) {
                 if (e.target.classList.contains('ajax-form')) {
                     e.preventDefault();
                     const form = e.target;
-                    
-                    // Simplified logic: The FormData will now contain the correct
-                    // 'pickup_datetime' and 'dropoff_datetime' keys directly
-                    // from the form inputs. No more JS magic needed.
-                    
                     const url = new URL(form.action);
                     const formData = new FormData(form);
                     
@@ -598,7 +585,6 @@
                     });
 
                     formData.forEach((value, key) => {
-                        // All form fields are now valid, so just set them
                         if (value) { 
                              url.searchParams.set(key, value);
                         } else {
