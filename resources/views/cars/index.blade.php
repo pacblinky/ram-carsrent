@@ -1,4 +1,50 @@
 <x-app-layout>
+    {{-- MODIFIED: Style block for fade-in animation --}}
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* For the car cards */
+        .fade-in-card {
+            opacity: 0; 
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* For the hero section */
+        .fade-in-hero-content, .fade-in-hero-search {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .fade-in-hero-search {
+            animation-delay: 0.2s; 
+        }
+
+        /* ADDED: Classes for Main Content Title and Filters */
+        .fade-in-main-title, .fade-in-filters {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .fade-in-main-title {
+            animation-delay: 0.3s; /* After hero search */
+        }
+        
+        .fade-in-filters {
+            animation-delay: 0.4s; /* After main title */
+        }
+
+    </style>
+    {{-- END MODIFIED BLOCK --}}
+
     {{-- HERO SEARCH SECTION --}}
     <section class="relative bg-gray-900 flex flex-col items-center justify-center pt-24 pb-48">
         <div class="absolute inset-0">
@@ -6,7 +52,8 @@
             <div class="absolute inset-0 bg-black opacity-50"></div>
         </div>
 
-        <div class="relative z-10 text-center px-4">
+        {{-- Added 'fade-in-hero-content' class --}}
+        <div class="relative z-10 text-center px-4 fade-in-hero-content">
             <span class="inline-block bg-green-100 text-green-800 text-sm font-medium px-4 py-1.5 rounded-full dark:bg-green-900 dark:text-green-300">
                 {{ __('cars_page.hero_badge') }}
             </span>
@@ -19,7 +66,8 @@
         {{-- =================================== --}}
         {{-- MAIN SEARCH FORM (4-column layout) --}}
         {{-- =================================== --}}
-        <div class="absolute -bottom-40 md:-bottom-24 z-20 w-full max-w-screen-lg mx-auto px-4">
+        {{-- Added 'fade-in-hero-search' class --}}
+        <div class="absolute -bottom-40 md:-bottom-24 z-20 w-full max-w-screen-lg mx-auto px-4 fade-in-hero-search">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
                 <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-4 gap-4 items-end" id="cars-search-form">
                     
@@ -98,7 +146,8 @@
 
     {{-- MAIN CONTENT --}}
     <section class="max-w-screen-xl mx-auto pt-48 md:pt-32 pb-12 px-4">
-        <div class="mb-8">
+        {{-- MODIFIED: Added 'fade-in-main-title' class --}}
+        <div class="mb-8 fade-in-main-title">
             <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('cars_page.fleet_title') }}</h2>
             <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('cars_page.fleet_subtitle') }}</p>
         </div>
@@ -119,8 +168,8 @@
             {{-- =================================== --}}
             {{-- MODIFIED: SIDEBAR FILTERS --}}
             {{-- =================================== --}}
-            {{-- Added 'hidden' to hide by default on mobile, 'lg:block' ensures it shows on desktop --}}
-            <aside class="hidden lg:block lg:col-span-1 space-y-6" id="sidebar-filters">
+            {{-- MODIFIED: Added 'fade-in-filters' class --}}
+            <aside class="hidden lg:block lg:col-span-1 space-y-6 fade-in-filters" id="sidebar-filters">
                 
                 {{-- 1. Price Filter Form (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -302,7 +351,7 @@
     </section>
 
     {{-- =================================== --}}
-    {{-- AJAX SCRIPT (MODIFIED) --}}
+    {{-- AJAX SCRIPT (Unchanged) --}}
     {{-- =================================== --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -67,7 +67,10 @@
     </div>
 
     @forelse($carsPaginator as $car)
-        <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow">
+        {{-- MODIFIED: Added .fade-in-card class and inline style for animation delay --}}
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow fade-in-card"
+             style="animation-delay: {{ $loop->index * 75 }}ms">
+            
             <div class="md:w-1/3 relative">
                 <img class="h-full w-full object-cover absolute inset-0" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
             </div>
