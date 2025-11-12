@@ -32,7 +32,7 @@ return [
     'vehicle_features' => 'Vehicle Features',
     'rent_this_vehicle' => 'Rent This Vehicle',
     'pickup_date' => 'Pick-Up Date',
-    'dropoff_date' => 'Drop-Off Date',
+    'dropoff_date' => 'Return Date',
     'select_date' => 'Select date',
     'start_time' => 'Start Time *',
     'end_time' => 'End Time *',

@@ -32,7 +32,7 @@ return [
     'vehicle_features' => 'مواصفات المركبة',
     'rent_this_vehicle' => 'استأجر هذه المركبة',
     'pickup_date' => 'تاريخ الاستلام',
-    'dropoff_date' => 'تاريخ التسليم',
+    'return_date' => 'تاريخ الإرجاع',
     'select_date' => 'اختر التاريخ',
     'start_time' => 'وقت البدء *',
     'end_time' => 'وقت الانتهاء *',

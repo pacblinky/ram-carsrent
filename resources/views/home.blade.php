@@ -20,10 +20,6 @@
                 
                 <form action="{{ route('cars.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-6" id="hero-search-form">
                     
-                    {{-- Hidden fields to hold the combined datetime for submission --}}
-                    <input type="hidden" name="pickup_datetime" id="hidden_pickup_datetime">
-                    <input type="hidden" name="dropoff_datetime" id="hidden_dropoff_datetime">
-
                     {{-- 1. Pickup Location --}}
                     <div>
                         <label for="location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_location') }}</label>
@@ -35,39 +31,35 @@
                         </select>
                     </div>
                     
-                    {{-- 2. Pickup Date Only --}}
+                    {{-- 2. Pickup DateTime --}}
                     <div>
-                        <label for="search_start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_date') }}</label>
+                        <label for="pickup_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_date') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
                             </div>
                             <input
-                                type="text"
-                                id="search_start_date"
-                                datepicker
-                                datepicker-autohide
-                                datepicker-format="yyyy-mm-dd"
-                                datepicker-min-date="{{ date('Y-m-d') }}"
+                                type="datetime-local"
+                                id="pickup_datetime"
+                                name="pickup_datetime"
+                                min="{{ now()->format('Y-m-d\TH:i') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
 
-                    {{-- 3. Dropoff Date Only --}}
+                    {{-- 3. Dropoff DateTime --}}
                     <div>
-                        <label for="search_end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.return_date') }}</label>
+                        <label for="dropoff_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.return_date') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
                             </div>
                             <input
-                                type="text"
-                                id="search_end_date"
-                                datepicker
-                                datepicker-autohide
-                                datepicker-format="yyyy-mm-dd"
-                                datepicker-min-date="{{ date('Y-m-d') }}"
+                                type="datetime-local"
+                                id="dropoff_datetime"
+                                name="dropoff_datetime"
+                                min="{{ now()->format('Y-m-d\TH:i') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
@@ -363,7 +355,7 @@
     </section>
 
     {{-- ======================================================= --}}
-    {{-- MODIFIED SCRIPT: Simplified & Fixed Animation Logic --}}
+    {{-- MODIFIED SCRIPT: Simplified Animation Logic --}}
     {{-- ======================================================= --}}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -415,49 +407,41 @@
                 scrollObserver.observe(el);
             });
 
-            // --- 3. DATE-ONLY SCRIPT FOR HERO FORM ---
-            const searchForm = document.getElementById("hero-search-form");
-            const startDateEl = document.getElementById("search_start_date");
-            const endDateEl   = document.getElementById("search_end_date");
-            const hiddenPickup = document.getElementById("hidden_pickup_datetime");
-            const hiddenDropoff = document.getElementById("hidden_dropoff_datetime");
-
-            if (startDateEl && endDateEl) { 
-                const startDatePicker = new Datepicker(startDateEl);
-                const endDatePicker = new Datepicker(endDateEl);
-
-                const toDate = (str) => {
-                    if (!str) return null;
-                    const [y, m, d] = str.split("-").map(Number);
-                    if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
-                    return new Date(y, m - 1, d);
-                };
-
-                const syncPickers = () => {
-                    const startDate = toDate(startDateEl.value);
-                    const endDate = toDate(endDateEl.value);
-
-                    if (startDate) {
-                        endDatePicker.setOptions({
-                            minDate: startDateEl.value
-                        });
-                        if (endDate && endDate < startDate) {
-                            endDatePicker.setDate(startDateEl.value);
-                        }
-                    }
-                };
-                
-                startDateEl.addEventListener("changeDate", syncPickers);
-            }
+            // --- 3. DATETIME-LOCAL SCRIPT ---
+            // Set min attribute for datetime-local inputs to current time
+            const setMinDateTime = (selector) => {
+                const el = document.querySelector(selector);
+                if (el) {
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                    now.setSeconds(0, 0); // Clear seconds/milliseconds
+                    el.min = now.toISOString().slice(0, 16);
+                }
+            };
             
-            if (searchForm) {
-                searchForm.addEventListener("submit", (e) => {
-                    if (startDateEl.value && endDateEl.value) {
-                        hiddenPickup.value = `${startDateEl.value}T00:00`;
-                        hiddenDropoff.value = `${endDateEl.value}T23:59`;
+            setMinDateTime("#pickup_datetime");
+            setMinDateTime("#dropoff_datetime");
+            
+            // Optional: Sync dropoff min time to pickup time
+            const pickupEl = document.getElementById("pickup_datetime");
+            const dropoffEl = document.getElementById("dropoff_datetime");
+
+            if (pickupEl && dropoffEl) {
+                pickupEl.addEventListener("change", () => {
+                    if (pickupEl.value) {
+                        // Set dropoff min to be at least pickup time
+                        dropoffEl.min = pickupEl.value;
+                        
+                        // If dropoff is already set and is now invalid, clear it
+                        if (dropoffEl.value && dropoffEl.value < pickupEl.value) {
+                            dropoffEl.value = "";
+                        }
+                    } else {
+                         setMinDateTime("#dropoff_datetime"); // Reset to "now"
                     }
                 });
             }
+
 
             // --- 4. SCRIPT FOR VIDEO CAROUSEL ---
             const videoCarousel = document.getElementById('video-carousel');

@@ -23,10 +23,6 @@
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
                 <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-4 gap-4 items-end" id="cars-search-form">
                     
-                    {{-- Hidden fields for submission (FULL DATETIME VALUES) --}}
-                    <input type="hidden" name="pickup_datetime" id="hidden_pickup_datetime_cars" value="{{ request('pickup_datetime') }}">
-                    <input type="hidden" name="dropoff_datetime" id="hidden_dropoff_datetime_cars" value="{{ request('dropoff_datetime') }}">
-
                     {{-- Location Dropdown --}}
                     <div>
                         <label for="location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_location') }}</label>
@@ -51,41 +47,37 @@
                         </div>
                     </div>
 
-                    {{-- Pickup Date (Date-only filter display) --}}
+                    {{-- Pickup DateTime --}}
                     <div>
-                        <label for="search_start_date_cars" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_date') }}</label>
+                        <label for="pickup_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_date') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
                             </div>
                             <input
-                                type="text"
-                                id="search_start_date_cars"
-                                datepicker
-                                datepicker-autohide
-                                datepicker-format="yyyy-mm-dd"
-                                datepicker-min-date="{{ date('Y-m-d') }}"
-                                value="{{ request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('Y-m-d') : '' }}"
+                                type="datetime-local"
+                                id="pickup_datetime"
+                                name="pickup_datetime"
+                                min="{{ now()->format('Y-m-d\TH:i') }}"
+                                value="{{ request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('Y-m-d\TH:i') : '' }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
                     
-                    {{-- Dropoff Date (Date-only filter display) --}}
+                    {{-- Dropoff DateTime --}}
                     <div>
-                        <label for="search_end_date_cars" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_date') }}</label>
+                        <label for="dropoff_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_date') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
                             </div>
                             <input
-                                type="text"
-                                id="search_end_date_cars"
-                                datepicker
-                                datepicker-autohide
-                                datepicker-format="yyyy-mm-dd"
-                                datepicker-min-date="{{ date('Y-m-d') }}"
-                                value="{{ request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('Y-m-d') : '' }}"
+                                type="datetime-local"
+                                id="dropoff_datetime"
+                                name="dropoff_datetime"
+                                min="{{ now()->format('Y-m-d\TH:i') }}"
+                                value="{{ request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('Y-m-d\TH:i') : '' }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
@@ -367,47 +359,59 @@
             // --- Initial bind on page load ---
             bindMobileToggle();
 
-            // --- Datepicker Logic Setup (Unchanged) ---
-            const startDateEl = document.getElementById("search_start_date_cars");
-            const endDateEl   = document.getElementById("search_end_date_cars");
-            const hiddenPickup = document.getElementById("hidden_pickup_datetime_cars");
-            const hiddenDropoff = document.getElementById("hidden_dropoff_datetime_cars");
+            // --- DATETIME-LOCAL SCRIPT ---
+            // Set min attribute for datetime-local inputs to current time
+            const setMinDateTime = (selector) => {
+                const el = document.querySelector(selector);
+                if (el) {
+                    // Check if value is not set or is in the past
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                    now.setSeconds(0, 0); // Clear seconds/milliseconds
+                    const minTime = now.toISOString().slice(0, 16);
 
-            if (startDateEl && endDateEl) {
-                const startDatePicker = new Datepicker(startDateEl, {
-                    autohide: true,
-                    format: 'yyyy-mm-dd',
-                    minDate: '{{ date('Y-m-d') }}'
-                });
-                const endDatePicker = new Datepicker(endDateEl, {
-                    autohide: true,
-                    format: 'yyyy-mm-dd',
-                    minDate: '{{ date('Y-m-d') }}'
-                });
-
-                const toDate = (str) => {
-                    if (!str) return null;
-                    const [y, m, d] = str.split("-").map(Number);
-                    if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
-                    return new Date(y, m - 1, d);
-                };
-
-                const syncPickers = () => {
-                    const startDate = toDate(startDateEl.value);
-                    const endDate = toDate(endDateEl.value);
-
-                    if (startDate) {
-                        endDatePicker.setOptions({
-                            minDate: startDateEl.value
-                        });
-                        if (endDate && endDate < startDate) {
-                            endDatePicker.setDate(startDateEl.value);
-                        }
+                    if (!el.value || el.value < minTime) {
+                         // We only set the min attribute, the value is set by PHP
+                         el.min = minTime;
+                    } else {
+                        // If value is valid, set min to now anyway
+                        el.min = minTime;
                     }
-                };
-                startDateEl.addEventListener("changeDate", syncPickers);
-                syncPickers(); 
+                }
+            };
+            
+            const bindDateTimeSync = () => {
+                setMinDateTime("#pickup_datetime");
+                setMinDateTime("#dropoff_datetime");
+                
+                const pickupEl = document.getElementById("pickup_datetime");
+                const dropoffEl = document.getElementById("dropoff_datetime");
+
+                if (pickupEl && dropoffEl) {
+                    // Sync dropoff min time to pickup time
+                    const syncDropoffMin = () => {
+                        if (pickupEl.value) {
+                            // Set dropoff min to be at least pickup time
+                            dropoffEl.min = pickupEl.value;
+                            
+                            // If dropoff is already set and is now invalid, clear it
+                            if (dropoffEl.value && dropoffEl.value < pickupEl.value) {
+                                dropoffEl.value = "";
+                            }
+                        } else {
+                             setMinDateTime("#dropoff_datetime"); // Reset to "now"
+                        }
+                    };
+                    
+                    pickupEl.removeEventListener("change", syncDropoffMin); // Remove old
+                    pickupEl.addEventListener("change", syncDropoffMin); // Add new
+                    syncDropoffMin(); // Run on init
+                }
             }
+            
+            // Initial bind
+            bindDateTimeSync();
+            
             // --- End of Datepicker Logic Setup ---
 
 
@@ -477,6 +481,7 @@
                     // --- Re-bind events for new content ---
                     rebindPartialEvents(); 
                     bindMobileToggle(); // <-- RE-BIND THE TOGGLE BUTTON
+                    bindDateTimeSync(); // <-- RE-BIND THE DATETIME SYNC
                 })
                 .catch(error => console.error('Error fetching cars:', error))
                 .finally(() => {
@@ -517,23 +522,16 @@
                 }
             });
 
-            // --- Form Submit listener (Unchanged) ---
+            // --- Form Submit listener (MODIFIED) ---
             document.addEventListener('submit', function(e) {
                 if (e.target.classList.contains('ajax-form')) {
                     e.preventDefault();
                     const form = e.target;
-
-                    const formId = form.getAttribute('id');
-                    if (formId === 'cars-search-form' && startDateEl && endDateEl && hiddenPickup && hiddenDropoff) {
-                        if (startDateEl.value && endDateEl.value) {
-                            hiddenPickup.value = `${startDateEl.value}T00:00`;
-                            hiddenDropoff.value = `${endDateEl.value}T23:59`;
-                        } else {
-                            hiddenPickup.value = '';
-                            hiddenDropoff.value = '';
-                        }
-                    }
-
+                    
+                    // Simplified logic: The FormData will now contain the correct
+                    // 'pickup_datetime' and 'dropoff_datetime' keys directly
+                    // from the form inputs. No more JS magic needed.
+                    
                     const url = new URL(form.action);
                     const formData = new FormData(form);
                     
@@ -545,9 +543,7 @@
                     });
 
                     formData.forEach((value, key) => {
-                        if (key === 'search_start_date_cars' || key === 'search_end_date_cars') {
-                            return;
-                        }
+                        // All form fields are now valid, so just set them
                         if (value) { 
                              url.searchParams.set(key, value);
                         } else {
