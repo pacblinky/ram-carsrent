@@ -305,7 +305,7 @@
     {{-- ======================================================= --}}
     {{-- BOTTOM CTA SECTIONS --}}
     {{-- ======================================================= --}}
-    <section class="max-w-screen-xl mx-auto py-16 px-4">
+    <section class="max-w-screen-xl mx-auto py-16 px-4 overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
             {{-- First CTA: Start Renting --}}
