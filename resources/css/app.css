@@ -69,3 +69,55 @@
         transform: translateY(0);
     }
 }
+
+
+/* Base neon effect for light mode */
+.neon-animated-brand {
+  color: #007bff; /* Base blue for light mode */
+  animation: neon-glow-light 2.5s ease-in-out infinite alternate;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes neon-glow-light {
+  0% {
+      text-shadow: 
+          0 0 4px rgba(0, 123, 255, 0.7), /* Smaller, tighter glow */
+          0 0 8px rgba(0, 123, 255, 0.5),
+          0 0 12px rgba(0, 123, 255, 0.3);
+      color: #007bff; /* Bright blue text */
+  }
+  100% {
+      text-shadow: 
+          0 0 4px rgba(220, 53, 69, 0.7), /* Smaller, tighter glow */
+          0 0 8px rgba(220, 53, 69, 0.5),
+          0 0 12px rgba(220, 53, 69, 0.3);
+      color: #dc3545; /* Bright red text */
+  }
+}
+
+
+/* Dark mode neon effect */
+.dark .neon-animated-brand {
+  color: #e0f2fe; /* Light blue/cyan for dark mode */
+  animation: neon-glow-dark 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon-glow-dark {
+  0% {
+      text-shadow: 
+          0 0 5px #fff,       /* White core */
+          0 0 10px #0ff,      /* Cyan glow */
+          0 0 20px #0ff,
+          0 0 30px #0ff;
+      color: #e0f2fe; /* Light cyan text */
+  }
+  100% {
+      text-shadow: 
+          0 0 5px #fff,       /* White core */
+          0 0 10px #f0f,      /* Magenta glow */
+          0 0 20px #f0f,
+          0 0 30px #f0f;
+      color: #fce4ec; /* Light pink text */
+  }
+}
