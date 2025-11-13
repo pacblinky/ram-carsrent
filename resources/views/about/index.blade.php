@@ -5,6 +5,20 @@
         .animate-fade-in {
             animation: fadeIn 1s ease-out;
         }
+
+        /* This CSS ensures the map embed iframe fills the 
+        flex-grow container provided by the Flowbite slide.
+        */
+        .map-embed-container {
+            width: 100%;
+            height: 100%;
+        }
+        .map-embed-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 0.5rem; /* rounded-lg */
+        }
     </style>
 
     <div class="animate-fade-in">
@@ -85,21 +99,72 @@
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 md:mb-12 text-center">{{ __('about.locations_title') }}</h2>
 
                 @if($locations->isNotEmpty())
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {{-- List of Locations --}}
-                        <div class="space-y-4">
-                            @foreach($locations as $location)
-                                <div class="pb-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
-                                    <h4 class="text-lg font-semibold text-gray-800 dark:text-white">{{ $location->name }}</h4>
-                                    <p class="text-gray-600 dark:text-gray-400 mb-1">{{ $location->address }}</p>
-                                    <a href="{{ $location->google_maps_link }}" target="_blank" class="text-sm text-blue-600 hover:underline dark:text-blue-500">
-                                        {{ __('about.locations_view_map') }}
-                                        <svg class="w-3 h-3 inline-block ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/></svg>
-                                    </a>
+                    
+                    {{-- 
+                        ======================================
+                        ===            FIX HERE            ===
+                        ======================================
+                        Added data-carousel-interval="5000" to enable autoplay
+                        Added data-carousel-pause="hover" to stop sliding on hover
+                    --}}
+                    <div id="location-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="5000" data-carousel-pause="hover">
+                        
+                        <div class="relative h-96 overflow-hidden rounded-lg md:h-[32rem] bg-gray-100 dark:bg-gray-700">
+                             @foreach($locations as $location)
+                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                    
+                                    {{-- Slide Content --}}
+                                    <div class="flex flex-col h-full w-full p-2 md:p-4">
+                                        <h4 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 md:mb-4 text-center flex-shrink-0">
+                                            {{ $location->name }}
+                                        </h4>
+                
+                                        <div class="map-embed-container flex-grow relative">
+                                            {!! $location->google_maps_embed !!}
+                                        </div>
+                
+                                        <div class="text-center mt-2 md:mt-4 flex-shrink-0">
+                                            <a href="{{ $location->google_maps_link }}" target="_blank" class="text-sm text-blue-600 hover:underline dark:text-blue-500">
+                                                {{ __('about.locations_view_map') }}
+                                                <svg class="w-3 h-3 inline-block ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/></svg>
+                                            </a>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            @endforeach
+                             @endforeach
                         </div>
+                        
+                        @if ($locations->count() > 1)
+                            <div class="flex items-center justify-center mt-6">
+                                
+                                <button type="button" class="flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                        <svg class="w-4 h-4 text-gray-800 dark:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                        </svg>
+                                        <span class="sr-only">Previous</span>
+                                    </span>
+                                </button>
+
+                                <div class="flex mx-4 space-x-3 rtl:space-x-reverse">
+                                    @foreach($locations as $location)
+                                        <button type="button" class="w-3 h-3 rounded-full" aria-current="{{ $loop->first ? 'true' : 'false' }}" aria-label="Slide {{ $loop->iteration }}" data-carousel-slide-to="{{ $loop->index }}"></button>
+                                    @endforeach
+                                </div>
+                                
+                                <button type="button" class="flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                        <svg class="w-4 h-4 text-gray-800 dark:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                        </svg>
+                                        <span class="sr-only">Next</span>
+                                    </span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
+
                 @else
                     <p class="text-center text-gray-500 dark:text-gray-400">{{ __('about.locations_none') }}</p>
                 @endif
@@ -124,7 +189,7 @@
         </section>
     </div>
 
-    {{-- ANIMATION SCRIPT --}}
+    {{-- ANIMATION SCRIPT (No changes here) --}}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // 1. Trigger Hero Animation Immediately
