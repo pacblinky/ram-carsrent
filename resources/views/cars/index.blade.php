@@ -55,10 +55,28 @@
         </div>
         <div class="absolute -bottom-40 md:-bottom-24 z-20 w-full max-w-screen-lg mx-auto px-4 fade-in-hero-search">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
-                <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-4 gap-4 items-end" id="cars-search-form">
+                
+                @php
+                    // MODIFIED: Removed $times, kept defaults
+                    $defaultPickupTime = '09:00';
+                    $defaultDropoffTime = '17:00';
+
+                    $pickup_date_value = request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('Y-m-d') : '';
+                    $pickup_time_value = request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('H:i') : $defaultPickupTime;
                     
+                    $dropoff_date_value = request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('Y-m-d') : '';
+                    $dropoff_time_value = request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('H:i') : $defaultDropoffTime;
+                @endphp
+
+                {{-- MODIFIED: Grid changed to 3 cols --}}
+                <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-3 gap-4 items-end" id="cars-search-form">
+                    
+                    {{-- Hidden inputs to store combined datetime --}}
+                    <input type="hidden" name="pickup_datetime" id="pickup_datetime">
+                    <input type="hidden" name="dropoff_datetime" id="dropoff_datetime">
+
                     {{-- Location Dropdown --}}
-                    <div>
+                    <div class="md:col-span-1">
                         <label for="location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_location') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -81,40 +99,52 @@
                         </div>
                     </div>
 
-                    {{-- Pickup DateTime --}}
-                    <div>
-                        <label for="pickup_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_date') }}</label>
+                    {{-- Pickup Date --}}
+                    <div class="md:col-span-1">
+                        <label for="pickup_date_display" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_date') }}</label>
                         <div class="relative">
-                            {{-- REMOVED SVG ICON DIV --}}
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                </svg>
+                            </div>
                             <input
-                                type="datetime-local"
-                                id="pickup_datetime"
-                                name="pickup_datetime"
-                                min="{{ now()->format('Y-m-d\TH:i') }}"
-                                value="{{ request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('Y-m-d\TH:i') : '' }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                datepicker
+                                datepicker-autohide
+                                datepicker-format="yyyy-mm-dd"
+                                datepicker-min-date="{{ now()->format('Y-m-d') }}"
+                                type="text"
+                                id="pickup_date_display"
+                                value="{{ $pickup_date_value }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
                     
-                    {{-- Dropoff DateTime --}}
-                    <div>
-                        <label for="dropoff_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_date') }}</label>
+                    {{-- Dropoff Date --}}
+                    <div class="md:col-span-1">
+                        <label for="dropoff_date_display" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_date') }}</label>
                         <div class="relative">
-                            {{-- REMOVED SVG ICON DIV --}}
+                           <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                </svg>
+                            </div>
                             <input
-                                type="datetime-local"
-                                id="dropoff_datetime"
-                                name="dropoff_datetime"
-                                min="{{ now()->format('Y-m-d\TH:i') }}"
-                                value="{{ request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('Y-m-d\TH:i') : '' }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                datepicker
+                                datepicker-autohide
+                                datepicker-format="yyyy-mm-dd"
+                                datepicker-min-date="{{ now()->format('Y-m-d') }}"
+                                type="text"
+                                id="dropoff_date_display"
+                                value="{{ $dropoff_date_value }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
-
-                    {{-- Submit Button --}}
-                    <div>
+                    
+                    {{-- Submit Button (MODIFIED) --}}
+                    <div class="md:col-span-3">
                         <button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             {{ __('cars_page.find_vehicle') }}
                         </button>
@@ -148,7 +178,7 @@
             {{-- =================================== --}}
             <aside class="hidden lg:block lg:col-span-1 space-y-6 fade-in-filters" id="sidebar-filters">
                 
-                {{-- ADDED: Clear Filters Button (Above) --}}
+                {{-- (Sidebar content is unchanged) --}}
                 <a href="{{ route('cars.index') }}" 
                    class="ajax-filter-link block w-full text-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg shadow-sm hover:bg-red-50 dark:bg-gray-800 dark:border-gray-700 dark:text-red-500 dark:hover:bg-gray-700">
                     <svg class="inline-block w-4 h-4 me-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -157,7 +187,6 @@
                     {{ __('cars_page.clear_all_filters') ?? 'Clear All Filters' }}
                 </a>
 
-                {{-- 1. Price Filter Form (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.price_range') }}</h3>
                     <form action="{{ route('cars.index') }}" method="GET" class="ajax-form">
@@ -184,7 +213,6 @@
                     </form>
                 </div>
 
-                {{-- 2. Brand Filter (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.brand') }}</h3>
                     <ul class="space-y-3">
@@ -208,7 +236,6 @@
                     </ul>
                 </div>
 
-                {{-- 3. Category Filter (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.categories') }}</h3>
                     <ul class="space-y-3">
@@ -232,7 +259,6 @@
                     </ul>
                 </div>
                 
-                {{-- 4. Fuel Type Filter (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.fuel_type') }}</h3>
                     <ul class="space-y-3">
@@ -256,7 +282,6 @@
                     </ul>
                 </div>
 
-                {{-- 5. Transmission Filter (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.transmission') }}</h3>
                     <ul class="space-y-3">
@@ -280,7 +305,6 @@
                     </ul>
                 </div>
 
-                {{-- 6. Number of Seats Filter (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.seats') }}</h3>
                     <ul class="space-y-3">
@@ -304,7 +328,6 @@
                     </ul>
                 </div>
                 
-                {{-- 7. Number of Doors Filter (Unchanged) --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.doors') }}</h3>
                     <ul class="space-y-3">
@@ -328,7 +351,6 @@
                     </ul>
                 </div>
                 
-                {{-- ADDED: Clear Filters Button (Below) --}}
                 <a href="{{ route('cars.index') }}" 
                    class="ajax-filter-link block w-full text-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg shadow-sm hover:bg-red-50 dark:bg-gray-800 dark:border-gray-700 dark:text-red-500 dark:hover:bg-gray-700">
                     <svg class="inline-block w-4 h-4 me-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -404,52 +426,61 @@
             // --- Initial bind on page load (Unchanged) ---
             bindMobileToggle();
 
-            // --- DATETIME-LOCAL SCRIPT (Unchanged) ---
-            const setMinDateTime = (selector) => {
-                const el = document.querySelector(selector);
-                if (el) {
-                    // Check if value is not set or is in the past
-                    const now = new Date();
-                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-                    now.setSeconds(0, 0); // Clear seconds/milliseconds
-                    const minTime = now.toISOString().slice(0, 16);
+            // --- MODIFIED: DATE-ONLY SCRIPT ---
+            const bindDateTimeSync = () => {
+                const pickupDateEl = document.getElementById("pickup_date_display");
+                const dropoffDateEl = document.getElementById("dropoff_date_display");
+                
+                const pickupHiddenEl = document.getElementById("pickup_datetime");
+                const dropoffHiddenEl = document.getElementById("dropoff_datetime");
 
-                    if (!el.value || el.value < minTime) {
-                         // We only set the min attribute, the value is set by PHP
-                         el.min = minTime;
+                if (!pickupDateEl) return; // Exit if elements aren't here
+
+                // Use the default times passed from PHP (which include request values)
+                const pickupTimeValue = '{{ $pickup_time_value }}';
+                const dropoffTimeValue = '{{ $dropoff_time_value }}';
+
+                // Function to update the hidden datetime input
+                function updateHiddenInputs() {
+                    if (pickupDateEl.value) {
+                        pickupHiddenEl.value = `${pickupDateEl.value}T${pickupTimeValue}`;
                     } else {
-                        // If value is valid, set min to now anyway
-                        el.min = minTime;
+                        pickupHiddenEl.value = "";
+                    }
+                    
+                    if (dropoffDateEl.value) {
+                        dropoffHiddenEl.value = `${dropoffDateEl.value}T${dropoffTimeValue}`;
+                    } else {
+                        dropoffHiddenEl.value = "";
                     }
                 }
-            };
-            const bindDateTimeSync = () => {
-                setMinDateTime("#pickup_datetime");
-                setMinDateTime("#dropoff_datetime");
-                
-                const pickupEl = document.getElementById("pickup_datetime");
-                const dropoffEl = document.getElementById("dropoff_datetime");
 
-                if (pickupEl && dropoffEl) {
-                    // Sync dropoff min time to pickup time
-                    const syncDropoffMin = () => {
-                        if (pickupEl.value) {
-                            // Set dropoff min to be at least pickup time
-                            dropoffEl.min = pickupEl.value;
-                            
-                            // If dropoff is already set and is now invalid, clear it
-                            if (dropoffEl.value && dropoffEl.value < pickupEl.value) {
-                                dropoffEl.value = "";
-                            }
-                        } else {
-                             setMinDateTime("#dropoff_datetime"); // Reset to "now"
+                // Function to validate and sync date pickers
+                function validateAndSync() {
+                    const pd = pickupDateEl.value;
+                    const dd = dropoffDateEl.value;
+
+                    if (pd) {
+                        // If pickup date is set, ensure dropoff date is not before it
+                        if (dd && dd < pd) {
+                            dropoffDateEl.value = ""; // Clear invalid dropoff date
                         }
-                    };
+                        
+                        // Dynamically update the min-date attribute for Flowbite Datepicker
+                        dropoffDateEl.setAttribute('datepicker-min-date', pd);
+
+                    }
                     
-                    pickupEl.removeEventListener("change", syncDropoffMin); // Remove old
-                    pickupEl.addEventListener("change", syncDropoffMin); // Add new
-                    syncDropoffMin(); // Run on init
+                    // Update the hidden inputs
+                    updateHiddenInputs();
                 }
+
+                // Add event listeners
+                pickupDateEl.addEventListener("change", validateAndSync);
+                dropoffDateEl.addEventListener("change", validateAndSync);
+
+                // Initial call to set hidden inputs on page load
+                validateAndSync();
             }
             bindDateTimeSync();
             
@@ -515,7 +546,7 @@
                     
                     rebindPartialEvents(); 
                     bindMobileToggle();
-                    bindDateTimeSync();
+                    bindDateTimeSync(); // <-- This re-binds the new date-only logic
                 })
                 .catch(error => console.error('Error fetching cars:', error))
                 .finally(() => {
@@ -565,10 +596,37 @@
                 }
             });
 
-            // --- Form Submit listener (Unchanged) ---
+            // --- Form Submit listener (MODIFIED) ---
             document.addEventListener('submit', function(e) {
                 if (e.target.classList.contains('ajax-form')) {
                     e.preventDefault();
+                    
+                    // --- Ensure hidden fields are updated before submitting ---
+                    const pickupDateEl = document.getElementById("pickup_date_display");
+                    const dropoffDateEl = document.getElementById("dropoff_date_display");
+                    const pickupHiddenEl = document.getElementById("pickup_datetime");
+                    const dropoffHiddenEl = document.getElementById("dropoff_datetime");
+
+                    // Use the PHP-defined default times
+                    const pickupTimeValue = '{{ $pickup_time_value }}';
+                    const dropoffTimeValue = '{{ $dropoff_time_value }}';
+
+                    if (pickupDateEl && pickupHiddenEl) {
+                         if (pickupDateEl.value) {
+                            pickupHiddenEl.value = `${pickupDateEl.value}T${pickupTimeValue}`;
+                        } else {
+                            pickupHiddenEl.value = "";
+                        }
+                    }
+                    if (dropoffDateEl && dropoffHiddenEl) {
+                        if (dropoffDateEl.value) {
+                            dropoffHiddenEl.value = `${dropoffDateEl.value}T${dropoffTimeValue}`;
+                        } else {
+                            dropoffHiddenEl.value = "";
+                        }
+                    }
+                    // --- End of update ---
+
                     const form = e.target;
                     const url = new URL(form.action);
                     const formData = new FormData(form);
@@ -581,6 +639,11 @@
                     });
 
                     formData.forEach((value, key) => {
+                        // Exclude the display fields from the form submission
+                        if (key.endsWith('_display')) {
+                            return;
+                        }
+
                         if (value) { 
                              url.searchParams.set(key, value);
                         } else {
