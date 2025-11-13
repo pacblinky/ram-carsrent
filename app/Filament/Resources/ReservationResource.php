@@ -32,7 +32,6 @@ class ReservationResource extends Resource
         return __('admin.models.reservation.navigation_label');
     }
 
-    // --- ADDED METHODS ---
     public static function getModelLabel(): string
     {
         return __('admin.models.reservation.label');
@@ -42,7 +41,6 @@ class ReservationResource extends Resource
     {
         return __('admin.models.reservation.plural_label');
     }
-    // --- END OF ADDED METHODS ---
 
     public static function form(Form $form): Form
     {
@@ -147,11 +145,22 @@ class ReservationResource extends Resource
                     ]),
             ])
             ->defaultSort('start_datetime', 'desc')
+            ->filters([
+                Tables\Filters\SelectFilter::make('status')
+                    ->label(__('admin.table.status'))
+                    ->options([
+                        'pending'   => __('admin.form.options.status.pending'),
+                        'confirmed' => __('admin.form.options.status.confirmed'),
+                        'completed' => __('admin.form.options.status.completed'),
+                        'canceled'  => __('admin.form.options.status.canceled'),
+                        'overdue'   => __('admin.form.options.status.overdue'),
+                    ])
+                    ->multiple(),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
 
-                // WhatsApp button
                 Action::make('whatsapp')
                     ->label(__('admin.table_actions.whatsapp'))
                     ->icon(function () {
