@@ -109,7 +109,7 @@
                     --}}
                     <div id="location-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="5000" data-carousel-pause="hover">
                         
-                        <div class="relative h-96 overflow-hidden rounded-lg md:h-[32rem] bg-gray-100 dark:bg-gray-700">
+                        <div class="relative h-96 overflow-hidden rounded-lg md:h-[32rem]">
                              @foreach($locations as $location)
                                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                                     

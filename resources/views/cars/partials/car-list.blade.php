@@ -1,5 +1,5 @@
 {{-- Sorting & Pagination Controls --}}
-<div class="flex flex-col md:flex-row justify-between items-center mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 fade-in-sortbar" 
+<div class="relative z-30 flex flex-col md:flex-row justify-between items-center mb-6 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 fade-in-sortbar" 
      style="animation-delay: 100ms">
     <span class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 md:mb-0">
         {{ __('cars_page.showing_results', [
@@ -17,7 +17,8 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg>
         </button>
-        <div id="showDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        {{-- MODIFICATION: Changed z-10 to z-40 --}}
+        <div id="showDropdown" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="showDropdownButton">
                 @foreach([10, 20, 30, 50] as $count)
                 <li>
@@ -44,7 +45,8 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg>
         </button>
-        <div id="sortDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        {{-- MODIFICATION: Changed z-10 to z-40 --}}
+        <div id="sortDropdown" class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="sortDropdownButton">
                 <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'newest', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('cars_page.newest') }}</a></li>
                 <li><a href="{{ route('cars.index', array_merge(request()->query(), ['sort' => 'price_asc', 'page' => 1])) }}" class="ajax-filter-link block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ __('cars_page.price_low_high') }}</a></li>
@@ -55,7 +57,7 @@
 </div>
 
 {{-- CARDS GRID --}}
-<div class="space-y-6 relative min-h-[500px]">
+<div class="space-y-6 relative min-h-[500px] z-20">
     {{-- Loading overlay (initially hidden) --}}
     <div id="loading-overlay" class="absolute inset-0 bg-white/50 dark:bg-gray-900/50 z-50 flex items-center justify-center hidden backdrop-blur-sm transition-opacity duration-300">
         <div role="status">
