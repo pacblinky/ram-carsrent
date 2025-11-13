@@ -102,6 +102,8 @@ return [
 
         // Location
         'google_maps_link' => 'رابط خرائط جوجل',
+        'google_maps_embed' => 'تضمين خرائط جوجل',
+        'google_maps_embed_placeholder' => 'ألصق كود تضمين خرائط جوجل أو رابط التضمين هنا...',
 
         // Reservation
         'user'                 => 'المستخدم',
