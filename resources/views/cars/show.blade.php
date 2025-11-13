@@ -99,7 +99,7 @@
                 </div>
                 {{-- ========================================================== --}}
                 {{--                END MODIFIED GALLERY SECTION                --}}
-                {{-- ========================================================== --}
+                {{-- ========================================================== --}}
 
 
                 {{-- Thumbnails --}}
@@ -351,7 +351,15 @@
             for (let h = 0; h < 24; h++) {
                 for (let m of [0,30]) {
                     const value = `${String(h).padStart(2,"0")}:${m === 0 ? "00" : "30"}`;
-                    select.append(new Option(value, value));
+                    
+                    // Convert to 12-hour format for display
+                    let h12 = h % 12;
+                    if (h12 === 0) h12 = 12;
+                    const ampm = h >= 12 ? 'PM' : 'AM';
+                    const text = `${String(h12).padStart(2,"0")}:${m === 0 ? "00" : "30"} ${ampm}`;
+                    
+                    // Value remains 24h for logic, Text is 12h for user
+                    select.append(new Option(text, value));
                 }
             }
             select.value = "10:00";
@@ -404,7 +412,17 @@
                 
                 opt.disabled = isPast || blocked;
     
-                opt.textContent = opt.value; 
+                // Re-generate 12-hour text since we might have appended status text previously
+                // or need to refresh it
+                const [hStr, mStr] = opt.value.split(':');
+                let h = parseInt(hStr, 10);
+                let h12 = h % 12;
+                if (h12 === 0) h12 = 12;
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                const time12 = `${String(h12).padStart(2,"0")}:${mStr} ${ampm}`;
+
+                opt.textContent = time12; 
+
                 if (isPast) {
                     opt.textContent += ` ${translations.past}`;
                     opt.classList.add('text-gray-400');
@@ -412,7 +430,7 @@
                     opt.textContent += ` ${translations.booked}`;
                     opt.classList.add('text-red-400');
                 } else {
-                    opt.classList.remove('text-gray-400', 'text-red-440');
+                    opt.classList.remove('text-gray-400', 'text-red-400');
                 }
             });
         };
