@@ -24,6 +24,7 @@ return [
     'doors' => 'عدد الأبواب',
     'show_filters' => 'إظهار الفلاتر',
     'hide_filters' => 'إخفاء الفلاتر',
+    'dropoff_date' => 'تاريخ الإرجاع',
 
     // === Car Detail Page ===
     'show_on_map' => 'عرض على الخريطة',
