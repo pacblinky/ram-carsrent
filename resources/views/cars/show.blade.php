@@ -243,11 +243,11 @@
                             </label>
                             <select id="pickup_location_id" name="pickup_location_id" required
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                        focus:ring-blue-500 focus:border-blue-5B00 block w-full p-2.5
-                                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                                        focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white truncate">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" {{ $car->location_id == $loc->id ? 'selected' : '' }}>
-                                        {{ $loc->name }}
+                                        {{ \Illuminate\Support\Str::limit($loc->name, 45) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -261,10 +261,10 @@
                             <select id="dropoff_location_id" name="dropoff_location_id" required
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
                                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white truncate">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" {{ $car->location_id == $loc->id ? 'selected' : '' }}>
-                                        {{ $loc->name }}
+                                        {{ \Illuminate\Support\Str::limit($loc->name, 45) }}
                                     </option>
                                 @endforeach
                             </select>
