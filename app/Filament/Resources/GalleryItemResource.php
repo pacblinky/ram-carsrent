@@ -20,16 +20,35 @@ class GalleryItemResource extends Resource
     protected static ?string $model = GalleryItem::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
-    protected static ?string $navigationGroup = 'Media';
-    protected static ?string $navigationLabel = 'Images';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('admin.navigation.media');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.models.gallery_item.navigation_label');
+    }
+
+    // --- ADDED METHODS ---
+    public static function getModelLabel(): string
+    {
+        return __('admin.models.gallery_item.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.models.gallery_item.plural_label');
+    }
+    // --- END OF ADDED METHODS ---
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                // ✅ Image can be edited
                 FileUpload::make('image_path')
-                    ->label('Image')
+                    ->label(__('admin.form.image'))
                     ->image()
                     ->directory('gallery')
                     ->disk('public')
@@ -51,16 +70,15 @@ class GalleryItemResource extends Resource
                         'required' => 'The image field is required.',
                     ]),
 
-                // 🚫 Name cannot be edited
                 TextInput::make('name')
-                    ->label('Name')
+                    ->label(__('admin.form.name'))
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255)
                     ->disabled(fn ($operation) => $operation === 'edit'),
 
                 TextInput::make('alt_text')
-                    ->label('Alt Text')
+                    ->label(__('admin.form.alt_text'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -71,22 +89,22 @@ class GalleryItemResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('image_path')
-                    ->label('Image')
+                    ->label(__('admin.table.image'))
                     ->disk('public')
                     ->square()
                     ->height(60),
 
                 TextColumn::make('name')
-                    ->label('Name')
+                    ->label(__('admin.table.name'))
                     ->sortable()
                     ->searchable(),
 
                 TextColumn::make('alt_text')
-                    ->label('Alt Text')
+                    ->label(__('admin.table.alt_text'))
                     ->limit(30),
 
                 TextColumn::make('created_at')
-                    ->label('Created')
+                    ->label(__('admin.table.created_at'))
                     ->dateTime()
                     ->since()
                     ->sortable(),

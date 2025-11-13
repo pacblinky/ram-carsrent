@@ -23,142 +23,140 @@ class CarResource extends Resource
     protected static ?string $model = Car::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
-    protected static ?string $navigationGroup = 'Cars Management';
-    protected static ?string $navigationLabel = 'Cars';
-    protected static ?string $modelLabel = 'Car';
-    protected static ?string $pluralModelLabel = 'Cars';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('admin.navigation.cars_management');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.models.car.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.models.car.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.models.car.plural_label');
+    }
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Section::make('Basic Information')
-                ->description('General details about the car.')
+            Section::make(__('admin.sections.car.basic_info'))
+                ->description(__('admin.sections.car.basic_info_desc'))
                 ->icon('heroicon-o-information-circle')
                 ->schema([
                     TextInput::make('name')
+                        ->label(__('admin.form.name'))
                         ->required()
                         ->maxLength(255),
 
                     Select::make('brand_id')
-                        ->label('Brand')
+                        ->label(__('admin.form.brand'))
                         ->relationship('brand', 'name')
                         ->searchable()
                         ->required()
                         ->native(false),
 
                     Select::make('category')
-                        ->label('Category')
-                        ->options([
-                            'sedan' => 'Sedan',
-                            'suv' => 'SUV',
-                            'sports_car' => 'Sports Car',
-                            'hatchback' => 'Hatchback',
-                            'coupe' => 'Coupe',
-                            'convertible' => 'Convertible',
-                            'pickup_truck' => 'Pickup Truck',
-                            'van' => 'Van'
-                        ])
+                        ->label(__('admin.form.category'))
+                        ->options(__('admin.form.options.categories'))
                         ->searchable()
                         ->required()
                         ->native(false),
 
                     Select::make('location_id')
-                        ->label('Location')
+                        ->label(__('admin.form.location'))
                         ->relationship('location', 'name')
                         ->searchable()
                         ->required(),
                 ])
                 ->columns(2),
 
-            Section::make('Specifications')
+            Section::make(__('admin.sections.car.specifications'))
                 ->icon('heroicon-o-cog-8-tooth')
                 ->schema([
                     Select::make('fuel_type')
-                        ->label('Fuel Type')
-                        ->options([
-                            'petrol' => 'Petrol',
-                            'diesel' => 'Diesel',
-                            'electric' => 'Electric',
-                            'hybrid' => 'Hybrid',
-                        ])
+                        ->label(__('admin.form.fuel_type'))
+                        ->options(__('admin.form.options.fuel_types'))
                         ->required()
                         ->native(false),
 
                     Select::make('transmission')
-                        ->label('Transmission')
-                        ->options([
-                            'manual' => 'Manual',
-                            'automatic' => 'Automatic',
-                            'semi-automatic' => 'Semi-Automatic',
-                        ])
+                        ->label(__('admin.form.transmission'))
+                        ->options(__('admin.form.options.transmissions'))
                         ->required()
                         ->native(false),
 
                     TextInput::make('number_of_seats')
                         ->numeric()
                         ->minValue(1)
-                        ->label('Seats')
+                        ->label(__('admin.form.seats'))
                         ->required(),
 
                     TextInput::make('number_of_doors')
                         ->numeric()
                         ->minValue(1)
-                        ->label('Doors')
+                        ->label(__('admin.form.doors'))
                         ->required(),
 
-                    // New Quantity Input
                     TextInput::make('quantity')
                         ->numeric()
                         ->minValue(1)
                         ->default(1)
-                        ->label('Total Quantity')
+                        ->label(__('admin.form.quantity'))
                         ->required()
-                        ->helperText('How many of this exact car model are available?'),
+                        ->helperText(__('admin.form.quantity_helper')),
 
                     Toggle::make('is_available')
-                        ->label('Available for Rent')
+                        ->label(__('admin.form.is_available'))
                         ->default(true)
-                        ->helperText('Master switch to hide/show this car entirely.'),
+                        ->helperText(__('admin.form.is_available_helper')),
                 ])
                 ->columns(3),
 
-            Section::make('Pricing')
+            Section::make(__('admin.sections.car.pricing'))
                 ->icon('heroicon-o-currency-dollar')
                 ->schema([
                     TextInput::make('price_per_day')
                         ->numeric()
                         ->prefix("SAR")
-                        ->label('Price per Day')
+                        ->label(__('admin.form.price_per_day'))
                         ->required(),
                 ]),
 
-            Section::make('Media')
+            Section::make(__('admin.sections.car.media'))
             ->icon('heroicon-o-photo')
             ->schema([
                 FileUpload::make('images')
-                    ->label('Car Images')
+                    ->label(__('admin.form.images'))
                     ->directory('cars')
                     ->multiple()
                     ->reorderable()
                     ->image()
                     ->maxFiles(5)
-                    ->helperText('Upload up to 5 images of the car'),
+                    ->helperText(__('admin.form.images_helper')),
             ]), 
 
-        Section::make('Description (Multilingual)')
+        Section::make(__('admin.sections.car.description'))
             ->icon('heroicon-o-chat-bubble-bottom-center-text')
             ->schema([
                 Textarea::make('description.en')
-                    ->label('Description (English)')
+                    ->label(__('admin.form.desc_en'))
                     ->rows(4)
                     ->maxLength(1000)
-                    ->placeholder('English description, features, or notes...'),
+                    ->placeholder(__('admin.form.desc_en_placeholder')),
                 
                 Textarea::make('description.ar')
-                    ->label('Description (Arabic)')
+                    ->label(__('admin.form.desc_ar'))
                     ->rows(4)
                     ->maxLength(1000)
-                    ->placeholder('Arabic description, features, or notes...'),
+                    ->placeholder(__('admin.form.desc_ar_placeholder')),
             ])
             ->columns(2),
         ]);
@@ -168,20 +166,21 @@ class CarResource extends Resource
     {
         return $table->columns([
             TextColumn::make('name')
+                ->label(__('admin.table.name'))
                 ->sortable()
                 ->searchable(),
 
             TextColumn::make('brand.name')
-                ->label('Brand')
+                ->label(__('admin.table.brand'))
                 ->sortable()
                 ->searchable(),
 
-            // Added Quantity Column to Table View
             TextColumn::make('quantity')
-                ->label('Qty')
+                ->label(__('admin.table.quantity_short'))
                 ->sortable(),
 
             TextColumn::make('category')
+                ->label(__('admin.table.category'))
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
                     'suv' => 'success',
@@ -195,27 +194,27 @@ class CarResource extends Resource
 
             TextColumn::make('price_per_day')
                 ->money('sar', true)
-                ->label('Price/Day')
+                ->label(__('admin.table.price_per_day'))
                 ->sortable(),
 
             TextColumn::make('location.name')
-                ->label('Location')
+                ->label(__('admin.table.location'))
                 ->sortable()
                 ->searchable(),
 
             IconColumn::make('is_available')
                 ->boolean()
-                ->label('Active'),
+                ->label(__('admin.table.active')),
 
             TextColumn::make('created_at')
                 ->dateTime('M d, Y')
-                ->label('Created')
+                ->label(__('admin.table.created_at'))
                 ->toggleable(isToggledHiddenByDefault: true),
         ])
         ->defaultSort('created_at', 'desc')
         ->filters([
             Tables\Filters\TernaryFilter::make('is_available')
-                ->label('Availability Master Switch'),
+                ->label(__('admin.filters.availability')),
         ])
         ->actions([
             Tables\Actions\ViewAction::make(),

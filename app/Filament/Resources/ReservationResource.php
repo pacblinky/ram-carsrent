@@ -21,62 +21,76 @@ class ReservationResource extends Resource
     protected static ?string $model = Reservation::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
-    protected static ?string $navigationGroup = 'Management';
-    protected static ?string $navigationLabel = 'Reservations';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('admin.navigation.management');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.models.reservation.navigation_label');
+    }
+
+    // --- ADDED METHODS ---
+    public static function getModelLabel(): string
+    {
+        return __('admin.models.reservation.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.models.reservation.plural_label');
+    }
+    // --- END OF ADDED METHODS ---
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Select::make('user_id')
-                    ->label('User')
+                    ->label(__('admin.form.user'))
                     ->relationship('user', 'name')
                     ->searchable()
                     ->required(),
 
                 Select::make('car_id')
-                    ->label('Car')
+                    ->label(__('admin.form.car'))
                     ->relationship('car', 'name')
                     ->searchable()
                     ->required(),
 
                 Select::make('pickup_location_id')
-                    ->label('Pickup Location')
+                    ->label(__('admin.form.pickup_location'))
                     ->relationship('pickup', 'name')
                     ->searchable()
                     ->required(),
 
                 Select::make('dropoff_location_id')
-                    ->label('Drop-off Location')
+                    ->label(__('admin.form.dropoff_location'))
                     ->relationship('dropoff', 'name')
                     ->searchable()
                     ->required(),
 
                 DateTimePicker::make('start_datetime')
-                    ->label('Start Date & Time')
+                    ->label(__('admin.form.start_datetime'))
                     ->required(),
 
                 DateTimePicker::make('end_datetime')
-                    ->label('End Date & Time')
+                    ->label(__('admin.form.end_datetime'))
                     ->required(),
 
                 TextInput::make('total_price')
-                    ->label('Total Price')
+                    ->label(__('admin.form.total_price'))
                     ->numeric()
                     ->prefix('SAR')
                     ->disabled()
                     ->dehydrated(false)
-                    ->helperText('Automatically calculated when saved'),
+                    ->helperText(__('admin.form.total_price_helper')),
 
                 Select::make('status')
-                    ->label('Status')
-                    ->options([
-                        'pending'    => 'Pending',
-                        'confirmed'  => 'Confirmed',
-                        'completed'  => 'Completed',
-                        'canceled'   => 'Canceled',
-                        'overdue'    => 'Overdue',
-                    ])
+                    ->label(__('admin.form.status'))
+                    ->options(__('admin.form.options.status'))
                     ->default('pending')
                     ->required(),
             ]);
@@ -101,14 +115,29 @@ class ReservationResource extends Resource
 
         return $table
             ->columns([
-                TextColumn::make('user.name')->label('User')->sortable(),
-                TextColumn::make('car.name')->label('Car'),
-                TextColumn::make('pickup.name')->label('Pickup')->sortable(),
-                TextColumn::make('dropoff.name')->label('Drop-off')->sortable(),
-                TextColumn::make('start_datetime')->dateTime()->label('Start'),
-                TextColumn::make('end_datetime')->dateTime()->label('End'),
-                TextColumn::make('total_price')->money('sar', true)->sortable(),
+                TextColumn::make('user.name')
+                    ->label(__('admin.table.user'))
+                    ->sortable(),
+                TextColumn::make('car.name')
+                    ->label(__('admin.table.car')),
+                TextColumn::make('pickup.name')
+                    ->label(__('admin.table.pickup'))
+                    ->sortable(),
+                TextColumn::make('dropoff.name')
+                    ->label(__('admin.table.dropoff'))
+                    ->sortable(),
+                TextColumn::make('start_datetime')
+                    ->dateTime()
+                    ->label(__('admin.table.start')),
+                TextColumn::make('end_datetime')
+                    ->dateTime()
+                    ->label(__('admin.table.end')),
+                TextColumn::make('total_price')
+                    ->money('sar', true)
+                    ->label(__('admin.table.total_price'))
+                    ->sortable(),
                 BadgeColumn::make('status')
+                    ->label(__('admin.table.status'))
                     ->colors([
                         'warning' => 'pending',
                         'info'    => 'confirmed',
@@ -124,7 +153,7 @@ class ReservationResource extends Resource
 
                 // WhatsApp button
                 Action::make('whatsapp')
-                    ->label('WhatsApp')
+                    ->label(__('admin.table_actions.whatsapp'))
                     ->icon(function () {
                         return <<<SVG
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" class="w-5 h-5">
@@ -134,7 +163,7 @@ SVG;
                     })
                     ->color('success')
                     ->url($whatsappUrl, shouldOpenInNewTab: true)
-                    ->tooltip('Message customer on WhatsApp')
+                    ->tooltip(__('admin.table_actions.whatsapp_tooltip'))
                     ->visible(fn ($record) => !empty($record->user?->phone_number)),
             ])
             ->bulkActions([

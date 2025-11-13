@@ -15,23 +15,39 @@ class BrandResource extends Resource
     protected static ?string $model = Brand::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
-    protected static ?string $navigationGroup = 'Cars Management';
-    protected static ?string $navigationLabel = 'Brands';
-    protected static ?string $pluralModelLabel = 'Brands';
-    protected static ?string $modelLabel = 'Brand';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('admin.navigation.cars_management');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('admin.models.brand.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('admin.models.brand.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('admin.models.brand.plural_label');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Brand Name')
+                    ->label(__('admin.form.brand_name'))
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
 
                 Forms\Components\FileUpload::make('logo_path')
-                    ->label('Logo')
+                    ->label(__('admin.form.logo'))
                     ->image()
                     ->imageEditor()
                     ->directory('brands/logos')
@@ -46,18 +62,18 @@ class BrandResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('logo_path')
-                    ->label('Logo')
+                    ->label(__('admin.table.logo'))
                     ->square()
                     ->height(60),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Brand Name')
+                    ->label(__('admin.table.brand_name'))
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('cars_count')
                     ->counts('cars')
-                    ->label('Cars')
+                    ->label(__('admin.table.cars_count'))
                     ->sortable(),
             ])
             ->filters([

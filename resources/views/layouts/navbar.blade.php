@@ -3,7 +3,7 @@
 
         <div class="flex items-center space-x-3 rtl:space-x-reverse">
             <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="{{ asset('images/header-logoo.png') }}" class="h-[60px] w-[60px] rounded-full object-cover" alt="Brand Logo" />
+                <img src="{{ asset('images/logo.png') }}" class="h-[60px] w-[60px] rounded-full object-cover" alt="Brand Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap neon-animated-brand">{{ __('navbar.brand') }}</span>
             </a>
 
