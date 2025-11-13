@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'brand' => 'Ram | Car Rental',
+    'brand' => 'RAM | Car Rental',
     'current_lang' => 'English',
 
     'open_user_menu' => 'Open user menu',
