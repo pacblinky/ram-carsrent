@@ -1,11 +1,12 @@
 {{-- resources/views/layouts/footer.blade.php --}}
 
 {{-- 
-    NEW DESIGN:
-    - Dark background (bg-gray-800) for a more "premium" feel.
-    - Full-width layout.
-    - Organized links into "Resources" and "Legal" columns.
-    - Copyright and social media are now in a separate bottom bar.
+    PROFESSIONAL FOOTER DESIGN:
+    - Dark background (bg-black) for premium feel
+    - Full-width responsive layout
+    - Fixed logo display with proper sizing
+    - Organized links into "Resources" and "Legal" columns
+    - Copyright and social media in separate bottom bar
 --}}
 
 <footer class="bg-black dark:bg-black">
@@ -15,8 +16,17 @@
             {{-- Logo and Company Name (Main Section) --}}
             <div class="mb-6 md:mb-0">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="{{ asset('images/logo.png') }}" class="h-8" alt="{{ __('footer.company_name') }} Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">{{ __('footer.company_name') }}</span>
+                    {{-- 
+                      FIXED FOOTER LOGO:
+                      - Mobile: h-10 w-auto (40px height)
+                      - Desktop (md): h-12 w-auto (48px height)
+                      - object-contain to show full logo without cropping
+                      - Proper alignment with company name
+                    --}}
+                    <img src="{{ asset('images/logo.png') }}" 
+                         class="h-10 w-auto md:h-12 lg:h-14 object-contain" 
+                         alt="{{ __('footer.company_name') }} Logo" />
+                    <span class="self-center text-xl md:text-2xl font-semibold whitespace-nowrap text-white dark:text-white">{{ __('footer.company_name') }}</span>
                 </a>
             </div>
             
