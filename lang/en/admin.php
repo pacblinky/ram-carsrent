@@ -102,6 +102,8 @@ return [
 
         // Location
         'google_maps_link' => 'Google Maps Link',
+        'google_maps_embed' => 'Google Maps Embed',
+        'google_maps_embed_placeholder' => 'Paste the Google Maps embed iframe or embed URL here...',
 
         // Reservation
         'user'                 => 'User',

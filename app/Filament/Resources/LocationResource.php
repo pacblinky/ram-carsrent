@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TextArea;
 use Filament\Tables\Columns\TextColumn;
 
 class LocationResource extends Resource
@@ -28,7 +29,6 @@ class LocationResource extends Resource
         return __('admin.models.location.navigation_label');
     }
 
-    // --- ADDED METHODS ---
     public static function getModelLabel(): string
     {
         return __('admin.models.location.label');
@@ -38,7 +38,6 @@ class LocationResource extends Resource
     {
         return __('admin.models.location.plural_label');
     }
-    // --- END OF ADDED METHODS ---
 
     public static function form(Form $form): Form
     {
@@ -48,12 +47,18 @@ class LocationResource extends Resource
                     ->label(__('admin.form.name'))
                     ->required()
                     ->maxLength(255),
+
                 TextInput::make('google_maps_link')
                     ->label(__('admin.form.google_maps_link'))
                     ->url()
                     ->suffixIcon('heroicon-o-map')
                     ->maxLength(255),
-            ]);
+
+                Textarea::make('google_maps_embed')
+                    ->label(__('admin.form.google_maps_embed'))
+                    ->rows(8)
+                    ->placeholder(__('admin.form.google_maps_embed_placeholder'))
+                ]);
     }
 
     public static function table(Table $table): Table
@@ -64,10 +69,16 @@ class LocationResource extends Resource
                     ->label(__('admin.table.name'))
                     ->sortable()
                     ->searchable(),
+
                 TextColumn::make('google_maps_link')
                     ->label(__('admin.table.google_maps'))
                     ->url(fn ($record) => $record->google_maps_link, true)
                     ->openUrlInNewTab(),
+
+                TextColumn::make('google_maps_embed')
+                    ->label(__('admin.table.google_maps_embed'))
+                    ->limit(30)
+                    ->tooltip(fn ($record) => $record->google_maps_embed),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
