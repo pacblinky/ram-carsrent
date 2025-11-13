@@ -35,15 +35,13 @@
                     <div>
                         <label for="pickup_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_date') }}</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
-                            </div>
+                            {{-- REMOVED SVG ICON DIV --}}
                             <input
                                 type="datetime-local"
                                 id="pickup_datetime"
                                 name="pickup_datetime"
                                 min="{{ now()->format('Y-m-d\TH:i') }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
@@ -52,15 +50,13 @@
                     <div>
                         <label for="dropoff_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.return_date') }}</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
-                            </div>
+                            {{-- REMOVED SVG ICON DIV --}}
                             <input
                                 type="datetime-local"
                                 id="dropoff_datetime"
                                 name="dropoff_datetime"
                                 min="{{ now()->format('Y-m-d\TH:i') }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
@@ -132,11 +128,13 @@
                     $imageUrl = !empty($car->images) && is_array($car->images) && count($car->images) > 0 
                         ? asset('storage/' . $car->images[0]) 
                         : asset('images/logo.png');
+                    
+                    // MODIFIED: Made specs dynamic from $car object
                     $specs = [
-                        ['icon' => 'mileage', 'text' => __('home.spec_unlimited')],
-                        ['icon' => 'transmission', 'text' => __('home.spec_automatic')],
-                        ['icon' => 'fuel', 'text' => __('home.spec_electric')],
-                        ['icon' => 'seats', 'text' => '4 ' . __('home.spec_seats')],
+                        ['icon' => 'doors',        'text' => $car->number_of_doors ? __('cars_page.feat_doors', ['count' => $car->number_of_doors]) : 'N/A'],
+                        ['icon' => 'transmission', 'text' => __('cars_page.feat_transmission_' . $car->transmission)],
+                        ['icon' => 'seats',        'text' => __('cars_page.feat_seats', ['count' => $car->number_of_seats])],
+                        ['icon' => 'fuel',         'text' => __('cars_page.feat_fuel_' . $car->fuel_type)],
                     ];
                     $delay = $index * 150; 
                 @endphp
@@ -156,8 +154,9 @@
                         <div class="grid grid-cols-2 gap-x-2 gap-y-4 mb-5">
                             @foreach($specs as $spec)
                                 <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                                    @if($spec['icon'] == 'mileage')
-                                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                    {{-- MODIFIED: Replaced 'mileage' with 'doors' and used the 'truck' icon from this file --}}
+                                    @if($spec['icon'] == 'doors')
+                                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
                                     @elseif($spec['icon'] == 'transmission')
                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527c.477-.34.994-.142 1.246.317l.545 1.03c.25.46.07.994-.317 1.246l-.527.737c-.25.35-.272.806-.108 1.204.165.397.505.71.93.78l.893.15c.542.09.94.56.94 1.11v1.093c0 .55-.398 1.02-.94 1.11l-.893.149c-.425.07-.764.384-.93.78-.164.398-.142.855.108 1.205l.527.737c.34.477.142.994-.317 1.246l1.03-.545c.46-.25.994-.07 1.246.317l.737.527c.35.25.806.272 1.204.108.397-.165.71-.505.78-.93l.15-.893zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>
                                     @elseif($spec['icon'] == 'fuel')

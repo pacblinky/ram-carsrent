@@ -85,16 +85,14 @@
                     <div>
                         <label for="pickup_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.pickup_date') }}</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
-                            </div>
+                            {{-- REMOVED SVG ICON DIV --}}
                             <input
                                 type="datetime-local"
                                 id="pickup_datetime"
                                 name="pickup_datetime"
                                 min="{{ now()->format('Y-m-d\TH:i') }}"
                                 value="{{ request('pickup_datetime') ? \Carbon\Carbon::parse(request('pickup_datetime'))->format('Y-m-d\TH:i') : '' }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
@@ -103,16 +101,14 @@
                     <div>
                         <label for="dropoff_datetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.dropoff_date') }}</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
-                            </div>
+                            {{-- REMOVED SVG ICON DIV --}}
                             <input
                                 type="datetime-local"
                                 id="dropoff_datetime"
                                 name="dropoff_datetime"
                                 min="{{ now()->format('Y-m-d\TH:i') }}"
                                 value="{{ request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('Y-m-d\TH:i') : '' }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
