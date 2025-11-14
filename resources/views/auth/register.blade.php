@@ -33,7 +33,7 @@
                         {{-- Email --}}
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.email') }}</label>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="{{ __('auth_pages.email_placeholder') }}"
+                            <input required type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="{{ __('auth_pages.email_placeholder') }}"
                                    class="{{ $inputClasses }} @error('email') {{ $errorClasses }} @enderror">
                             @error('email')
                                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -43,7 +43,7 @@
                         {{-- Phone Number --}}
                         <div>
                             <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.phone_number') }}</label>
-                            <input type="tel" id="phone_number" name="phone_number"
+                            <input required type="tel" id="phone_number" name="phone_number"
                                    value="{{ old('phone_number') }}" required autocomplete="tel"
                                    class="{{ $inputClasses }} @error('phone_number') {{ $errorClasses }} @enderror text-start">
                             @error('phone_number')
@@ -54,7 +54,7 @@
                         {{-- Government ID --}}
                         <div>
                             <label for="government_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.government_id') }}</label>
-                            <input type="text" id="government_id" name="government_id" value="{{ old('government_id') }}" required autocomplete="government-id" placeholder="{{ __('auth_pages.government_id_placeholder') }}"
+                            <input required type="text" id="government_id" name="government_id" value="{{ old('government_id') }}" required autocomplete="government-id" placeholder="{{ __('auth_pages.government_id_placeholder') }}"
                                 class="{{ $inputClasses }} @error('government_id') {{ $errorClasses }} @enderror">
                             @error('government_id')
                                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
