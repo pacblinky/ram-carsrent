@@ -53,10 +53,10 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-100 uppercase dark:text-white">{{ __('footer.legal_links') }}</h2>
                     <ul class="text-gray-400 dark:text-gray-400 font-medium">
                         <li class="mb-4">
-                            <a href="{{ route('privacy.index') }}" class="hover:underline">{{ __('footer.privacy_policy') }}</a>
+                            <a href="{{ route('privacy') }}" class="hover:underline">{{ __('footer.privacy_policy') }}</a>
                         </li>
                         <li>
-                            <a href="{{ route('terms.index') }}" class="hover:underline">{{ __('footer.terms') }}</a>
+                            <a href="{{ route('terms') }}" class="hover:underline">{{ __('footer.terms') }}</a>
                         </li>
                     </ul>
                 </div>

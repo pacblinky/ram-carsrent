@@ -64,8 +64,8 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::view('/terms', 'terms.index')->name('terms.index');
-Route::view('/privacy', 'privacy.index')->name('privacy.index');
+Route::view('/terms', 'terms.index')->name('terms');
+Route::view('/privacy', 'privacy.index')->name('privacy');
 
 Route::post('/save-fcm-token', function (Request $request) {
     // Validate the incoming token from the frontend
