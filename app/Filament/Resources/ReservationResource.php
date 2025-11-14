@@ -129,11 +129,13 @@ class ReservationResource extends Resource
 
                 TextColumn::make('pickup.name')
                     ->label(__('admin.table.pickup'))
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('dropoff.name')
                     ->label(__('admin.table.dropoff'))
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('start_datetime')
                     ->dateTime()
