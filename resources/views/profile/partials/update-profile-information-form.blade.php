@@ -203,38 +203,51 @@
     </form>
 </section>
 
-{{-- ADDED SCRIPT FOR INTL-TEL-INPUT --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Target the input inside the profile update form
-        const phoneInputProfile = document.querySelector("form[action='{{ route('profile.update') }}'] #phone_number_profile");
-        
-        if (phoneInputProfile) {
-            const itiProfile = window.intlTelInput(phoneInputProfile, {
-                utilsScript: "/js/utils.js",
-                initialCountry: "auto",
-                geoIpLookup: callback => {
-                    fetch("https://ipapi.co/json")
-                        .then(res => res.json())
-                        .then(data => callback(data.country_code))
-                        .catch(() => callback("us"));
-                },
-                separateDialCode: true,
-                preferredCountries: ['eg', 'sa', 'us', 'gb'],
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    const phoneInputProfile = document.querySelector("#phone_number_profile");
 
-            // Set the initial value if it exists
-            if (phoneInputProfile.value) {
-                itiProfile.setNumber(phoneInputProfile.value);
-            }
+    if (phoneInputProfile) {
+        const itiProfile = window.intlTelInput(phoneInputProfile, {
+            initialCountry: "auto",
+            geoIpLookup: callback => {
+                fetch("https://ipapi.co/json")
+                    .then(res => res.json())
+                    .then(data => callback(data.country_code))
+                    .catch(() => callback("us"));
+            },
+            separateDialCode: true,
+            preferredCountries: ['eg','sa','us','gb'],
+        });
 
-            // On form submit, get the full number
-            const profileForm = phoneInputProfile.closest('form');
-            if (profileForm) {
-                profileForm.addEventListener('submit', () => {
-                    phoneInputProfile.value = itiProfile.getNumber();
-                });
-            }
+        // Optional: set initial value
+        if (phoneInputProfile.value) {
+            // Remove any non-digit characters
+            const cleaned = phoneInputProfile.value.replace(/\D/g,'');
+            phoneInputProfile.value = cleaned;
         }
-    });
+
+        // On form submit: append country code and validate
+        const profileForm = phoneInputProfile.closest('form');
+        if (profileForm) {
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                let phoneNumber = phoneInputProfile.value.trim().replace(/\D/g,''); // remove non-digits
+
+                // Basic validation: digits only, 8-15 characters
+                if (!phoneNumber.match(/^\d{8,15}$/)) {
+                    alert("Please enter a valid phone number");
+                    return;
+                }
+
+                // Prepend country dial code
+                const dialCode = itiProfile.getSelectedCountryData().dialCode;
+                phoneInputProfile.value = `+${dialCode}${phoneNumber.replace(/^0+/, '')}`;
+
+                this.submit();
+            });
+        }
+    }
+});
 </script>
