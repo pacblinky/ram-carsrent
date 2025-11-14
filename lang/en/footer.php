@@ -2,7 +2,7 @@
 // lang/en/footer.php
 
 return [
-    'company_name' => 'Ram Cars Rent',
+    'company_name' => 'RAM | Car Rental',
     'copyright' => 'All Rights Reserved.',
     
     'resources_links' => 'Resources', // <-- ADD THIS

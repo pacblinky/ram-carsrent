@@ -2,7 +2,7 @@
 // lang/ar/footer.php
 
 return [
-    'company_name' => 'رام لتأجير السيارات',
+    'company_name' => 'رام | لتأجير السيارات',
     'copyright' => 'جميع الحقوق محفوظة.',
     
     'resources_links' => 'المصادر', // <-- ADD THIS
