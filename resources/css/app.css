@@ -126,3 +126,7 @@
 .iti {
     width: 100% !important;
 }
+
+.dark .iti__selected-dial-code {
+    color: #e5e7eb; /* Tailwind gray-200 */
+}

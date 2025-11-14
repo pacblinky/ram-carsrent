@@ -155,17 +155,18 @@
 
         {{-- Phone Number --}}
         <div>
-            <x-input-label for="phone_number" :value="__('profile_page.phone_number')" />
-             <div class="relative mt-1">
-                <div class="absolute inset-y-0 flex items-center pointer-events-none ltr:left-3 rtl:right-3">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M15.992 11.285c-1.28 0-2.514.2-3.693.606a.75.75 0 0 1-.88-.09l-1.42-1.14a13.4 13.4 0 0 0-4.99-4.99l-1.14-1.42a.75.75 0 0 1-.09-.88c.402-1.178.605-2.412.605-3.693a.75.75 0 0 0-.75-.75H1.75a.75.75 0 0 0-.75.75c0 9.808 7.942 17.75 17.75 17.75a.75.75 0 0 0 .75-.75v-2.344a.75.75 0 0 0-.75-.75Z" />
-                    </svg>
-                </div>
-                <x-text-input id="phone_number" name="phone_number" type="tel" class="block w-full ltr:pl-10 rtl:pr-10 ltr:text-left rtl:text-right" :value="old('phone_number', $user->phone_number)" autocomplete="tel" />
-            </div>
+            <x-input-label for="phone_number_profile" :value="__('profile_page.phone_number')" />
+            
+            {{-- 
+              Replaced x-text-input with a standard <input>.
+              We manually add the classes that x-text-input would have,
+              but WITHOUT the padding (pl-10/pr-10).
+            --}}
+            <input id="phone_number_profile" name="phone_number" type="tel" 
+                   class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 rounded-md shadow-sm text-start" 
+                   value="{{ old('phone_number', $user->phone_number) }}" 
+                   autocomplete="tel">
+            
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
 
@@ -201,3 +202,39 @@
         </div>
     </form>
 </section>
+
+{{-- ADDED SCRIPT FOR INTL-TEL-INPUT --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Target the input inside the profile update form
+        const phoneInputProfile = document.querySelector("form[action='{{ route('profile.update') }}'] #phone_number_profile");
+        
+        if (phoneInputProfile) {
+            const itiProfile = window.intlTelInput(phoneInputProfile, {
+                utilsScript: "/js/utils.js",
+                initialCountry: "auto",
+                geoIpLookup: callback => {
+                    fetch("https://ipapi.co/json")
+                        .then(res => res.json())
+                        .then(data => callback(data.country_code))
+                        .catch(() => callback("us"));
+                },
+                separateDialCode: true,
+                preferredCountries: ['eg', 'sa', 'us', 'gb'],
+            });
+
+            // Set the initial value if it exists
+            if (phoneInputProfile.value) {
+                itiProfile.setNumber(phoneInputProfile.value);
+            }
+
+            // On form submit, get the full number
+            const profileForm = phoneInputProfile.closest('form');
+            if (profileForm) {
+                profileForm.addEventListener('submit', () => {
+                    phoneInputProfile.value = itiProfile.getNumber();
+                });
+            }
+        }
+    });
+</script>
