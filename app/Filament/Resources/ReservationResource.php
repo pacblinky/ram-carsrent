@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ReservationStatus;
 use App\Filament\Resources\ReservationResource\Pages;
 use App\Models\Reservation;
 use Filament\Forms;
@@ -13,7 +14,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Actions\Action;
 
 class ReservationResource extends Resource
@@ -88,8 +89,14 @@ class ReservationResource extends Resource
 
                 Select::make('status')
                     ->label(__('admin.form.status'))
-                    ->options(__('admin.form.options.status'))
-                    ->default('pending')
+                    ->options([
+                        ReservationStatus::Pending->value   => __('admin.form.options.status.pending'),
+                        ReservationStatus::Confirmed->value => __('admin.form.options.status.confirmed'),
+                        ReservationStatus::Completed->value => __('admin.form.options.status.completed'),
+                        ReservationStatus::Canceled->value  => __('admin.form.options.status.canceled'),
+                        ReservationStatus::Overdue->value   => __('admin.form.options.status.overdue'),
+                    ])
+                    ->default(ReservationStatus::Pending->value)
                     ->required(),
             ]);
     }
@@ -98,17 +105,17 @@ class ReservationResource extends Resource
     {
         $whatsappUrl = fn($record) => $record->user?->phone_number
             ? 'https://wa.me/' . preg_replace('/\D+/', '', $record->user->phone_number)
-              . '?text=' . urlencode(
-                  "Hello {$record->user->name},\n\n"
-                  . "Regarding your car reservation:\n"
-                  . "- Car: {$record->car->name}\n"
-                  . "- Pickup: {$record->pickup->name}\n"
-                  . "- Drop-off: {$record->dropoff->name}\n"
-                  . "- From: {$record->start_datetime->format('Y-m-d H:i')}\n"
-                  . "- To: {$record->end_datetime->format('Y-m-d H:i')}\n\n"
-                  . "Total Price: SAR{$record->total_price}\n\n"
-                  . "Thank you!"
-              )
+                . '?text=' . urlencode(
+                    "Hello {$record->user->name},\n\n"
+                    . "Regarding your car reservation:\n"
+                    . "- Car: {$record->car->name}\n"
+                    . "- Pickup: {$record->pickup->name}\n"
+                    . "- Drop-off: {$record->dropoff->name}\n"
+                    . "- From: {$record->start_datetime->format('Y-m-d H:i')}\n"
+                    . "- To: {$record->end_datetime->format('Y-m-d H:i')}\n\n"
+                    . "Total Price: SAR{$record->total_price}\n\n"
+                    . "Thank you!"
+                )
             : null;
 
         return $table
@@ -116,44 +123,54 @@ class ReservationResource extends Resource
                 TextColumn::make('user.name')
                     ->label(__('admin.table.user'))
                     ->sortable(),
+
                 TextColumn::make('car.name')
                     ->label(__('admin.table.car')),
+
                 TextColumn::make('pickup.name')
                     ->label(__('admin.table.pickup'))
                     ->sortable(),
+
                 TextColumn::make('dropoff.name')
                     ->label(__('admin.table.dropoff'))
                     ->sortable(),
+
                 TextColumn::make('start_datetime')
                     ->dateTime()
                     ->label(__('admin.table.start')),
+
                 TextColumn::make('end_datetime')
                     ->dateTime()
                     ->label(__('admin.table.end')),
+
                 TextColumn::make('total_price')
                     ->money('sar', true)
                     ->label(__('admin.table.total_price'))
                     ->sortable(),
-                BadgeColumn::make('status')
+
+                /** 🔥 INLINE EDITABLE STATUS (FIXED ENUM ISSUE) */
+                SelectColumn::make('status')
                     ->label(__('admin.table.status'))
-                    ->colors([
-                        'warning' => 'pending',
-                        'info'    => 'confirmed',
-                        'success' => 'completed',
-                        'danger'  => 'canceled',
-                        'gray'    => 'overdue',
-                    ]),
+                    ->options([
+                        ReservationStatus::Pending->value   => __('admin.form.options.status.pending'),
+                        ReservationStatus::Confirmed->value => __('admin.form.options.status.confirmed'),
+                        ReservationStatus::Completed->value => __('admin.form.options.status.completed'),
+                        ReservationStatus::Canceled->value  => __('admin.form.options.status.canceled'),
+                        ReservationStatus::Overdue->value   => __('admin.form.options.status.overdue'),
+                    ])
+                    ->selectablePlaceholder(false) // <-- THIS IS THE CORRECT FIX
+                    ->sortable(),
             ])
             ->defaultSort('start_datetime', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->label(__('admin.table.status'))
                     ->options([
-                        'pending'   => __('admin.form.options.status.pending'),
-                        'confirmed' => __('admin.form.options.status.confirmed'),
-                        'completed' => __('admin.form.options.status.completed'),
-                        'canceled'  => __('admin.form.options.status.canceled'),
-                        'overdue'   => __('admin.form.options.status.overdue'),
+                        ReservationStatus::Pending->value   => __('admin.form.options.status.pending'),
+                        ReservationStatus::Confirmed->value => __('admin.form.options.status.confirmed'),
+                        ReservationStatus::Completed->value => __('admin.form.options.status.completed'),
+                        ReservationStatus::Canceled->value  => __('admin.form.options.status.canceled'),
+                        ReservationStatus::Overdue->value   => __('admin.form.options.status.overdue'),
                     ])
                     ->multiple(),
             ])
