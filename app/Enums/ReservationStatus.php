@@ -18,6 +18,7 @@ enum ReservationStatus: string
             self::Confirmed => 'Confirmed',
             self::Completed => 'Completed',
             self::Canceled  => 'Canceled',
+            self::Overdue   => 'Overdue', // Added Overdue label
         };
     }
 
