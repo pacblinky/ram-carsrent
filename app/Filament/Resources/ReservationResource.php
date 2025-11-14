@@ -138,11 +138,11 @@ class ReservationResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('start_datetime')
-                    ->dateTime()
+                    ->dateTime('Y-m-d h:i A')
                     ->label(__('admin.table.start')),
 
                 TextColumn::make('end_datetime')
-                    ->dateTime()
+                    ->dateTime('Y-m-d h:i A')
                     ->label(__('admin.table.end')),
 
                 TextColumn::make('total_price')
