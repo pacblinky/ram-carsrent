@@ -51,6 +51,16 @@
                             @enderror
                         </div>
 
+                        {{-- Government ID --}}
+                        <div>
+                            <label for="government_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.government_id') }}</label>
+                            <input type="text" id="government_id" name="government_id" value="{{ old('government_id') }}" required autocomplete="government-id" placeholder="{{ __('auth_pages.government_id_placeholder') }}"
+                                class="{{ $inputClasses }} @error('government_id') {{ $errorClasses }} @enderror">
+                            @error('government_id')
+                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         {{-- Password --}}
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.password') }}</label>
