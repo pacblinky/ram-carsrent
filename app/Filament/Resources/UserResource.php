@@ -54,11 +54,13 @@ class UserResource extends Resource
 
                         Forms\Components\TextInput::make('phone_number')
                             ->label(__('admin.form.phone'))
+                            ->required()
                             ->tel()
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('government_id')
                             ->label(__('admin.form.government_id'))
+                            ->required()
                             ->maxLength(255),
                     ])->columns(2),
 
@@ -67,6 +69,7 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('password')
                             ->password()
+                            ->required()
                             ->maxLength(255)
                             ->dehydrateStateUsing(fn($state) => filled($state) ? Hash::make($state) : null)
                             ->dehydrated(fn($state) => filled($state))
