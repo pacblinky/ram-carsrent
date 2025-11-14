@@ -109,7 +109,8 @@
         {{-- Name --}}
         <div>
             <x-input-label for="name" :value="__('profile_page.name')" />
-            <div class="relative mt-1">
+            {{-- UPDATED: mt-1 to mt-2 --}}
+            <div class="relative mt-2">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9.05 14.5h1.9a3.987 3.987 0 0 1 3.951 2.012A8.949 8.949 0 0 1 10 18Z"/>
@@ -123,7 +124,8 @@
         {{-- Email --}}
         <div>
             <x-input-label for="email" :value="__('profile_page.email')" />
-             <div class="relative mt-1">
+            {{-- UPDATED: mt-1 to mt-2 --}}
+             <div class="relative mt-2">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
                         <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
@@ -158,12 +160,13 @@
             <x-input-label for="phone_number_profile" :value="__('profile_page.phone_number')" />
             
             {{-- 
-              Replaced x-text-input with a standard <input>.
-              We manually add the classes that x-text-input would have,
-              but WITHOUT the padding (pl-10/pr-10).
+              UPDATED:
+              - Changed mt-1 to mt-2 for spacing
+              - Changed dark:border-gray-600 to dark:border-gray-700 to match x-text-input
+              - Changed dark:bg-gray-700 to dark:bg-gray-900 to match x-text-input
             --}}
             <input id="phone_number_profile" name="phone_number" type="tel" 
-                   class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 rounded-md shadow-sm text-start" 
+                   class="mt-2 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 rounded-md shadow-sm text-start" 
                    value="{{ old('phone_number', $user->phone_number) }}" 
                    autocomplete="tel">
             
@@ -173,7 +176,8 @@
         {{-- Government ID --}}
         <div>
             <x-input-label for="government_id" :value="__('profile_page.government_id')" />
-             <div class="relative mt-1">
+            {{-- UPDATED: mt-1 to mt-2 --}}
+             <div class="relative mt-2">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M18 0H2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM5 16V4h10v12H5ZM14 7h-4v1h4V7Zm0 3h-4v1h4v-1Zm-2 3h-2v1h2v-1Z"/>
@@ -203,6 +207,7 @@
     </form>
 </section>
 
+{{-- UPDATED SCRIPT: Removed the block that stripped the '+' from the initial value --}}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const phoneInputProfile = document.querySelector("#phone_number_profile");
@@ -218,14 +223,11 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             separateDialCode: true,
             preferredCountries: ['eg','sa','us','gb'],
+            // The 'value' attribute of the input (e.g., +2010...)
+            // is now correctly read by the library.
+            // 'separateDialCode: true' handles parsing it,
+            // setting the flag, and showing the national number.
         });
-
-        // Optional: set initial value
-        if (phoneInputProfile.value) {
-            // Remove any non-digit characters
-            const cleaned = phoneInputProfile.value.replace(/\D/g,'');
-            phoneInputProfile.value = cleaned;
-        }
 
         // On form submit: append country code and validate
         const profileForm = phoneInputProfile.closest('form');
