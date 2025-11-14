@@ -62,7 +62,7 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact.index
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 // ------------------------------------
 
-Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::view('/terms', 'terms.index')->name('terms.index');
 Route::view('/privacy', 'privacy.index')->name('privacy.index');

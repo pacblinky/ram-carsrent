@@ -40,7 +40,7 @@
                             <a href="{{ route('cars.index') }}" class="hover:underline">{{ __('footer.cars') }}</a>
                         </li>
                         <li class="mb-4">
-                            <a href="{{ route('about.index') }}" class="hover:underline">{{ __('footer.about') }}</a>
+                            <a href="{{ route('about') }}" class="hover:underline">{{ __('footer.about') }}</a>
                         </li>
                         <li>
                             <a href="{{ route('contact.index') }}" class="hover:underline">{{ __('footer.contact') }}</a>
