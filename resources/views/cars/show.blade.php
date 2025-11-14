@@ -247,7 +247,7 @@
                                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white truncate">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" {{ $car->location_id == $loc->id ? 'selected' : '' }}>
-                                        {{ \Illuminate\Support\Str::limit($loc->name, 45) }}
+                                        {{ \Illuminate\Support\Str::limit($loc->name, 100) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -264,7 +264,7 @@
                                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white truncate">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" {{ $car->location_id == $loc->id ? 'selected' : '' }}>
-                                        {{ \Illuminate\Support\Str::limit($loc->name, 45) }}
+                                        {{ \Illuminate\Support\Str::limit($loc->name, 100) }}
                                     </option>
                                 @endforeach
                             </select>
