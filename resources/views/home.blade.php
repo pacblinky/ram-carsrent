@@ -290,8 +290,8 @@
                 {{-- MODIFIED: Removed absolute classes, updated colors --}}
                 <button type="button" class="flex items-center justify-center cursor-pointer group focus:outline-none" data-carousel-prev>
                     <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600 group-focus:ring-4 group-focus:ring-gray-300 dark:group-focus:ring-gray-600/70 group-focus:outline-none">
-                        {{-- MODIFIED: Updated text color --}}
-                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        {{-- MODIFIED: Updated text color AND ADDED RTL FIX --}}
+                        <svg class="w-4 h-4 text-gray-800 dark:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                         </svg>
                         <span class="sr-only">Previous</span>
@@ -300,8 +300,8 @@
                 {{-- MODIFIED: Removed absolute classes, updated colors --}}
                 <button type="button" class="flex items-center justify-center cursor-pointer group focus:outline-none" data-carousel-next>
                     <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600 group-focus:ring-4 group-focus:ring-gray-300 dark:group-focus:ring-gray-600/70 group-focus:outline-none">
-                        {{-- MODIFIED: Updated text color --}}
-                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        {{-- MODIFIED: Updated text color AND ADDED RTL FIX --}}
+                        <svg class="w-4 h-4 text-gray-800 dark:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                         </svg>
                         <span class="sr-only">Next</span>
