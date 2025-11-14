@@ -1,3 +1,4 @@
+@import 'intl-tel-input/build/css/intlTelInput.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -120,4 +121,8 @@
           0 0 30px #f0f;
       color: #fce4ec; /* Light pink text */
   }
+}
+
+.iti {
+    width: 100% !important;
 }

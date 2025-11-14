@@ -2,6 +2,7 @@ import './bootstrap';
 import 'flowbite';
 import "./theme-toggle";
 import { requestNotificationPermission } from './firebase';
+import intlTelInput from 'intl-tel-input';
 
 import Alpine from 'alpinejs';
 
@@ -12,3 +13,5 @@ Alpine.start();
 if (window.location.pathname !== "/login" && window.userIsLoggedIn) {
     requestNotificationPermission();
 }
+
+window.intlTelInput = intlTelInput;
