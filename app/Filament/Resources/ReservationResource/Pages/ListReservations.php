@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ReservationResource\Pages;
 use App\Filament\Resources\ReservationResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Enums\MaxWidth;
 
 class ListReservations extends ListRecords
 {
@@ -15,5 +16,10 @@ class ListReservations extends ListRecords
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    public function getMaxContentWidth(): MaxWidth
+    {
+        return MaxWidth::Full;
     }
 }
