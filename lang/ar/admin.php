@@ -187,6 +187,7 @@ return [
         
         // Location
         'google_maps' => 'خرائط جوجل',
+        'google_maps_embed' => 'تضمين خرائط جوجل',
 
         // Reservation
         'user'        => 'المستخدم',

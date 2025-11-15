@@ -187,6 +187,7 @@ return [
 
         // Location
         'google_maps' => 'Google Maps',
+        'google_maps_embed' => 'Google Maps Embed',
         
         // Reservation
         'user'        => 'User',
