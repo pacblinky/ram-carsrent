@@ -120,6 +120,12 @@ class ReservationResource extends Resource
 
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label("#")
+                    ->badge()
+                    ->color('info')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('user.name')
                     ->label(__('admin.table.user'))
                     ->sortable(),
@@ -162,6 +168,21 @@ class ReservationResource extends Resource
                     ])
                     ->selectablePlaceholder(false) // <-- THIS IS THE CORRECT FIX
                     ->sortable(),
+                
+                TextColumn::make('status_badge')
+                    ->label('')
+                    ->getStateUsing(fn ($record) => $record->status)
+                    ->badge()
+                    // V-- THIS MUST BE ReservationStatus
+                    ->formatStateUsing(fn (ReservationStatus $state): string => match($state) {
+                        ReservationStatus::Pending   => __('admin.form.options.status.pending'),
+                        ReservationStatus::Confirmed => __('admin.form.options.status.confirmed'),
+                        ReservationStatus::Completed => __('admin.form.options.status.completed'),
+                        ReservationStatus::Canceled  => __('admin.form.options.status.canceled'),
+                        ReservationStatus::Overdue   => __('admin.form.options.status.overdue'),
+                    })
+                    // V-- THIS ONE TOO (This is likely line 170)
+                    ->color(fn (ReservationStatus $state): string => $state->color())
             ])
             ->defaultSort('start_datetime', 'desc')
             ->filters([

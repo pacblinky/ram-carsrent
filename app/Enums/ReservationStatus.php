@@ -27,10 +27,10 @@ enum ReservationStatus: string
     {
         return match($this) {
             self::Pending   => 'warning',
-            self::Confirmed => 'primary',
+            self::Confirmed => 'info',
             self::Completed => 'success',
-            self::Canceled  => 'secondary',
-            self::Overdue   => 'danger',
+            self::Canceled  => 'danger',
+            self::Overdue   => 'gray',
         };
     }
 }
