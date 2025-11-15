@@ -4,7 +4,9 @@ namespace App\Filament\Resources\ReservationResource\Pages;
 
 use App\Filament\Resources\ReservationResource;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;        // ✔ correct
+use Filament\Actions\EditAction;    // optional
+use Filament\Actions\DeleteAction;  // optional
 
 class ViewReservation extends ViewRecord
 {
