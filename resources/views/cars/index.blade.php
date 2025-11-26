@@ -113,6 +113,7 @@
                                 datepicker-autohide
                                 datepicker-format="yyyy-mm-dd"
                                 datepicker-min-date="{{ now()->format('Y-m-d') }}"
+                                readonly
                                 type="text"
                                 id="pickup_date_display"
                                 value="{{ $pickup_date_value }}"
@@ -135,6 +136,7 @@
                                 datepicker-autohide
                                 datepicker-format="yyyy-mm-dd"
                                 datepicker-min-date="{{ now()->format('Y-m-d') }}"
+                                readonly
                                 type="text"
                                 id="dropoff_date_display"
                                 value="{{ $dropoff_date_value }}"
