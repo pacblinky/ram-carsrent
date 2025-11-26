@@ -45,7 +45,9 @@ return [
     'js_past' => '(Past)',
     'js_booked' => '(Booked)',
     'js_days' => 'day(s)',
-     'vehicle_description' => 'Vehicle Description',
+    'vehicle_description' => 'Vehicle Description',
+    'with_driver' => 'With Driver', // Added
+    
     // === Car List Partial ===
     'showing_results' => 'Showing :start - :end of :total results',
     'show' => 'Show:',

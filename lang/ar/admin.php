@@ -26,13 +26,13 @@ return [
             'navigation_label' => 'الصور',
         ],
         'location' => [
-            'label'          => 'موقع', // ADDED
-            'plural_label'   => 'المواقع', // ADDED
+            'label'          => 'موقع', 
+            'plural_label'   => 'المواقع', 
             'navigation_label' => 'المواقع',
         ],
         'reservation' => [
-            'label'          => 'حجز', // ADDED
-            'plural_label'   => 'الحجوزات', // ADDED
+            'label'          => 'حجز', 
+            'plural_label'   => 'الحجوزات', 
             'navigation_label' => 'الحجوزات',
         ],
         'user' => [
@@ -89,6 +89,7 @@ return [
         'is_available'        => 'متاحة للإيجار',
         'is_available_helper' => 'مفتاح تحكم لإخفاء/إظهار هذه السيارة بالكامل.',
         'price_per_day'       => 'السعر لكل يوم',
+        'driver_price_per_day'=> 'سعر السائق في اليوم', // Added
         'images'              => 'صور السيارة',
         'images_helper'       => 'قم برفع 5 صور كحد أقصى للسيارة',
         'desc_en'             => 'الوصف (الإنجليزية)',
@@ -108,6 +109,7 @@ return [
         // Reservation
         'user'                 => 'المستخدم',
         'car'                  => 'السيارة',
+        'with_driver'          => 'مع سائق', // Added
         'pickup_location'      => 'موقع الاستلام',
         'dropoff_location'     => 'موقع التسليم',
         'start_datetime'       => 'تاريخ ووقت البدء',
@@ -198,6 +200,7 @@ return [
         'end'         => 'النهاية',
         'total_price' => 'السعر الإجمالي',
         'status'      => 'الحالة',
+        'with_driver' => 'مع سائق', // Added
         
         // User
         'email'   => 'البريد الإلكتروني',

@@ -128,6 +128,13 @@ class CarResource extends Resource
                         ->prefix("SAR")
                         ->label(__('admin.form.price_per_day'))
                         ->required(),
+                    
+                    TextInput::make('driver_price_per_day')
+                        ->numeric()
+                        ->prefix("SAR")
+                        ->label(__('admin.form.driver_price_per_day'))
+                        ->default(0)
+                        ->required(),
                 ]),
 
             Section::make(__('admin.sections.car.media'))

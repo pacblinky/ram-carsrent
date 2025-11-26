@@ -11,6 +11,7 @@ class Reservation extends Model
     protected $fillable = [
         'user_id',
         'car_id',
+        'with_driver', // Added
         'pickup_location_id',
         'dropoff_location_id',
         'start_datetime',
@@ -22,7 +23,8 @@ class Reservation extends Model
     protected $casts = [
         'start_datetime' => 'datetime',
         'end_datetime'   => 'datetime',
-        'status'         => ReservationStatus::class, // pending/confirmed/completed/canceled/overdue
+        'with_driver'    => 'boolean', // Added
+        'status'         => ReservationStatus::class,
     ];
 
     public function user()     { return $this->belongsTo(User::class); }
@@ -40,7 +42,12 @@ class Reservation extends Model
                 $days  = max(1, ceil($start->diffInMinutes($end) / 1440));
 
                 if ($car) {
-                    $reservation->total_price = $car->price_per_day * $days;
+                    // Updated calculation logic
+                    $basePrice = $car->price_per_day;
+                    if ($reservation->with_driver) {
+                        $basePrice += $car->driver_price_per_day;
+                    }
+                    $reservation->total_price = $basePrice * $days;
                 }
             }
         });

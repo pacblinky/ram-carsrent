@@ -13,8 +13,10 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle; // Added
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\IconColumn; // Added
 use Filament\Tables\Actions\Action;
 
 class ReservationResource extends Resource
@@ -57,7 +59,14 @@ class ReservationResource extends Resource
                     ->label(__('admin.form.car'))
                     ->relationship('car', 'name')
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    // Reactive to trigger price recalculations if implemented in future
+                    ->reactive(), 
+
+                // Added With Driver Toggle
+                Toggle::make('with_driver')
+                    ->label(__('admin.form.with_driver'))
+                    ->default(false),
 
                 Select::make('pickup_location_id')
                     ->label(__('admin.form.pickup_location'))
@@ -112,8 +121,9 @@ class ReservationResource extends Resource
                     . "- Pickup: {$record->pickup->name}\n"
                     . "- Drop-off: {$record->dropoff->name}\n"
                     . "- From: {$record->start_datetime->format('Y-m-d H:i')}\n"
-                    . "- To: {$record->end_datetime->format('Y-m-d H:i')}\n\n"
-                    . "Total Price: SAR{$record->total_price}\n\n"
+                    . "- To: {$record->end_datetime->format('Y-m-d H:i')}\n"
+                    . ($record->with_driver ? "- With Driver: Yes\n" : "")
+                    . "\nTotal Price: SAR{$record->total_price}\n\n"
                     . "Thank you!"
                 )
             : null;
@@ -132,6 +142,12 @@ class ReservationResource extends Resource
 
                 TextColumn::make('car.name')
                     ->label(__('admin.table.car')),
+
+                // Added With Driver Column
+                IconColumn::make('with_driver')
+                    ->label(__('admin.table.with_driver'))
+                    ->boolean()
+                    ->sortable(),
 
                 TextColumn::make('pickup.name')
                     ->label(__('admin.table.pickup'))
@@ -156,7 +172,6 @@ class ReservationResource extends Resource
                     ->label(__('admin.table.total_price'))
                     ->sortable(),
 
-                /** 🔥 INLINE EDITABLE STATUS (FIXED ENUM ISSUE) */
                 SelectColumn::make('status')
                     ->label(__('admin.table.status'))
                     ->options([
@@ -166,23 +181,8 @@ class ReservationResource extends Resource
                         ReservationStatus::Canceled->value  => __('admin.form.options.status.canceled'),
                         ReservationStatus::Overdue->value   => __('admin.form.options.status.overdue'),
                     ])
-                    ->selectablePlaceholder(false) // <-- THIS IS THE CORRECT FIX
+                    ->selectablePlaceholder(false)
                     ->sortable(),
-                
-                TextColumn::make('status_badge')
-                    ->label('')
-                    ->getStateUsing(fn ($record) => $record->status)
-                    ->badge()
-                    // V-- THIS MUST BE ReservationStatus
-                    ->formatStateUsing(fn (ReservationStatus $state): string => match($state) {
-                        ReservationStatus::Pending   => __('admin.form.options.status.pending'),
-                        ReservationStatus::Confirmed => __('admin.form.options.status.confirmed'),
-                        ReservationStatus::Completed => __('admin.form.options.status.completed'),
-                        ReservationStatus::Canceled  => __('admin.form.options.status.canceled'),
-                        ReservationStatus::Overdue   => __('admin.form.options.status.overdue'),
-                    })
-                    // V-- THIS ONE TOO (This is likely line 170)
-                    ->color(fn (ReservationStatus $state): string => $state->color())
             ])
             ->defaultSort('start_datetime', 'desc')
             ->filters([

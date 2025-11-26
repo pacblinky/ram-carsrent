@@ -47,6 +47,7 @@ return [
     'js_booked' => '(محجوز)',
     'js_days' => 'يوم / أيام',
     'vehicle_description' => 'وصف المركبة',
+    'with_driver' => 'مع سائق', // Added
 
     // === Car List Partial ===
     'showing_results' => 'عرض :start - :end من أصل :total نتائج',
@@ -65,7 +66,7 @@ return [
     // === Feature Specs (Corrected) ===
     'feat_seats' => ':count مقاعد',
     'feat_doors' => ':count أبواب',
-    'feat_transmission_automatic' => 'أوتوماتيك', // Corrected key
+    'feat_transmission_automatic' => 'أوتوماتيك',
     'feat_transmission_manual' => 'يدوي',
     'feat_transmission_semi-automatic' => 'شبه أوتوماتيكي',
     'feat_fuel_gasoline' => 'بنزين',

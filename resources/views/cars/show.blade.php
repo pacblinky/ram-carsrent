@@ -235,7 +235,25 @@
                                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
                             </select>
                         </div>
-    
+                        
+                        {{-- Added Driver Checkbox --}}
+                        @if($car->driver_price_per_day > 0)
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="with_driver" name="with_driver" type="checkbox" value="1"
+                                       class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
+                            </div>
+                            <div class="ms-3 text-sm">
+                                <label for="with_driver" class="font-medium text-gray-900 dark:text-gray-300">
+                                    {{ __('cars_page.with_driver') }}
+                                    <span class="text-gray-500 dark:text-gray-400 text-xs">
+                                        (+ <img src="{{ asset('images/currency.png') }}" style="width: 10px; display: inline-block; vertical-align: baseline;" class="dark:invert"> {{ number_format($car->driver_price_per_day, 0) }} {{ __('cars_page.per_day') }})
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        @endif
+
                         {{-- Pickup Location --}}
                         <div>
                             <label for="pickup_location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -331,12 +349,14 @@
         // Data passed from Backend
         const unavailable = @json($unavailable ?? []);
         const pricePerDay = {{ $car->price_per_day ?? 0 }};
+        const driverPricePerDay = {{ $car->driver_price_per_day ?? 0 }}; // Added
     
         // Element References
         const startDate = document.getElementById("start_date");
         const endDate   = document.getElementById("end_date");
         const startTime = document.getElementById("start_time");
         const endTime   = document.getElementById("end_time");
+        const driverCheckbox = document.getElementById("with_driver"); // Added
         const totalPriceEl = document.getElementById("total_price");
         const breakdownEl  = document.getElementById("price_breakdown");
         const currencySymbol = '<img src="{{ asset('images/currency.png') }}" style="width: 12px; display: inline-block; vertical-align: baseline;" class="dark:invert">';
@@ -486,15 +506,23 @@
             const diffMin = (end - start) / (1000 * 60);
             const daysExact = diffMin / 1440;
             const billableDays = Math.max(1, Math.ceil(daysExact));
-            const total = billableDays * pricePerDay;
+            
+            // Logic with Driver
+            const withDriver = driverCheckbox && driverCheckbox.checked;
+            const dailyRate = pricePerDay + (withDriver ? driverPricePerDay : 0);
+            const total = billableDays * dailyRate;
     
             totalPriceEl.textContent = total.toLocaleString('en-US', {minimumFractionDigits: 0});
     
             if (breakdownEl) {
-                breakdownEl.innerHTML = `
-                    ${billableDays} ${translations.days} × ${currencySymbol} ${pricePerDay.toLocaleString()} =
-                    <strong>${currencySymbol} ${total.toLocaleString()}</strong>
-                `;
+                // Detailed breakdown
+                let breakdownText = `${billableDays} ${translations.days} × ${currencySymbol} ${pricePerDay.toLocaleString()}`;
+                if(withDriver) {
+                    breakdownText += ` + (${currencySymbol} ${driverPricePerDay.toLocaleString()} driver)`;
+                }
+                breakdownText += ` = <strong>${currencySymbol} ${total.toLocaleString()}</strong>`;
+                
+                breakdownEl.innerHTML = breakdownText;
             }
         };
     
@@ -533,6 +561,11 @@
             ensureEndAfterStart();
             calculatePrice();
         });
+
+        // Listener for driver checkbox
+        if(driverCheckbox) {
+            driverCheckbox.addEventListener("change", calculatePrice);
+        }
     
         // Initial runs on page load
         updateTimeOptions(startDate, startTime);

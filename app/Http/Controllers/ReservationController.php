@@ -35,6 +35,7 @@ class ReservationController extends Controller
             'start_time'          => 'required',
             'end_date'            => 'required|date|after_or_equal:start_date',
             'end_time'            => 'required',
+            'with_driver'         => 'nullable|boolean', // Validation
         ]);
 
         $start = Carbon::parse("{$validated['start_date']} {$validated['start_time']}");
@@ -66,6 +67,7 @@ class ReservationController extends Controller
         Reservation::create([
             'user_id'             => auth()->id(),
             'car_id'              => $car->id,
+            'with_driver'         => $request->has('with_driver'), // Store with_driver
             'pickup_location_id'  => $validated['pickup_location_id'],
             'dropoff_location_id' => $validated['dropoff_location_id'],
             'start_datetime'      => $start,

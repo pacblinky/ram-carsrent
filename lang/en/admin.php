@@ -26,13 +26,13 @@ return [
             'navigation_label' => 'Images',
         ],
         'location' => [
-            'label'          => 'Location', // ADDED
-            'plural_label'   => 'Locations', // ADDED
+            'label'          => 'Location', 
+            'plural_label'   => 'Locations', 
             'navigation_label' => 'Locations',
         ],
         'reservation' => [
-            'label'          => 'Reservation', // ADDED
-            'plural_label'   => 'Reservations', // ADDED
+            'label'          => 'Reservation', 
+            'plural_label'   => 'Reservations', 
             'navigation_label' => 'Reservations',
         ],
         'user' => [
@@ -89,6 +89,7 @@ return [
         'is_available'        => 'Available for Rent',
         'is_available_helper' => 'Master switch to hide/show this car entirely.',
         'price_per_day'       => 'Price per Day',
+        'driver_price_per_day'=> 'Driver Price per Day', // Added
         'images'              => 'Car Images',
         'images_helper'       => 'Upload up to 5 images of the car',
         'desc_en'             => 'Description (English)',
@@ -108,6 +109,7 @@ return [
         // Reservation
         'user'                 => 'User',
         'car'                  => 'Car',
+        'with_driver'          => 'With Driver', // Added
         'pickup_location'      => 'Pickup Location',
         'dropoff_location'     => 'Drop-off Location',
         'start_datetime'       => 'Start Date & Time',
@@ -198,6 +200,7 @@ return [
         'end'         => 'End',
         'total_price' => 'Total Price',
         'status'      => 'Status',
+        'with_driver' => 'With Driver', // Added
 
         // User
         'email'   => 'Email',
