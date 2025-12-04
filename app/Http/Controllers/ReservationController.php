@@ -8,8 +8,8 @@ use App\Models\User;
 use App\Enums\ReservationStatus;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Filament\Notifications\Notification; // Imported Notification
-use Filament\Notifications\Actions\Action; // Imported Action
+use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action;
 use function App\Helpers\sendPushNotification;
 
 class ReservationController extends Controller
@@ -37,7 +37,7 @@ class ReservationController extends Controller
             'start_time'          => 'required',
             'end_date'            => 'required|date|after_or_equal:start_date',
             'end_time'            => 'required',
-            'with_driver'         => 'nullable|boolean', // Validation
+            'with_driver'         => 'nullable|boolean',
         ]);
 
         $start = Carbon::parse("{$validated['start_date']} {$validated['start_time']}");
@@ -66,11 +66,11 @@ class ReservationController extends Controller
             ])->withInput();
         }
 
-        // Create the reservation and capture the instance
+        // Create the reservation
         $reservation = Reservation::create([
             'user_id'             => auth()->id(),
             'car_id'              => $car->id,
-            'with_driver'         => $request->has('with_driver'), // Store with_driver
+            'with_driver'         => $request->has('with_driver'),
             'pickup_location_id'  => $validated['pickup_location_id'],
             'dropoff_location_id' => $validated['dropoff_location_id'],
             'start_datetime'      => $start,
@@ -80,7 +80,7 @@ class ReservationController extends Controller
 
         $admins = User::where('is_admin', true)->get();
 
-        // 1. Filament Database Notification for Admin Panel
+        // 1. Filament Database Notification (Fixed: No Closure in URL)
         Notification::make()
             ->title(__('admin.notifications.new_reservation_title'))
             ->body(__('admin.notifications.new_reservation_body', [
@@ -92,11 +92,11 @@ class ReservationController extends Controller
                 Action::make('view')
                     ->button()
                     ->label(__('admin.notifications.view_reservation'))
-                    ->url(fn () => route('filament.admin.resources.reservations.view', $reservation))
+                    ->url(route('filament.admin.resources.reservations.view', $reservation), shouldOpenInNewTab: true)
             ])
             ->sendToDatabase($admins);
 
-        // 2. Existing Push Notifications (Firebase/OneSignal etc)
+        // 2. Push Notifications
         foreach ($admins as $admin) {
             sendPushNotification(
                 $admin,
@@ -105,7 +105,6 @@ class ReservationController extends Controller
             );
         }
 
-        // Redirect to the new reservations index page with a success message
         return redirect()->route('reservations.index')
             ->with('success', __('reservations.reservation_created_success'));
     }
@@ -127,9 +126,9 @@ class ReservationController extends Controller
 
         $reservation->update(['status' => 'canceled']);
 
-        // Filament Database Notification for Cancellation
         $admins = User::where('is_admin', true)->get();
-        
+
+        // 1. Filament Database Notification for Cancellation (Fixed: No Closure in URL)
         Notification::make()
             ->title(__('admin.notifications.reservation_canceled_title'))
             ->body(__('admin.notifications.reservation_canceled_body', [
@@ -141,7 +140,7 @@ class ReservationController extends Controller
                 Action::make('view')
                     ->button()
                     ->label(__('admin.notifications.view_reservation'))
-                    ->url(fn () => route('filament.admin.resources.reservations.view', $reservation))
+                    ->url(route('filament.admin.resources.reservations.view', $reservation), shouldOpenInNewTab: true)
             ])
             ->sendToDatabase($admins);
 
