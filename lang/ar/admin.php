@@ -89,7 +89,7 @@ return [
         'is_available'        => 'متاحة للإيجار',
         'is_available_helper' => 'مفتاح تحكم لإخفاء/إظهار هذه السيارة بالكامل.',
         'price_per_day'       => 'السعر لكل يوم',
-        'driver_price_per_day'=> 'سعر السائق في اليوم', // Added
+        'driver_price_per_day'=> 'سعر السائق في اليوم',
         'images'              => 'صور السيارة',
         'images_helper'       => 'قم برفع 5 صور كحد أقصى للسيارة',
         'desc_en'             => 'الوصف (الإنجليزية)',
@@ -109,7 +109,7 @@ return [
         // Reservation
         'user'                 => 'المستخدم',
         'car'                  => 'السيارة',
-        'with_driver'          => 'مع سائق', // Added
+        'with_driver'          => 'مع سائق',
         'pickup_location'      => 'موقع الاستلام',
         'dropoff_location'     => 'موقع التسليم',
         'start_datetime'       => 'تاريخ ووقت البدء',
@@ -200,7 +200,7 @@ return [
         'end'         => 'النهاية',
         'total_price' => 'السعر الإجمالي',
         'status'      => 'الحالة',
-        'with_driver' => 'مع سائق', // Added
+        'with_driver' => 'مع سائق',
         
         // User
         'email'   => 'البريد الإلكتروني',
@@ -229,5 +229,11 @@ return [
     // Notifications
     'notifications' => [
         'password_reset_success' => 'تمت إعادة تعيين كلمة المرور بنجاح!',
+        // New Reservation Notifications
+        'new_reservation_title' => 'تم إنشاء حجز جديد',
+        'new_reservation_body' => 'تم إنشاء حجز جديد #:id للسيارة :car.',
+        'reservation_canceled_title' => 'تم إلغاء الحجز',
+        'reservation_canceled_body' => 'قام المستخدم بإلغاء الحجز رقم #:id للسيارة :car.',
+        'view_reservation' => 'عرض الحجز',
     ],
 ];

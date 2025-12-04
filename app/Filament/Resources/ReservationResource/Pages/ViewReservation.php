@@ -4,9 +4,10 @@ namespace App\Filament\Resources\ReservationResource\Pages;
 
 use App\Filament\Resources\ReservationResource;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Actions\Action;        // ✔ correct
-use Filament\Actions\EditAction;    // optional
-use Filament\Actions\DeleteAction;  // optional
+use Filament\Actions\Action;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use App\Enums\ReservationStatus;
 
 class ViewReservation extends ViewRecord
 {
@@ -24,12 +25,29 @@ class ViewReservation extends ViewRecord
                   . "- Drop-off: {$this->record->dropoff->name}\n"
                   . "- From: {$this->record->start_datetime->format('Y-m-d H:i')}\n"
                   . "- To: {$this->record->end_datetime->format('Y-m-d H:i')}\n\n"
-                  . "Total Price: \${$this->record->total_price}\n\n"
+                  . "Total Price: SAR{$this->record->total_price}\n\n"
                   . "Thank you!"
               )
             : null;
 
         return [
+            // Custom Edit Action for Status Only
+            EditAction::make('update_status')
+                ->label(__('admin.form.status'))
+                ->icon('heroicon-m-pencil-square')
+                ->form([
+                    Select::make('status')
+                        ->label(__('admin.form.status'))
+                        ->options([
+                            ReservationStatus::Pending->value   => __('admin.form.options.status.pending'),
+                            ReservationStatus::Confirmed->value => __('admin.form.options.status.confirmed'),
+                            ReservationStatus::Completed->value => __('admin.form.options.status.completed'),
+                            ReservationStatus::Canceled->value  => __('admin.form.options.status.canceled'),
+                            ReservationStatus::Overdue->value   => __('admin.form.options.status.overdue'),
+                        ])
+                        ->required(),
+                ]),
+
             Action::make('whatsapp')
                 ->label('WhatsApp')
                 ->icon(function () {

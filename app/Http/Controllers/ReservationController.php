@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Enums\ReservationStatus;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Filament\Notifications\Notification; // Imported Notification
+use Filament\Notifications\Actions\Action; // Imported Action
 use function App\Helpers\sendPushNotification;
 
 class ReservationController extends Controller
@@ -64,7 +66,8 @@ class ReservationController extends Controller
             ])->withInput();
         }
 
-        Reservation::create([
+        // Create the reservation and capture the instance
+        $reservation = Reservation::create([
             'user_id'             => auth()->id(),
             'car_id'              => $car->id,
             'with_driver'         => $request->has('with_driver'), // Store with_driver
@@ -76,6 +79,24 @@ class ReservationController extends Controller
         ]);
 
         $admins = User::where('is_admin', true)->get();
+
+        // 1. Filament Database Notification for Admin Panel
+        Notification::make()
+            ->title(__('admin.notifications.new_reservation_title'))
+            ->body(__('admin.notifications.new_reservation_body', [
+                'id' => $reservation->id, 
+                'car' => $car->name
+            ]))
+            ->success()
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->label(__('admin.notifications.view_reservation'))
+                    ->url(fn () => route('filament.admin.resources.reservations.view', $reservation))
+            ])
+            ->sendToDatabase($admins);
+
+        // 2. Existing Push Notifications (Firebase/OneSignal etc)
         foreach ($admins as $admin) {
             sendPushNotification(
                 $admin,
@@ -105,6 +126,24 @@ class ReservationController extends Controller
         }
 
         $reservation->update(['status' => 'canceled']);
+
+        // Filament Database Notification for Cancellation
+        $admins = User::where('is_admin', true)->get();
+        
+        Notification::make()
+            ->title(__('admin.notifications.reservation_canceled_title'))
+            ->body(__('admin.notifications.reservation_canceled_body', [
+                'id' => $reservation->id,
+                'car' => $reservation->car->name
+            ]))
+            ->warning()
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->label(__('admin.notifications.view_reservation'))
+                    ->url(fn () => route('filament.admin.resources.reservations.view', $reservation))
+            ])
+            ->sendToDatabase($admins);
 
         return back()->with('success', __('reservations.cancel_success'));
     }

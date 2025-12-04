@@ -13,11 +13,15 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle; // Added
+use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\SelectColumn;
-use Filament\Tables\Columns\IconColumn; // Added
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Actions\Action;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\IconEntry;
 
 class ReservationResource extends Resource
 {
@@ -198,6 +202,7 @@ class ReservationResource extends Resource
                     ->multiple(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(), // Ensure View Action is enabled
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
 
@@ -217,6 +222,75 @@ SVG;
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make(__('admin.models.reservation.label'))
+                    ->columns(2)
+                    ->schema([
+                        TextEntry::make('id')
+                            ->label("#"),
+                        
+                        TextEntry::make('status')
+                            ->label(__('admin.table.status'))
+                            ->badge()
+                            ->color(fn (ReservationStatus $state): string => match ($state) {
+                                ReservationStatus::Pending => 'warning',
+                                ReservationStatus::Confirmed => 'success',
+                                ReservationStatus::Completed => 'success',
+                                ReservationStatus::Canceled => 'danger',
+                                ReservationStatus::Overdue => 'danger',
+                                default => 'gray',
+                            }),
+
+                        TextEntry::make('start_datetime')
+                            ->label(__('admin.table.start'))
+                            ->dateTime('Y-m-d h:i A'),
+                            
+                        TextEntry::make('end_datetime')
+                            ->label(__('admin.table.end'))
+                            ->dateTime('Y-m-d h:i A'),
+                            
+                        TextEntry::make('pickup.name')
+                            ->label(__('admin.table.pickup')),
+                            
+                        TextEntry::make('dropoff.name')
+                            ->label(__('admin.table.dropoff')),
+                            
+                        IconEntry::make('with_driver')
+                            ->label(__('admin.table.with_driver'))
+                            ->boolean(),
+                            
+                        TextEntry::make('total_price')
+                            ->label(__('admin.table.total_price'))
+                            ->money('sar'),
+                    ]),
+                
+                Section::make(__('admin.form.car'))
+                    ->columns(2)
+                    ->schema([
+                        TextEntry::make('car.name')
+                            ->label(__('admin.form.name')),
+                        TextEntry::make('car.brand.name')
+                            ->label(__('admin.form.brand')),
+                    ]),
+                    
+                Section::make(__('admin.form.user'))
+                    ->columns(2)
+                    ->schema([
+                        TextEntry::make('user.name')
+                            ->label(__('admin.form.name')),
+                        TextEntry::make('user.email')
+                            ->label(__('admin.form.email')),
+                        TextEntry::make('user.phone_number')
+                            ->label(__('admin.form.phone')),
+                        TextEntry::make('user.gov_id')
+                            ->label(__('admin.form.government_id')),
+                    ]),
             ]);
     }
 

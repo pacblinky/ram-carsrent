@@ -89,7 +89,7 @@ return [
         'is_available'        => 'Available for Rent',
         'is_available_helper' => 'Master switch to hide/show this car entirely.',
         'price_per_day'       => 'Price per Day',
-        'driver_price_per_day'=> 'Driver Price per Day', // Added
+        'driver_price_per_day'=> 'Driver Price per Day',
         'images'              => 'Car Images',
         'images_helper'       => 'Upload up to 5 images of the car',
         'desc_en'             => 'Description (English)',
@@ -109,7 +109,7 @@ return [
         // Reservation
         'user'                 => 'User',
         'car'                  => 'Car',
-        'with_driver'          => 'With Driver', // Added
+        'with_driver'          => 'With Driver',
         'pickup_location'      => 'Pickup Location',
         'dropoff_location'     => 'Drop-off Location',
         'start_datetime'       => 'Start Date & Time',
@@ -200,7 +200,7 @@ return [
         'end'         => 'End',
         'total_price' => 'Total Price',
         'status'      => 'Status',
-        'with_driver' => 'With Driver', // Added
+        'with_driver' => 'With Driver',
 
         // User
         'email'   => 'Email',
@@ -229,5 +229,11 @@ return [
     // Notifications
     'notifications' => [
         'password_reset_success' => 'Password reset successfully!',
+        // New Reservation Notifications
+        'new_reservation_title' => 'New Reservation Created',
+        'new_reservation_body' => 'A new reservation #:id for :car has been created.',
+        'reservation_canceled_title' => 'Reservation Canceled',
+        'reservation_canceled_body' => 'Reservation #:id for :car has been canceled by the user.',
+        'view_reservation' => 'View Reservation',
     ],
 ];
