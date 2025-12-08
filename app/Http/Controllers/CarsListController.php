@@ -32,11 +32,11 @@ class CarsListController extends Controller
                     SELECT COUNT(*)
                     FROM reservations
                     WHERE reservations.car_id = cars.id
-                    AND reservations.status != ?
+                    AND reservations.status = ?
                     AND reservations.start_datetime < ?
                     AND reservations.end_datetime > ?
                 ) < cars.quantity', [
-                    'canceled',
+                    'confirmed', // CHANGED: Check only 'confirmed' status instead of != 'canceled'
                     $reqEnd,   // Existing Start MUST BE LESS THAN Requested End
                     $reqStart  // Existing End MUST BE GREATER THAN Requested Start
                 ]);
@@ -202,9 +202,9 @@ class CarsListController extends Controller
         }
 
         // --- NEW UNAVAILABLE LOGIC ---
-        // Get all future, non-canceled reservations for this car
+        // Get all future, confirmed reservations for this car
         $allReservations = \App\Models\Reservation::where('car_id', $car->id)
-            ->where('status', '!=', 'canceled')
+            ->where('status', 'confirmed') // CHANGED: Check only 'confirmed' status
             ->where('end_datetime', '>=', now())
             ->orderBy('start_datetime')
             ->get();
