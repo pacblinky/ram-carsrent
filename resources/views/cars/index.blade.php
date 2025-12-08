@@ -189,6 +189,28 @@
                     {{ __('cars_page.clear_all_filters') ?? 'Clear All Filters' }}
                 </a>
 
+                {{-- NEW: Search by Name Box --}}
+                <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.search') ?? 'Search' }}</h3>
+                    <form action="{{ route('cars.index') }}" method="GET" class="ajax-form">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
+                            </div>
+                            <input type="search" name="search" id="search-input" 
+                                   value="{{ request('search') }}" 
+                                   class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                   placeholder="{{ __('cars_page.search_placeholder') ?? 'Search by name...' }}" />
+                        </div>
+                        {{-- FIXED SPACING: Changed mt-3 to mt-4 --}}
+                        <button type="submit" class="mt-4 w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 dark:bg-blue-600 dark:hover:bg-blue-700">
+                             {{ __('cars_page.search_btn') ?? 'Search' }}
+                        </button>
+                    </form>
+                </div>
+
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.price_range') }}</h3>
                     <form action="{{ route('cars.index') }}" method="GET" class="ajax-form">
@@ -442,7 +464,7 @@
                 const pickupTimeValue = '{{ $pickup_time_value }}';
                 const dropoffTimeValue = '{{ $dropoff_time_value }}';
 
-                // Function to update the hidden datetime input
+                // Function to update the hidden inputs
                 function updateHiddenInputs() {
                     if (pickupDateEl.value) {
                         pickupHiddenEl.value = `${pickupDateEl.value}T${pickupTimeValue}`;

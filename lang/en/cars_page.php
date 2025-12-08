@@ -12,6 +12,11 @@ return [
     'find_vehicle' => 'Find a Vehicle',
     'fleet_title' => 'Our Vehicle Fleet',
     'fleet_subtitle' => 'Turning dreams into reality with versatile vehicles.',
+    // NEW SEARCH KEYS
+    'search' => 'Car Search',
+    'search_placeholder' => 'Search by name...',
+    'search_btn' => 'Search',
+    
     'price_range' => 'Price Range / Day',
     'min_price' => 'Min',
     'max_price' => 'Max',
@@ -46,7 +51,7 @@ return [
     'js_booked' => '(Booked)',
     'js_days' => 'day(s)',
     'vehicle_description' => 'Vehicle Description',
-    'with_driver' => 'With Driver', // Added
+    'with_driver' => 'With Driver', 
     
     // === Car List Partial ===
     'showing_results' => 'Showing :start - :end of :total results',
@@ -62,7 +67,7 @@ return [
     'view_details' => 'View Details',
     'clear_all_filters' => 'Clear all filters',
 
-    // === Feature Specs (New) ===
+    // === Feature Specs ===
     'feat_seats' => ':count Seats',
     'feat_doors' => ':count Doors',
     'feat_transmission_automatic' => 'Automatic',

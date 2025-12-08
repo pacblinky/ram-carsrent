@@ -12,6 +12,11 @@ return [
     'find_vehicle' => 'ابحث عن سيارة',
     'fleet_title' => 'أسطول سياراتنا',
     'fleet_subtitle' => 'نحول الأحلام إلى حقيقة بمركبات متنوعة.',
+    // NEW SEARCH KEYS
+    'search' => 'بحث السيارات',
+    'search_placeholder' => 'البحث بالاسم...',
+    'search_btn' => 'بحث',
+
     'price_range' => 'نطاق السعر / اليوم',
     'min_price' => 'الأدنى',
     'max_price' => 'الأعلى',
@@ -47,7 +52,7 @@ return [
     'js_booked' => '(محجوز)',
     'js_days' => 'يوم / أيام',
     'vehicle_description' => 'وصف المركبة',
-    'with_driver' => 'مع سائق', // Added
+    'with_driver' => 'مع سائق',
 
     // === Car List Partial ===
     'showing_results' => 'عرض :start - :end من أصل :total نتائج',
@@ -63,7 +68,7 @@ return [
     'view_details' => 'عرض التفاصيل',
     'clear_all_filters' => 'مسح كل الفلاتر',
 
-    // === Feature Specs (Corrected) ===
+    // === Feature Specs ===
     'feat_seats' => ':count مقاعد',
     'feat_doors' => ':count أبواب',
     'feat_transmission_automatic' => 'أوتوماتيك',
