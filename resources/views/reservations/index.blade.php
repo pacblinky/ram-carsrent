@@ -43,34 +43,29 @@
                             $imageUrl = !empty($reservation->car->images) && is_array($reservation->car->images) && count($reservation->car->images) > 0 
                                 ? asset('storage/' . $reservation->car->images[0]) 
                                 : asset('images/logo.png');
+
+                            // STATUS LOGIC
+                            $statusKey = 'reservations.status_' . $reservation->status->value;
+                            
+                            // UPDATED: Used 'amber' for Pending to ensure orange color appears
+                            $statusColorClasses = match($reservation->status) {
+                                \App\Enums\ReservationStatus::Pending => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+                                \App\Enums\ReservationStatus::Confirmed => 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
+                                \App\Enums\ReservationStatus::Completed => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+                                \App\Enums\ReservationStatus::Canceled => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+                                \App\Enums\ReservationStatus::Overdue => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+                                default => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+                            };
                         @endphp
                         <div class="relative flex-none w-full sm:w-1/3 md:w-72 overflow-hidden">
                             <img src="{{ $imageUrl }}" alt="{{ $reservation->car->name }}" class="w-full h-56 sm:h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                            
-                            {{-- Mobile Status Badge Overlay --}}
-                            <div class="absolute top-3 right-3 sm:hidden">
-                                @php
-                                    $statusKey = 'reservations.status_' . $reservation->status->value;
-                                    $statusColorClasses = match($reservation->status) {
-                                        \App\Enums\ReservationStatus::Pending => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 border-yellow-200',
-                                        \App\Enums\ReservationStatus::Confirmed => 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 border-blue-200',
-                                        \App\Enums\ReservationStatus::Completed => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 border-green-200',
-                                        \App\Enums\ReservationStatus::Canceled => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 border-red-200',
-                                        \App\Enums\ReservationStatus::Overdue => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 border-gray-200',
-                                        default => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
-                                    };
-                                @endphp
-                                <span class="px-2.5 py-0.5 text-xs font-bold rounded-full border {{ $statusColorClasses }} shadow-sm">
-                                    {{ __($statusKey) }}
-                                </span>
-                            </div>
                         </div>
 
                         {{-- Details Section --}}
                         <div class="flex-grow p-6 flex flex-col">
                             
-                            {{-- Header: ID, Name, Desktop Status --}}
-                            <div class="flex justify-between items-start mb-4">
+                            {{-- Header: ID, Name, Status --}}
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-4">
                                 <div>
                                     <div class="flex items-center gap-2 mb-1">
                                         <span class="text-xs font-mono text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">
@@ -85,9 +80,9 @@
                                     </h2>
                                 </div>
 
-                                {{-- Desktop Status Badge --}}
-                                <div class="hidden sm:block">
-                                    <span class="px-3 py-1 text-xs font-bold rounded-full border {{ $statusColorClasses }}">
+                                {{-- Status Badge --}}
+                                <div>
+                                    <span class="inline-flex items-center px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-md shadow-sm {{ $statusColorClasses }}">
                                         {{ __($statusKey) }}
                                     </span>
                                 </div>
@@ -99,7 +94,7 @@
                             {{-- Info Grid --}}
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-6 text-sm text-gray-600 dark:text-gray-300 mb-6">
                                 
-                                {{-- Service Type (With Driver / Self Drive) --}}
+                                {{-- Service Type --}}
                                 <div class="flex flex-col">
                                     <span class="text-xs text-gray-400 dark:text-gray-500 uppercase font-semibold mb-1">{{ __('reservations.service_type') }}</span>
                                     <div class="flex items-center gap-2">
@@ -158,7 +153,6 @@
                                         {{ __('reservations.cancel_reservation') }}
                                     </button>
 
-                                    {{-- Modal remains mostly the same, just ensured classes match --}}
                                     <x-modal name="confirm-reservation-cancellation-{{ $reservation->id }}" focusable>
                                         <form method="post" action="{{ route('reservations.cancel', $reservation) }}" class="p-6 text-start rtl:text-right">
                                             @csrf
@@ -185,21 +179,17 @@
                     </div>
                 @empty
                     {{-- Empty State --}}
-                    <div class="text-center py-16 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                        <div class="bg-gray-50 dark:bg-gray-700 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('reservations.no_reservations_yet') }}</h3>
-                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-sm mx-auto">{{ __('reservations.no_reservations_desc') }}</p>
-                        <div class="mt-8">
-                            <a href="{{ route('cars.index') }}" 
-                                class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 dark:bg-blue-500 border border-transparent rounded-lg font-semibold text-sm text-white shadow-md hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all transform hover:-translate-y-0.5">
-                                {{ __('reservations.book_new_car') }}
-                            </a>
-                        </div>
-                    </div>
+                <div class="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('reservations.no_reservations_yet') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('reservations.no_reservations_desc') }}</p>
+                    <div class="mt-6">
+                        <a href="{{ route('cars.index') }}" 
+                            class="inline-flex items-center justify-center px-4 py-2 bg-blue-700 dark:bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                            {{ __('reservations.book_new_car') }}
+                </a>
                 @endforelse
             </div>
 
@@ -212,7 +202,6 @@
         </div>
 
         <script>
-            // ... (Keep existing script) ...
             document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => {
                     const heroContent = document.getElementById('hero-content');
