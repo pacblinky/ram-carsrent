@@ -1,7 +1,7 @@
 <?php
 
 return [
-    // Page Hero
+    // ... keep existing keys ...
     'my_reservations' => 'حجوزاتي',
     'manage_desc' => 'إدارة، عرض، أو إلغاء حجوزات سيارتك كلها في مكان واحد.',
     'reservation_created_success' => 'تم إنشاء الحجز بنجاح! بانتظار التأكيد.',
@@ -11,6 +11,11 @@ return [
     'alert_error' => 'خطأ!',
 
     // Card Details
+    'reservation_id' => 'رقم الحجز',      // [NEW]
+    'service_type' => 'نوع الخدمة',       // [NEW]
+    'with_driver' => 'مع سائق',           // [NEW]
+    'self_drive' => 'قيادة ذاتية',        // [NEW]
+
     'status' => 'الحالة',
     'from' => 'من',
     'to' => 'إلى',
@@ -18,20 +23,18 @@ return [
     'view_details' => 'عرض التفاصيل',
     'cancel_reservation' => 'إلغاء الحجز',
 
-    // Statuses (From your dynamic logic)
+    // ... keep statuses and modal keys ...
     'status_pending' => 'قيد الانتظار',
     'status_confirmed' => 'مؤكد',
     'status_completed' => 'مكتمل',
     'status_canceled' => 'ملغى',
     'status_overdue' => 'متأخر',
 
-    // Cancellation Modal
     'cancel_modal_title' => 'هل أنت متأكد أنك تريد إلغاء هذا الحجز؟',
     'cancel_modal_desc' => 'بمجرد الإلغاء، لا يمكن التراجع عن هذا الإجراء. يرجى تأكيد رغبتك في المتابعة.',
     'no_keep_it' => 'لا، احتفظ به',
     'yes_cancel_it' => 'نعم، قم بالإلغاء',
 
-    // Empty State
     'no_reservations_yet' => 'لا توجد حجوزات بعد',
     'no_reservations_desc' => 'لم تقم بأي حجوزات. ابدأ بالبحث عن سيارتك المثالية.',
     'book_new_car' => 'احجز سيارة جديدة',
