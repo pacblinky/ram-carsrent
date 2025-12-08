@@ -95,11 +95,15 @@ class UserResource extends Resource
 
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('admin.table.email'))
-                    ->searchable(),
+                    ->searchable()
+                    ->icon('heroicon-m-envelope')
+                    ->copyable(),
 
                 Tables\Columns\TextColumn::make('phone_number')
                     ->label(__('admin.table.phone'))
-                    ->searchable(),
+                    ->searchable()
+                    ->icon('heroicon-m-phone')
+                    ->copyable(),
 
                 Tables\Columns\TextColumn::make('government_id')
                     ->label(__('admin.table.gov_id'))
@@ -150,7 +154,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Future: Relation managers like ReservationsRelationManager::class
+            // Future: Relation managers
         ];
     }
 

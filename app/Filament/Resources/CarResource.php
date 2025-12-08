@@ -17,6 +17,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\ToggleColumn;
 
 class CarResource extends Resource
 {
@@ -172,6 +174,12 @@ class CarResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
+            ImageColumn::make('images')
+                ->label(__('admin.form.images'))
+                ->circular()
+                ->stacked()
+                ->limit(3),
+
             TextColumn::make('name')
                 ->label(__('admin.table.name'))
                 ->sortable()
@@ -207,11 +215,13 @@ class CarResource extends Resource
             TextColumn::make('location.name')
                 ->label(__('admin.table.location'))
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->toggleable(isToggledHiddenByDefault: true),
 
-            IconColumn::make('is_available')
-                ->boolean()
-                ->label(__('admin.table.active')),
+            ToggleColumn::make('is_available')
+                ->label(__('admin.table.active'))
+                ->onColor('success')
+                ->offColor('danger'),
 
             TextColumn::make('created_at')
                 ->dateTime('M d, Y')
@@ -222,6 +232,14 @@ class CarResource extends Resource
         ->filters([
             Tables\Filters\TernaryFilter::make('is_available')
                 ->label(__('admin.filters.availability')),
+            
+            Tables\Filters\SelectFilter::make('brand')
+                ->relationship('brand', 'name')
+                ->label(__('admin.form.brand')),
+                
+            Tables\Filters\SelectFilter::make('category')
+                ->options(__('admin.form.options.categories'))
+                ->label(__('admin.form.category')),
         ])
         ->actions([
             Tables\Actions\ViewAction::make(),
