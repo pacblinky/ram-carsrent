@@ -343,7 +343,7 @@
     </script>
     
     {{-- ========================================================== --}}
-    {{--                BOOKING FORM SCRIPT (UNCHANGED)             --}}
+    {{--                BOOKING FORM SCRIPT (MODIFIED)              --}}
     {{-- ========================================================== --}}
     <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -366,6 +366,19 @@
         // --- Checkbox and Button elements ---
         const termsCheckbox = document.getElementById("terms_agree");
         const bookNowButton = document.getElementById("book-now-button");
+
+        // --- NEW: Track validity of booking dates ---
+        let isDateSelectionValid = false;
+
+        // --- NEW: Helper to toggle button state ---
+        const updateBookButtonState = () => {
+            // Button is enabled ONLY if dates are valid AND terms are checked
+            if (isDateSelectionValid && termsCheckbox.checked) {
+                bookNowButton.disabled = false;
+            } else {
+                bookNowButton.disabled = true;
+            }
+        };
     
         // 1. Generate 30-minute time intervals for select boxes
         const generateTimes = (select) => {
@@ -378,7 +391,10 @@
                     let h12 = h % 12;
                     if (h12 === 0) h12 = 12;
                     const ampm = h >= 12 ? 'PM' : 'AM';
-                    const text = `${String(h12).padStart(2,"0")}:${m === 0 ? "00" : "30"} ${ampm}`;
+                    
+                    // --- CHANGED: Wrap time in LTR embedding characters (\u202A ... \u202C)
+                    // This forces "10:00 AM" to always display as Time then AM, even in RTL mode.
+                    const text = `\u202A${String(h12).padStart(2,"0")}:${m === 0 ? "00" : "30"} ${ampm}\u202C`;
                     
                     // Value remains 24h for logic, Text is 12h for user
                     select.append(new Option(text, value));
@@ -413,6 +429,15 @@
             // We check if 't' is *inside* a block, so StartBlock <= t < EndBlock
             return blocks.some(b => t >= b.start.getTime() && t < b.end.getTime());
         };
+
+        // --- NEW: Check if a RANGE overlaps with any booked block ---
+        const isRangeBlocked = (start, end) => {
+            if (!start || !end) return false;
+            const s = start.getTime();
+            const e = end.getTime();
+            // Overlap logic: Range A overlaps Range B if (StartA < EndB) and (EndA > StartB)
+            return blocks.some(b => s < b.end.getTime() && e > b.start.getTime());
+        };
     
         // 2. Update available times based on selected date
         const updateTimeOptions = (dateInput, timeSelect) => {
@@ -441,7 +466,9 @@
                 let h12 = h % 12;
                 if (h12 === 0) h12 = 12;
                 const ampm = h >= 12 ? 'PM' : 'AM';
-                const time12 = `${String(h12).padStart(2,"0")}:${mStr} ${ampm}`;
+                
+                // --- CHANGED: Wrap time in LTR embedding characters here as well
+                const time12 = `\u202A${String(h12).padStart(2,"0")}:${mStr} ${ampm}\u202C`;
 
                 opt.textContent = time12; 
 
@@ -490,18 +517,39 @@
             const ed = endDate.value;
             const et = endTime.value;
     
+            // Invalid Inputs
             if (!sd || !st || !ed || !et) {
                 totalPriceEl.textContent = "0";
                 if (breakdownEl) breakdownEl.textContent = "";
+                
+                isDateSelectionValid = false;
+                updateBookButtonState();
                 return;
             }
     
             const start = toLocalDate(`${sd} ${st}`);
             const end   = toLocalDate(`${ed} ${et}`);
     
+            // Invalid Range (End before Start)
             if (!start || !end || end <= start) {
                 totalPriceEl.textContent = "0";
                 if (breakdownEl) breakdownEl.textContent = "";
+
+                isDateSelectionValid = false;
+                updateBookButtonState();
+                return;
+            }
+
+            // --- NEW: Check if range is blocked/booked ---
+            if (isRangeBlocked(start, end)) {
+                totalPriceEl.textContent = "0";
+                // Show a helpful error message to the user
+                if (breakdownEl) {
+                    breakdownEl.innerHTML = `<span class="text-red-600 font-medium">${translations.booked}</span>`; 
+                }
+
+                isDateSelectionValid = false;
+                updateBookButtonState();
                 return;
             }
     
@@ -526,14 +574,16 @@
                 
                 breakdownEl.innerHTML = breakdownText;
             }
+
+            // Valid Range
+            isDateSelectionValid = true;
+            updateBookButtonState();
         };
     
         // ================= EVENT LISTENERS =================
         
-        // Checkbox listener to enable/disable button
-        termsCheckbox.addEventListener('change', function() {
-            bookNowButton.disabled = !this.checked;
-        });
+        // --- CHANGED: Checkbox listener now calls the shared state updater ---
+        termsCheckbox.addEventListener('change', updateBookButtonState);
     
         const handleStartDateChange = (e) => {
              endDate.setAttribute('datepicker-min-date', e.target.value);
@@ -577,7 +627,7 @@
     </script>
 
     {{-- ========================================================== --}}
-    {{--          ANIMATED SLIDER SCRIPT (MODIFIED)                 --}}
+    {{--          ANIMATED SLIDER SCRIPT (UNCHANGED)                --}}
     {{-- ========================================================== --}}
     <script>
     document.addEventListener("DOMContentLoaded", () => {
