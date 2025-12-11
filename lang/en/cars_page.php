@@ -78,4 +78,6 @@ return [
     'feat_fuel_petrol'   => 'Petrol',
     'feat_fuel_electric' => 'Electric',
     'feat_fuel_hybrid'   => 'Hybrid',
+
+    'booking_timezone_title' => 'Bookings are in :city Time'
 ];

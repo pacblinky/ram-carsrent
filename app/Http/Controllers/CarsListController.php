@@ -17,7 +17,7 @@ class CarsListController extends Controller
 
         // --- 1. FILTERS ---
         
-        // NEW: Search by Name
+        // Search by Name
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
@@ -26,14 +26,13 @@ class CarsListController extends Controller
             $query->where('location_id', $request->location_id);
         }
 
-        // Availability Filter (Implicitly handled by passing datetime if available, but not used as an availability filter here)
+        // Availability Filter
         if ($request->filled('pickup_datetime') && $request->filled('dropoff_datetime')) {
             try {
                 $reqStart = Carbon::parse($request->pickup_datetime);
                 $reqEnd   = Carbon::parse($request->dropoff_datetime);
 
-                // Use the same standard overlap formula in SQL:
-                // existing_start < req_end AND existing_end > req_start
+                // Check overlap against 'confirmed' reservations only
                 $query->whereRaw('(
                     SELECT COUNT(*)
                     FROM reservations
@@ -42,9 +41,9 @@ class CarsListController extends Controller
                     AND reservations.start_datetime < ?
                     AND reservations.end_datetime > ?
                 ) < cars.quantity', [
-                    'confirmed', // Check only 'confirmed' status
-                    $reqEnd,   // Existing Start MUST BE LESS THAN Requested End
-                    $reqStart  // Existing End MUST BE GREATER THAN Requested Start
+                    'confirmed', 
+                    $reqEnd,   
+                    $reqStart  
                 ]);
 
             } catch (\Exception $e) {
@@ -67,7 +66,6 @@ class CarsListController extends Controller
             $query->where('category', $request->category);
         }
 
-        // NEW FILTERS ADDED (from previous steps)
         if ($request->filled('fuel_type')) {
             $query->where('fuel_type', $request->fuel_type);
         }
@@ -77,7 +75,6 @@ class CarsListController extends Controller
         if ($request->filled('seats')) {
             $query->where('number_of_seats', $request->seats);
         }
-        // NEW FILTER: Number of Doors
         if ($request->filled('doors')) {
             $query->where('number_of_doors', $request->doors);
         }
@@ -101,7 +98,6 @@ class CarsListController extends Controller
                     'price'     => $car->price_per_day,
                     'location'  => $car->location?->name ?? 'Not specified',
                     'specs'    => [
-                        // Updated to use doors
                         ['icon' => 'doors',        'text' => $car->number_of_doors ? __('cars_page.feat_doors', ['count' => $car->number_of_doors]) : 'N/A'],
                         ['icon' => 'transmission', 'text' => __('cars_page.feat_transmission_' . $car->transmission)],
                         ['icon' => 'seats',        'text' => __('cars_page.feat_seats', ['count' => $car->number_of_seats])],
@@ -115,12 +111,11 @@ class CarsListController extends Controller
             return view('cars.partials.car-list', compact('carsPaginator'))->render();
         }
 
-        // Fetching common variables
+        // Fetching common variables for filters
         $locations = Location::all();
         $minPriceInDb = Car::min('price_per_day') ?? 0;
         $maxPriceInDb = Car::max('price_per_day') ?? 500;
         
-        // Fetch Filter options for Brand and Category
         $brands = Brand::withCount(['cars' => fn($q) => $q->where('is_available', true)])->get();
         $categories = Car::where('is_available', true)
             ->select('category', DB::raw('count(*) as count'))
@@ -132,7 +127,6 @@ class CarsListController extends Controller
                 'count' => $item->count
             ]);
 
-        // Fetch filter options for specs (fuel, transmission, seats, doors)
         $fuelTypes = Car::where('is_available', true)
             ->select('fuel_type', DB::raw('count(*) as count'))
             ->groupBy('fuel_type')
@@ -164,7 +158,6 @@ class CarsListController extends Controller
                 'count' => $item->count
             ]);
             
-        // NEW: Fetch filter options for Number of Doors
         $doors = Car::where('is_available', true)
             ->select('number_of_doors', DB::raw('count(*) as count'))
             ->groupBy('number_of_doors')
@@ -179,18 +172,14 @@ class CarsListController extends Controller
         return view('cars.index', compact('carsPaginator', 'brands', 'categories', 'locations', 'minPriceInDb', 'maxPriceInDb', 'fuelTypes', 'transmissions', 'seats', 'doors'));
     }
 
-    /**
-     * Display the specified car.
-     */
     public function show($id)
     {
         $car = Car::with(['brand', 'location'])->findOrFail($id);
 
-        $images = $car->images && is_array($car->images)
+        // Load images into thumbnails array directly
+        $thumbnails = $car->images && is_array($car->images)
             ? array_map(fn($img) => asset('storage/' . $img), $car->images)
             : [];
-
-        $thumbnails = $images;
 
         $specs = [
             ['icon' => 'doors', 'text' => __('cars_page.feat_doors', ['count' => $car->number_of_doors])],
@@ -199,6 +188,7 @@ class CarsListController extends Controller
             ['icon' => 'fuel', 'text' => __('cars_page.feat_fuel_' . $car->fuel_type)],
         ];
 
+        // Legacy timeOptions (JS generates them now, but kept for safety)
         $timeOptions = [];
         $start = Carbon::parse('00:00');
         for ($i = 0; $i < 48; $i++) {
@@ -206,25 +196,20 @@ class CarsListController extends Controller
              $start->addMinutes(30);
         }
 
-        // --- NEW UNAVAILABLE LOGIC ---
-        // Get all future, confirmed reservations for this car
+        // --- UNAVAILABLE LOGIC (Supports Quantity > 1) ---
         $allReservations = \App\Models\Reservation::where('car_id', $car->id)
-            ->where('status', 'confirmed') // Check only 'confirmed' status
+            ->where('status', 'confirmed') 
             ->where('end_datetime', '>=', now())
             ->orderBy('start_datetime')
             ->get();
 
         $fullyBookedSlots = [];
-
-        // Get all "event" points (starts and ends)
         $events = [];
         foreach ($allReservations as $res) {
-            // We use timestamps for easy sorting
             $events[] = ['time' => $res->start_datetime->timestamp, 'type' => 'start'];
             $events[] = ['time' => $res->end_datetime->timestamp, 'type' => 'end'];
         }
 
-        // Sort events chronologically
         usort($events, fn($a, $b) => $a['time'] - $b['time']);
 
         $concurrentBookings = 0;
@@ -236,14 +221,11 @@ class CarsListController extends Controller
 
             if ($event['type'] == 'start') {
                 $concurrentBookings++;
-                // If we JUST hit the car's limit, start an "unavailable" block
                 if ($concurrentBookings === $carQuantity && $fullyBookedStart === null) {
                     $fullyBookedStart = $eventTime;
                 }
-            } else { // 'end' event
-                // If we were fully booked, and now a car is returned (dropping us below the limit)
+            } else { 
                 if ($concurrentBookings === $carQuantity && $fullyBookedStart !== null) {
-                    // End the unavailable block, ensuring start is not same as end
                     if($fullyBookedStart < $eventTime) {
                          $fullyBookedSlots[] = [
                             'start' => Carbon::createFromTimestamp($fullyBookedStart)->format('Y-m-d H:i'),
@@ -256,20 +238,19 @@ class CarsListController extends Controller
             }
         }
 
-        // If the loop ends while still fully booked (e.g., reservations extend past our loop)
         if ($fullyBookedStart !== null) {
              $fullyBookedSlots[] = [
                  'start' => Carbon::createFromTimestamp($fullyBookedStart)->format('Y-m-d H:i'),
-                 // Block for a reasonable future (e.g., 1 year)
                  'end'   => Carbon::now()->addYear()->format('Y-m-d H:i'),
              ];
         }
 
-        // This now only contains time ranges where ALL cars of this model are busy.
         $unavailable = $fullyBookedSlots;
-
         $locations = Location::all();
+        
+        // --- TIMEZONE FIX: Pass Server Time to View ---
+        $serverTime = now()->format('Y-m-d H:i:s');
 
-        return view('cars.show', compact('car', 'locations', 'images', 'thumbnails', 'specs', 'timeOptions', 'unavailable'));
+        return view('cars.show', compact('car', 'locations', 'thumbnails', 'specs', 'timeOptions', 'unavailable', 'serverTime'));
     }
-}
+}   

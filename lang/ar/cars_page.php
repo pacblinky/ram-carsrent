@@ -79,4 +79,6 @@ return [
     'feat_fuel_petrol'   => 'بنزين',
     'feat_fuel_electric' => 'كهرباء',
     'feat_fuel_hybrid'   => 'هجين',
+    
+    'booking_timezone_title' => 'الحجوزات بتوقيت :city',
 ];

@@ -51,9 +51,9 @@ class ReservationController extends Controller
              return back()->withErrors(['unavailable' => 'This vehicle is currently unavailable.'])->withInput();
         }
 
-        // Check for overlaps
+        // Check for overlaps (Only check 'confirmed' reservations)
         $conflictingReservations = Reservation::where('car_id', $car->id)
-            ->where('status', '!=', 'canceled')
+            ->where('status', 'confirmed') 
             ->where(function ($query) use ($start, $end) {
                 $query->where('start_datetime', '<', $end)
                       ->where('end_datetime', '>', $start);
@@ -80,7 +80,7 @@ class ReservationController extends Controller
 
         $admins = User::where('is_admin', true)->get();
 
-        // 1. Filament Database Notification (Fixed: No Closure in URL)
+        // 1. Filament Database Notification
         Notification::make()
             ->title(__('admin.notifications.new_reservation_title'))
             ->body(__('admin.notifications.new_reservation_body', [
@@ -128,7 +128,7 @@ class ReservationController extends Controller
 
         $admins = User::where('is_admin', true)->get();
 
-        // 1. Filament Database Notification for Cancellation (Fixed: No Closure in URL)
+        // 1. Filament Database Notification for Cancellation
         Notification::make()
             ->title(__('admin.notifications.reservation_canceled_title'))
             ->body(__('admin.notifications.reservation_canceled_body', [
