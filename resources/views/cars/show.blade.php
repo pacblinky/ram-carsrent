@@ -1,4 +1,31 @@
 <x-app-layout>
+    {{-- ADDED: PHP Logic to parse incoming request dates --}}
+    @php
+        $reqPickup = request('pickup_datetime');
+        $reqDropoff = request('dropoff_datetime');
+        $reqLocation = request('location_id');
+
+        $startDateValue = '';
+        $startTimeValue = '09:00'; // Default
+        if ($reqPickup) {
+            try {
+                $c = \Carbon\Carbon::parse($reqPickup);
+                $startDateValue = $c->format('Y-m-d');
+                $startTimeValue = $c->format('H:i');
+            } catch (\Exception $e) {}
+        }
+
+        $endDateValue = '';
+        $endTimeValue = '17:00'; // Default
+        if ($reqDropoff) {
+            try {
+                $c = \Carbon\Carbon::parse($reqDropoff);
+                $endDateValue = $c->format('Y-m-d');
+                $endTimeValue = $c->format('H:i');
+            } catch (\Exception $e) {}
+        }
+    @endphp
+
     {{-- ... (Styles block remains the same) ... --}}
     <style>
         #slider-track {
@@ -130,8 +157,7 @@
                 <div class="sticky top-24 p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 section-fade-in" style="animation-delay: 0.3s;">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-5">{{ __('cars_page.rent_this_vehicle') }}</h2>
                     
-                    {{-- --- NEW: Timezone Notification --- --}}
-                    {{-- This clearly tells the user what "Time" it is for the business --}}
+                    {{-- --- Timezone Notification --- --}}
                     @php
                         // Parse server time to display comfortably
                         $displayTime = \Carbon\Carbon::parse($serverTime);
@@ -150,7 +176,6 @@
                     
                     <form action="{{ route('reservations.store', $car->id) }}" method="POST" class="space-y-4">
                         @csrf
-                        {{-- (Rest of Form remains exactly the same as previous step) --}}
                         {{-- Pick-Up Date --}}
                         <div>
                             <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -160,7 +185,11 @@
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
                                 </div>
-                                <input type="text" id="start_date" name="start_date" datepicker datepicker-autohide datepicker-format="yyyy-mm-dd" datepicker-min-date="{{ date('Y-m-d') }}" readonly class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="{{ __('cars_page.select_date') }}" required>
+                                <input type="text" id="start_date" name="start_date" 
+                                       value="{{ $startDateValue }}" 
+                                       datepicker datepicker-autohide datepicker-format="yyyy-mm-dd" datepicker-min-date="{{ date('Y-m-d') }}" readonly 
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" 
+                                       placeholder="{{ __('cars_page.select_date') }}" required>
                             </div>
                         </div>
                         {{-- Drop-Off Date --}}
@@ -172,7 +201,11 @@
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4Zm-1 14H3V8h16v10Z"/></svg>
                                 </div>
-                                <input type="text" id="end_date" name="end_date" datepicker datepicker-autohide datepicker-format="yyyy-mm-dd" datepicker-min-date="{{ date('Y-m-d') }}" readonly class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="{{ __('cars_page.select_date') }}" required>
+                                <input type="text" id="end_date" name="end_date" 
+                                       value="{{ $endDateValue }}"
+                                       datepicker datepicker-autohide datepicker-format="yyyy-mm-dd" datepicker-min-date="{{ date('Y-m-d') }}" readonly 
+                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" 
+                                       placeholder="{{ __('cars_page.select_date') }}" required>
                             </div>
                         </div>
                         {{-- Start Time --}}
@@ -204,7 +237,10 @@
                             <label for="pickup_location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.booking_pickup_location') }}</label>
                             <select id="pickup_location_id" name="pickup_location_id" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white truncate">
                                 @foreach($locations as $loc)
-                                    <option value="{{ $loc->id }}" {{ $car->location_id == $loc->id ? 'selected' : '' }}>{{ \Illuminate\Support\Str::limit($loc->name, 100) }}</option>
+                                    <option value="{{ $loc->id }}" 
+                                        {{ ($reqLocation == $loc->id) ? 'selected' : ($car->location_id == $loc->id ? 'selected' : '') }}>
+                                        {{ \Illuminate\Support\Str::limit($loc->name, 100) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -213,7 +249,10 @@
                             <label for="dropoff_location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('cars_page.booking_dropoff_location') }}</label>
                             <select id="dropoff_location_id" name="dropoff_location_id" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white truncate">
                                 @foreach($locations as $loc)
-                                    <option value="{{ $loc->id }}" {{ $car->location_id == $loc->id ? 'selected' : '' }}>{{ \Illuminate\Support\Str::limit($loc->name, 100) }}</option>
+                                    <option value="{{ $loc->id }}" 
+                                        {{ ($reqLocation == $loc->id) ? 'selected' : ($car->location_id == $loc->id ? 'selected' : '') }}>
+                                        {{ \Illuminate\Support\Str::limit($loc->name, 100) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -262,6 +301,10 @@
         const driverPricePerDay = {{ $car->driver_price_per_day ?? 0 }};
         const serverNowString = "{{ $serverTime }}"; 
         
+        // ADDED: Pre-selected times from PHP
+        const preselectedStartTime = "{{ $startTimeValue }}";
+        const preselectedEndTime = "{{ $endTimeValue }}";
+        
         const getBusinessNow = () => {
              const d = new Date(serverNowString.replace(/-/g, "/")); 
              return d;
@@ -288,7 +331,8 @@
             }
         };
     
-        const generateTimes = (select) => {
+        // UPDATED: Accept a default time
+        const generateTimes = (select, defaultTime) => {
             select.innerHTML = "";
             for (let h = 0; h < 24; h++) {
                 for (let m of [0,30]) {
@@ -300,11 +344,11 @@
                     select.append(new Option(text, value));
                 }
             }
-            select.value = "10:00";
+            select.value = defaultTime || "10:00";
         };
     
-        generateTimes(startTime);
-        generateTimes(endTime);
+        generateTimes(startTime, preselectedStartTime);
+        generateTimes(endTime, preselectedEndTime);
     
         const toLocalDate = (str) => {
             if (!str) return null;

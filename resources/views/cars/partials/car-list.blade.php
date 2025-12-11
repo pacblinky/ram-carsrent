@@ -70,16 +70,21 @@
     </div>
 
     @forelse($carsPaginator as $car)
+        @php
+            // ADDED: Pass current query params (like pickup_datetime) to the show route
+            $detailRoute = route('cars.show', array_merge(['id' => $car['id']], request()->query()));
+        @endphp
+
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow fade-in-card"
              style="animation-delay: {{ 200 + ($loop->index * 75) }}ms">
             
             <div class="md:w-1/3 relative">
-                <a href="{{ route('cars.show', $car['id']) }}">
+                <a href="{{ $detailRoute }}">
                     <img class="h-full w-full object-cover absolute inset-0" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
                 </a>
             </div>
             <div class="md:hidden h-48">
-                <a href="{{ route('cars.show', $car['id']) }}">
+                <a href="{{ $detailRoute }}">
                     <img class="h-full w-full object-cover" src="{{ $car['image'] }}" alt="{{ $car['name'] }}">
                 </a>
             </div>
@@ -89,7 +94,7 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-500">
-                                <a href="{{ route('cars.show', $car['id']) }}">{{ $car['name'] }}</a>
+                                <a href="{{ $detailRoute }}">{{ $car['name'] }}</a>
                             </h5>
                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 flex items-center mt-1">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -123,7 +128,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4-6v2m0 0v2m0-2h2m-2 0H8m8-2v2m0 0v2m0-2h2m-2 0h-2" />
                                     </svg>
-                                @endif {{-- <== THIS IS THE FIX --}}
+                                @endif
                                 <span class="text-sm truncate">{{ $spec['text'] }}</span>
                             </div>
                         @endforeach
@@ -139,7 +144,8 @@
                         </span>
                         <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('cars_page.per_day') }}</span>
                     </div>
-                    <a href="{{ route('cars.show', $car['id']) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
+                    {{-- Updated link variable here --}}
+                    <a href="{{ $detailRoute }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
                         {{ __('cars_page.view_details') }}
                     </a>
                 </div>
