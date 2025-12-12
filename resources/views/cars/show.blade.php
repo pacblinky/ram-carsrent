@@ -1,3 +1,12 @@
+@section('title', $car->name . ' Rental in ' . $car->location->name . ' | Ram Car Rental')
+
+@section('meta_description')
+Rent a {{ $car->name }} in {{ $car->location->name }}. Book now for {{ number_format($car->price_per_day) }} per day. {{ Str::limit($car->description[app()->getLocale()] ?? '', 150) }}
+@endsection
+
+@section('meta_keywords', 'rent ' . $car->name . ', car rental ' . $car->location->name . ', rent ' . ($car->brand->name ?? 'car') )
+
+@section('meta_image', !empty($thumbnails) ? $thumbnails[0] : asset('images/logo.png'))
 <x-app-layout>
     {{-- ADDED: PHP Logic to parse incoming request dates --}}
     @php
@@ -25,8 +34,34 @@
             } catch (\Exception $e) {}
         }
     @endphp
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "{{ $car->name }}",
+      "image": [
+        @if(count($thumbnails) > 0)
+            "{{ $thumbnails[0] }}"
+        @else
+            "{{ asset('images/logo.png') }}"
+        @endif
+       ],
+      "description": "{{ trim(preg_replace('/\s+/', ' ', strip_tags($car->description[app()->getLocale()] ?? ''))) }}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{ $car->brand->name ?? 'Ram Car Rental' }}"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ request()->url() }}",
+        "priceCurrency": "SAR", 
+        "price": "{{ $car->price_per_day }}",
+        "availability": "{{ $car->is_available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' }}",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    }
+    </script>
 
-    {{-- ... (Styles block remains the same) ... --}}
     <style>
         #slider-track {
             display: flex;

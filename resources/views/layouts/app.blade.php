@@ -12,7 +12,8 @@
         <meta property="og:type" content="website">
         <meta property="og:title" content="@yield('title', config('app.name', 'Ram Car Rental'))">
         <meta property="og:description" content="@yield('meta_description', 'Rent luxury and economy cars at the best prices with Ram Car Rental.')">
-        <meta property="og:image" content="{{ asset('images/logo.png') }}">
+        <meta property="og:image" content="@yield('meta_image', asset('images/logo.png'))">
+        <meta name="twitter:image" content="@yield('meta_image', asset('images/logo.png'))">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
