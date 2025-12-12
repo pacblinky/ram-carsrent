@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://ramco.com.sa/sitemap.xml

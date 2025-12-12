@@ -83,6 +83,12 @@ Route::post('/save-fcm-token', function (Request $request) {
     return response()->json(['success' => true]);
 })->middleware('auth');
 
+Route::get('/sitemap.xml', function () {
+    $cars = \App\Models\Car::all(); 
+    
+    return Response::view('sitemap', compact('cars'))
+        ->header('Content-Type', 'text/xml');
+});
 
 Route::fallback(function () {
     return redirect()->route('home');
