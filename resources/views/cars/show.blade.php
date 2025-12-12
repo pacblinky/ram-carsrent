@@ -36,8 +36,8 @@ Rent a {{ $car->name }} in {{ $car->location->name }}. Book now for {{ number_fo
     @endphp
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org/",
-      "@type": "Product",
+    "@@context": "https://schema.org/",
+    "@@type": "Product",
       "name": "{{ $car->name }}",
       "image": [
         @if(count($thumbnails) > 0)
@@ -47,12 +47,12 @@ Rent a {{ $car->name }} in {{ $car->location->name }}. Book now for {{ number_fo
         @endif
        ],
       "description": "{{ trim(preg_replace('/\s+/', ' ', strip_tags($car->description[app()->getLocale()] ?? ''))) }}",
-      "brand": {
-        "@type": "Brand",
+            "brand": {
+                "@@type": "Brand",
         "name": "{{ $car->brand->name ?? 'Ram Car Rental' }}"
       },
-      "offers": {
-        "@type": "Offer",
+            "offers": {
+                "@@type": "Offer",
         "url": "{{ request()->url() }}",
         "priceCurrency": "SAR", 
         "price": "{{ $car->price_per_day }}",
