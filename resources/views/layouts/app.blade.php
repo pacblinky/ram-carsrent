@@ -55,17 +55,16 @@
 
         @include('layouts.footer')
         
-
     <script>
         window.userIsLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
-    </script>
-
-    <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/firebase-messaging-sw.js')
-            .then(reg => console.log("✅ Firebase SW registered"))
-            .catch(err => console.error("❌ SW Failed:", err));
-    }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                    .catch(err => {
+                        console.error("Firebase Service Worker registration failed:", err);
+                    });
+            });
+        }
     </script>
     
     </body>

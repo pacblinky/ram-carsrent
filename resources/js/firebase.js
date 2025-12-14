@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 // Firebase config
@@ -12,7 +12,8 @@ const firebaseConfig = {
 };
 
 // Init Firebase
-const app = initializeApp(firebaseConfig);
+// Use getApps() to avoid initializing twice if the script is loaded multiple times
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 // Request permission + get token
@@ -21,7 +22,7 @@ export async function requestNotificationPermission() {
         const permission = await Notification.requestPermission();
 
         if (permission !== "granted") {
-            console.warn("Notification permission not granted.");
+            // console.warn("Notification permission not granted."); // Removed console.warn
             return;
         }
 
@@ -30,7 +31,7 @@ export async function requestNotificationPermission() {
             serviceWorkerRegistration: await navigator.serviceWorker.ready
         });
 
-        console.log("FCM Token:", token);
+        // console.log("FCM Token:", token); // Removed console.log (token is sensitive)
 
         await fetch("/save-fcm-token", {
             method: "POST",
@@ -42,16 +43,23 @@ export async function requestNotificationPermission() {
         });
 
     } catch (error) {
-        console.error("Error requesting permission:", error);
+        // console.error("Error requesting permission:", error); // Removed console.error
     }
 }
 
 // Foreground messages
 onMessage(messaging, (payload) => {
-    console.log("Foreground message:", payload);
+    // console.log("Foreground message:", payload); // Removed console.log
 
-    new Notification(payload.notification.title, {
-        body: payload.notification.body,
-        icon: payload.notification.icon
+    // Prioritize data payload for consistency, then fall back to notification payload
+    const notificationData = payload.data || payload.notification || {};
+
+    const title = notificationData.title || 'New Notification';
+    const body = notificationData.body || 'You have a new message.';
+    const icon = notificationData.icon || '/favicon.png';
+
+    new Notification(title, {
+        body: body,
+        icon: icon
     });
 });
