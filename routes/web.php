@@ -15,6 +15,7 @@ use App\Models\Location;
 use App\Models\Brand;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -44,19 +45,19 @@ Route::get('/locale/{locale}', function ($locale) {
     return Redirect::back();
 })->name('locale.switch');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::delete('/profile/photo', [ProfileController::class, 'destroyPhoto'])->name('profile.photo.destroy');
     
-    Route::get('/my-reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::patch('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
 });
 
 Route::get('/cars', [CarsListController::class, 'index'])->name('cars.index');
 Route::get('/cars/{id}', [CarsListController::class, 'show'])->name('cars.show');
-Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->middleware('auth')->name('reservations.store');
+Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->middleware('auth', 'verified')->name('reservations.store');
 
 // --- ADD THESE NEW CONTACT ROUTES ---
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');

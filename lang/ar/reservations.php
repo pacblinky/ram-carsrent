@@ -2,7 +2,7 @@
 
 return [
     // ... keep existing keys ...
-    'my_reservations' => 'حجوزاتي',
+    'my_reservations' => 'الحجوزات',
     'manage_desc' => 'إدارة، عرض، أو إلغاء حجوزات سيارتك كلها في مكان واحد.',
     'reservation_created_success' => 'تم إنشاء الحجز بنجاح! بانتظار التأكيد.',
 

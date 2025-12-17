@@ -5,7 +5,7 @@ return [
     'current_lang' => 'English',
 
     'open_user_menu' => 'Open user menu',
-    'my_reservations' => 'My Reservations',
+    'my_reservations' => 'Reservations',
     'profile' => 'Profile',
     'admin_panel' => 'Admin Panel',
     'sign_out' => 'Sign out',

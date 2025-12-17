@@ -2,7 +2,7 @@
 
 return [
     // ... keep existing keys ...
-    'my_reservations' => 'My Reservations',
+    'my_reservations' => 'Reservations',
     'manage_desc' => 'Manage, view, or cancel your car reservations all in one place.',
     'reservation_created_success' => 'Reservation created successfully! awaiting confirmation.',
 

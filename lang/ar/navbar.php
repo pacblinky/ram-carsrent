@@ -5,7 +5,7 @@ return [
     'current_lang' => 'العربية',
     
     'open_user_menu' => 'فتح قائمة المستخدم',
-    'my_reservations' => 'حجوزاتي',
+    'my_reservations' => 'الحجوزات',
     'profile' => 'الملف الشخصي',
     'admin_panel' => 'لوحة الإدارة',
     'sign_out' => 'تسجيل الخروج',
