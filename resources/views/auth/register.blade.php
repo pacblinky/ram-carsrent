@@ -118,7 +118,6 @@
                 },
                 separateDialCode: true,
                 preferredCountries: ['eg', 'sa', 'us', 'gb'],
-                loadUtils:()=>import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.5/build/js/utils.js"),
                 hiddenInput:()=>({ phone: "full_phone" }), 
             });
 
