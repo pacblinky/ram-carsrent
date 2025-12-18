@@ -98,7 +98,7 @@
     
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Form animations
+        // Animate form and image
         setTimeout(() => {
             document.getElementById('register-form-container').classList.remove('opacity-0', 'translate-y-5');
             document.getElementById('register-image-container').classList.remove('opacity-0');
@@ -118,20 +118,20 @@
                 },
                 separateDialCode: true,
                 preferredCountries: ['eg', 'sa', 'us', 'gb'],
-                hiddenInput: () => ({ phone: "full_phone" }), 
+                loadUtils:()=>import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.5/build/js/utils.js"),
+                hiddenInput:()=>({ phone: "full_phone" }), 
             });
 
             registerForm.addEventListener('submit', function(e) {
-                // Validate before submission
+                // Check validity using the plugin instance
                 if (!iti.isValidNumber()) {
                     e.preventDefault();
                     alert("Please enter a valid phone number");
                 }
-                // Standard submission follows; "full_phone" is sent to the backend
             });
         };
 
-        // Polling to wait for lazy-loaded library
+        // Poll for lazy-loaded library from app.js
         const checkIti = setInterval(() => {
             if (window.intlTelInput) {
                 clearInterval(checkIti);
