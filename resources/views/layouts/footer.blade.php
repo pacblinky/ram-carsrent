@@ -70,7 +70,7 @@
             <span class="text-sm text-gray-400 sm:text-center dark:text-gray-400">© {{ date('Y') }} <a href="{{ route('home') }}" class="hover:underline">{{ __('footer.company_name') }}™</a>. {{ __('footer.copyright') }}
             </span>
             <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5 rtl:space-x-reverse">
-                <a href="https://www.tiktok.com/@.ram_rent_a_car" class="text-gray-400 hover:text-white dark:hover:text-white" aria-label="TikTok page">
+                <a href="https://www.tiktok.com/@.ram_rent_a_car" class="text-gray-400 hover:text-white dark:hover:text-white" aria-label="TikTok page" target="_blank">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
                         <path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0h88a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/>
                     </svg>
