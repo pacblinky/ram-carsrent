@@ -110,13 +110,14 @@
         const initRegisterIti = () => {
             const iti = window.intlTelInput(phoneInput, {
                 initialCountry: "auto",
+                strictMode = true,
+                loadUtils: () => import("/intl-tel-input/js/utils.js?1765894508450"),
                 geoIpLookup: callback => {
                     fetch("https://ipapi.co/json")
                         .then(res => res.json())
                         .then(data => callback(data.country_code))
                         .catch(() => callback("us"));
                 },
-                separateDialCode: true,
                 preferredCountries: ['eg', 'sa', 'us', 'gb'],
                 hiddenInput:()=>({ phone: "full_phone" }), 
             });
