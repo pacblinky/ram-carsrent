@@ -72,7 +72,7 @@ Route::view('/privacy', 'privacy.index')->name('privacy');
 Route::post('/save-fcm-token', [FCMController::class, 'saveTokenAndSendWelcome'])->middleware('auth');
 
 Route::get('/sitemap.xml', function () {
-    $cars = \App\Models\Car::all(); 
+    $cars = Car::all(); 
     
     return Response::view('sitemap', compact('cars'))
         ->header('Content-Type', 'text/xml');
