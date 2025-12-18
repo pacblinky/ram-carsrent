@@ -34,7 +34,7 @@ return [
     'info_title' => 'Contact Information',
     'info_address' => 'Dammam Rd, Ghirnatah, Riyadh 13242, Saudi Arabia',
     'info_phone' => '+996 (056) 288-2828',
-    'info_email' => 'support@ramcarrental.com',
+    'info_email' => 'info@ramco.com.sa',
     'locations_title' => 'Our Locations',
     'locations_view_map' => 'View on Map',
     'locations_visit_branch' => 'Visit our main branch:',
