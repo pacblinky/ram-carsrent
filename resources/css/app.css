@@ -127,8 +127,8 @@
     width: 100% !important;
 }
 
-.dark .iti__selected-dial-code {
-    color: #e5e7eb; /* Tailwind gray-200 */
+html[dir="ltr"] .iti input {
+    padding-left: 52px !important;
 }
 
 .dark .iti__selected-dial-code {
@@ -151,4 +151,13 @@
 /* Style the dial code text within the dropdown */
 .dark .iti__dial-code {
     color: #9ca3af; /* gray-400 */
+}
+
+.iti input {
+    background-color: transparent !important;
+}
+
+.dark .iti input {
+    background-color: #374151 !important; /* Matches bg-gray-700 */
+    color: white !important;
 }

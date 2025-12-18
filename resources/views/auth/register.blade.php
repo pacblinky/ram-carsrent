@@ -60,7 +60,7 @@
                             <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('auth_pages.phone_number') }}</label>
                             <input required type="tel" id="phone_number" name="phone_number"
                                    value="{{ old('phone_number') }}" required autocomplete="tel"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-start placeholder:text-start dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('phone_number') {{ $errorClasses }} @enderror">
+                                   class="bg-transparent border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-start placeholder:text-start dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('phone_number') {{ $errorClasses }} @enderror">
                             @error('phone_number')
                                 <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                             @enderror
