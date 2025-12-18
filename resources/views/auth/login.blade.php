@@ -1,17 +1,20 @@
 <x-app-layout>
 <section class="bg-gray-50 dark:bg-gray-900">
+    {{-- Adjusting min-height to match standard layouts --}}
     <div class="flex min-h-[calc(100vh-80px)]"> 
         
-        {{-- Form Section (Left) --}}
-        <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 transition-all duration-1000 ease-out opacity-0 translate-y-5" id="login-form-container">
+        {{-- Form Section (Left) - Using p-6 for a tighter, cleaner look --}}
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-6 transition-all duration-1000 ease-out opacity-0 translate-y-5" id="login-form-container">
             <div class="w-full max-w-md">
                 <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white mb-4">
                     {{ __('auth_pages.login_title') }}
                 </h1>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400 mb-6">
-                    {{ __('auth_pages.dont_have_account') }} <a href="{{ route('register') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('auth_pages.signup') }}</a>.
+                    {{ __('auth_pages.dont_have_account') }} 
+                    <a href="{{ route('register') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('auth_pages.signup') }}</a>.
                 </p>
 
+                {{-- Using space-y-4 md:space-y-6 for standard register-style spacing --}}
                 <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('login') }}">
                     @csrf
 
@@ -82,7 +85,6 @@
 </section>
 
 <script>
-    // Simple load-in animation
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             const form = document.getElementById('login-form-container');
