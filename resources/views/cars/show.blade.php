@@ -311,29 +311,8 @@ Rent a {{ $car->name }} in {{ $car->location->name }}. Book now for {{ number_fo
                                 <p class="text-xs font-normal text-gray-500 dark:text-gray-400">{{ __('cars_page.pay_on_pickup_desc') }}</p>
                             </div>
                         </div>
-                        @auth
-                        @if(auth()->user()->hasVerifiedEmail())
-                            {{-- CASE 1: User is Logged In & Verified --}}
-                            <button type="submit" id="book-now-button" disabled 
-                                class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out">
-                                {{ __('cars_page.book_now') }}
-                            </button>
-                            @else
-                                {{-- CASE 2: User is Logged In but NOT Verified --}}
-                                <div class="mb-3 p-3 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
-                                    <span class="font-medium">Verification Required!</span> Please <a href="{{ route('verification.notice') }}" class="underline font-bold">verify your email</a> to book.
-                                </div>
-                                <button type="button" disabled class="w-full text-white bg-gray-400 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-3 text-center">
-                                    {{ __('cars_page.book_now') }} (Locked)
-                                </button>
-                            @endif
-                        @else
-                            {{-- CASE 3: User is NOT Logged In --}}
-                            <a href="{{ route('login') }}" 
-                            class="block w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800 transition-all duration-200 ease-in-out">
-                            Login to Book
-                            </a>
-                        @endauth
+                        {{-- Button --}}
+                        <button type="submit" id="book-now-button" disabled class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out">{{ __('cars_page.book_now') }}</button>
                     </form>
                 </div>
             </div>
