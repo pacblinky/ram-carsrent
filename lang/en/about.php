@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'hero_title' => 'About Ram Car Rental',
+    'hero_title' => 'About Us',
     'hero_subtitle' => 'Discover our mission, our values, and what makes us your best choice for car rentals.',
     'mission_title' => 'Our Mission',
     'mission_text_1' => 'At Ram Car Rental, our mission is to provide you with an exceptional rental experience through reliable vehicles, transparent pricing, and outstanding customer service. We believe that renting a car should be simple, fast, and hassle-free.',
