@@ -96,18 +96,18 @@
         </div>
     </section>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate form and image on load
-            setTimeout(() => {
-                document.getElementById('register-form-container').classList.remove('opacity-0', 'translate-y-5');
-                document.getElementById('register-image-container').classList.remove('opacity-0');
-            }, 100);
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form animations
+        setTimeout(() => {
+            document.getElementById('register-form-container').classList.remove('opacity-0', 'translate-y-5');
+            document.getElementById('register-image-container').classList.remove('opacity-0');
+        }, 100);
 
-            // Initialize intl-tel-input without utils.js
-            const phoneInput = document.querySelector("#phone_number");
-            const registerForm = document.getElementById("register-form");
+        const phoneInput = document.querySelector("#phone_number");
+        const registerForm = document.getElementById("register-form");
 
+        const initRegisterIti = () => {
             const iti = window.intlTelInput(phoneInput, {
                 initialCountry: "auto",
                 geoIpLookup: callback => {
@@ -118,26 +118,26 @@
                 },
                 separateDialCode: true,
                 preferredCountries: ['eg', 'sa', 'us', 'gb'],
+                hiddenInput: () => ({ phone: "full_phone" }), 
             });
 
-            // Custom validation and formatting
             registerForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                let phoneNumber = phoneInput.value.trim();
-
-                // Basic validation: digits only, 8-15 characters
-                if (!phoneNumber.match(/^\d{8,15}$/)) {
+                // Validate before submission
+                if (!iti.isValidNumber()) {
+                    e.preventDefault();
                     alert("Please enter a valid phone number");
-                    return;
                 }
-
-                // Append selected country code
-                const dialCode = iti.getSelectedCountryData().dialCode;
-                phoneInput.value = `+${dialCode}${phoneNumber.replace(/^0+/, '')}`;
-
-                this.submit();
+                // Standard submission follows; "full_phone" is sent to the backend
             });
-        });
-    </script>
+        };
+
+        // Polling to wait for lazy-loaded library
+        const checkIti = setInterval(() => {
+            if (window.intlTelInput) {
+                clearInterval(checkIti);
+                initRegisterIti();
+            }
+        }, 50);
+    });
+</script>
 </x-app-layout>
