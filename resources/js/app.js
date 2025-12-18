@@ -26,9 +26,11 @@ if (window.location.pathname !== "/login" && window.userIsLoggedIn) {
 // 2. Lazy-load International Phone Input
 // This prevents the library from loading on every page, only when needed.
 // It exposes the default object globally just like your original code.
-import('intl-tel-input')
-    .then((module) => {
-        window.intlTelInput = module.default;
+import('intl-tel-input').then((module) => {
+    window.intlTelInput = module.default;
+    import('intl-tel-input/utils').then((utils) => {
+        window.intlTelInput.utils = utils;
+    });
     })
     .catch(error => {
         console.error("Failed to load International Phone Input:", error);
