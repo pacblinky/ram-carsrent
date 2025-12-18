@@ -111,7 +111,7 @@
             const iti = window.intlTelInput(phoneInput, {
                 initialCountry: "auto",
                 strictMode = true,
-                loadUtils: () => import("/intl-tel-input/js/utils.js?1765894508450"),
+                loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.5/build/js/utils.js"),
                 geoIpLookup: callback => {
                     fetch("https://ipapi.co/json")
                         .then(res => res.json())
