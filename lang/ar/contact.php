@@ -34,7 +34,7 @@ return [
     'info_title' => 'معلومات الاتصال',
     'info_address' => 'طريق الدمام، غرناطة، الرياض 13242، المملكة العربية السعودية',
     'info_phone' => '+996 (056) 288-2828',
-    'info_email' => 'info@ramco.com.sa',
+    'info_email' => 'support@ramco.com.sa',
     'locations_title' => 'مواقعنا',
     'locations_view_map' => 'عرض على الخريطة',
     'locations_visit_branch' => 'قم بزيارة فرعنا الرئيسي:',
