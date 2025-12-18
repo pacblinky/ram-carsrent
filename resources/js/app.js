@@ -23,6 +23,23 @@ if (window.location.pathname !== "/login" && window.userIsLoggedIn) {
         });
 }
 
+window.togglePassword = function(inputId, btn) {
+    const input = document.getElementById(inputId);
+    // Select only the specific eye icons using classes
+    const openIcon = btn.querySelector('.eye-open');
+    const closedIcon = btn.querySelector('.eye-closed');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        if(openIcon) openIcon.classList.add('hidden');
+        if(closedIcon) closedIcon.classList.remove('hidden');
+    } else {
+        input.type = 'password';
+        if(openIcon) openIcon.classList.remove('hidden');
+        if(closedIcon) closedIcon.classList.add('hidden');
+    }
+};
+
 // 2. Lazy-load International Phone Input
 // This prevents the library from loading on every page, only when needed.
 // It exposes the default object globally just like your original code.
