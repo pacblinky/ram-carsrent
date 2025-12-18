@@ -207,12 +207,14 @@ class ReservationResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('start_datetime')
+                    ->label(__('admin.table.start'))
                     ->dateTime('Y-m-d h:i A')
-                    ->label(__('admin.table.start')),
+                    ->sortable(),
 
                 TextColumn::make('end_datetime')
+                    ->label(__('admin.table.end'))
                     ->dateTime('Y-m-d h:i A')
-                    ->label(__('admin.table.end')),
+                    ->sortable(),
 
                 TextColumn::make('total_price')
                     ->money('sar', true)
@@ -230,6 +232,20 @@ class ReservationResource extends Resource
                     ])
                     ->selectablePlaceholder(false)
                     ->sortable(),
+                
+                TextColumn::make('status_badge')
+                    ->label("")
+                    ->badge()
+                    ->state(fn ($record) => $record->status)
+                    ->formatStateUsing(fn ($state) => match ($state) {
+                        ReservationStatus::Pending   => __('admin.form.options.status.pending'),
+                        ReservationStatus::Confirmed => __('admin.form.options.status.confirmed'),
+                        ReservationStatus::Completed => __('admin.form.options.status.completed'),
+                        ReservationStatus::Canceled  => __('admin.form.options.status.canceled'),
+                        ReservationStatus::Overdue   => __('admin.form.options.status.overdue'),
+                        default => $state,
+                    })
+                    ->color(fn (ReservationStatus $state) => $state->color()),
             ])
             ->defaultSort('start_datetime', 'desc')
             ->filters([
