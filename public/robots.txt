@@ -1,4 +1,6 @@
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /profile
+Disallow: /reservations
 
 Sitemap: https://ramco.com.sa/sitemap.xml
