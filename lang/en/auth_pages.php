@@ -55,11 +55,10 @@ return [
     'confirm_new_password' => 'Confirm New Password',
     'remember_password' => 'Remember your password?',
     'sign_in' => 'Sign In',
-
+    
     'verify_email_code_sent' => 'We have sent a verification code to your email. Please enter it below.',
     'verification_code_status' => 'A new verification code has been sent to your email address.',
     'verification_code_label' => 'Verification Code',
     'verify_button' => 'Verify Email',
     'resend_code_button' => 'Resend Code',
-    'change_email_button' => 'Change Email'
 ];
