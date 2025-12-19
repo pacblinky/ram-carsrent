@@ -56,7 +56,7 @@ onMessage(messaging, (payload) => {
 
     const title = notificationData.title || 'New Notification';
     const body = notificationData.body || 'You have a new message.';
-    const icon = notificationData.icon || '/favicon.png';
+    const icon = notificationData.icon || '/favicon-96x96.png';
 
     new Notification(title, {
         body: body,
