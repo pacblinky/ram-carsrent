@@ -49,7 +49,7 @@ export async function requestNotificationPermission() {
 
 // Foreground messages
 onMessage(messaging, (payload) => {
-    // console.log("Foreground message:", payload); // Removed console.log
+    console.log("Foreground message:", payload); // Removed console.log
 
     // Prioritize data payload for consistency, then fall back to notification payload
     const notificationData = payload.data || payload.notification || {};
