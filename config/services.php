@@ -37,7 +37,7 @@ return [
 
     'firebase' => [
         'credentials' => [
-            'file' => env('FIREBASE_CREDENTIALS', null),
+            'file' => env('FIREBASE_CREDENTIALS') ? base_path(env('FIREBASE_CREDENTIALS')) : null,
         ],
     ],
 ];
