@@ -1,34 +1,48 @@
 <x-app-layout>
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-[calc(100vh-80px)]">
-            {{-- Auth Card --}}
             <div class="w-full bg-white rounded-lg shadow-xl dark:bg-gray-800 sm:max-w-md p-6 sm:p-8 border dark:border-gray-700">
                 <h2 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white mb-6">
                     {{ __('auth_pages.verify_email_title') }}
                 </h2>
 
+                <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                    {{ __('auth_pages.verify_email_code_sent') }}
+                </div>
+
                 @if (session('status') == 'verification-link-sent')
-                    <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                        {{ __('auth_pages.verification_sent') }}
+                    <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                        {{ __('auth_pages.verification_code_status') }}
                     </div>
                 @endif
 
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                    {{ __('auth_pages.verify_email_text_1') }} {{ __('auth_pages.verify_email_text_2') }}
-                </p>
+                <form method="POST" action="{{ route('verification.verify') }}">
+                    @csrf
 
-                <div class="space-y-4">
+                    <div class="mb-4">
+                        <x-input-label for="code" :value="__('auth_pages.verification_code_label')" />
+                        <x-text-input id="code" class="block mt-1 w-full text-center tracking-widest text-xl" type="text" name="code" required autofocus />
+                        <x-input-error :messages="$errors->get('code')" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4">
+                        <x-primary-button class="w-full justify-center">
+                            {{ __('auth_pages.verify_button') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+
+                <div class="mt-6 flex items-center justify-between">
                     <form method="POST" action="{{ route('verification.send') }}">
                         @csrf
-                        <button type="submit"
-                                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-200 ease-in-out">
-                            {{ __('auth_pages.resend_verification') }}
+                        <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                            {{ __('auth_pages.resend_code_button') }}
                         </button>
                     </form>
 
-                    <form method="POST" action="{{ route('logout') }}" class="text-center">
+                    <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="w-full text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700 transition-all">
+                        <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                             {{ __('auth_pages.logout') }}
                         </button>
                     </form>

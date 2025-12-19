@@ -55,4 +55,10 @@ return [
     'confirm_new_password' => 'تأكيد كلمة المرور الجديدة',
     'remember_password' => 'هل تذكرت كلمة المرور؟',
     'sign_in' => 'تسجيل الدخول',
+    
+    'verify_email_code_sent' => 'لقد أرسلنا رمز التحقق إلى بريدك الإلكتروني. يرجى إدخاله أدناه.',
+    'verification_code_status' => 'تم إرسال رمز تحقق جديد إلى عنوان بريدك الإلكتروني.',
+    'verification_code_label' => 'رمز التحقق',
+    'verify_button' => 'تأكيد البريد الإلكتروني',
+    'resend_code_button' => 'إعادة إرسال الرمز',
 ];
