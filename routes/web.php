@@ -46,7 +46,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::delete('/profile/photo', [ProfileController::class, 'destroyPhoto'])->name('profile.photo.destroy');
+
+    Route::post('/cars/{car}/reserve', [ReservationController::class, 'store']);
     
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::patch('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
@@ -54,7 +55,6 @@ Route::middleware('auth', 'verified')->group(function () {
 
 Route::get('/cars', [CarsListController::class, 'index'])->name('cars.index');
 Route::get('/cars/{id}', [CarsListController::class, 'show'])->name('cars.show');
-Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->middleware('auth', 'verified')->name('reservations.store');
 
 // --- ADD THESE NEW CONTACT ROUTES ---
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
