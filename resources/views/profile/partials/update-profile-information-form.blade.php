@@ -13,103 +13,17 @@
         @csrf
     </form>
 
-    {{-- *** NEW: This is a separate, hidden form just for deleting the photo *** --}}
-    <form
-        method="POST"
-        action="{{ route('profile.photo.destroy') }}"
-        id="delete_photo_form"
-        class="hidden"
-    >
-        @csrf
-        @method('DELETE')
-    </form>
-
-
     <form
         method="post"
         action="{{ route('profile.update') }}"
         class="mt-6 space-y-6"
-        enctype="multipart/form-data"
     >
         @csrf
         @method('patch')
 
-        {{-- *** UPDATED X-DATA: All 'fetch' logic is removed *** --}}
-        <div
-            x-data="{
-                photoPreview: '{{ $user->profile_photo_url }}',
-                hasPhoto: {{ $user->profile_photo_path ? 'true' : 'false' }},
-                isDeleting: false, // Loading state for delete button
-
-                updatePreview(files) {
-                    if (files.length === 0) { return; }
-                    let file = files[0];
-                    const reader = new FileReader();
-                    reader.onload = (e) => { this.photoPreview = e.target.result; };
-                    reader.readAsDataURL(file);
-                    this.hasPhoto = true;
-                }
-            }"
-            class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6"
-        >
-            <div class="flex-shrink-0">
-                <span class="block w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
-                    <img x-bind:src="photoPreview" alt="Profile Photo" class="object-cover w-full h-full">
-                </span>
-            </div>
-
-            <div class="flex-grow mt-2 sm:mt-0">
-                
-                {{-- The hidden input is no longer needed here --}}
-
-                <input
-                    type="file"
-                    id="profile_photo"
-                    name="profile_photo"
-                    class="hidden"
-                    x-on:change="updatePreview($event.target.files)"
-                    accept="image/png, image/jpeg, image/jpg"
-                >
-
-                <x-input-label for="profile_photo" :value="__('profile_page.profile_photo')" class="sr-only" />
-
-                {{-- Select New Photo Button --}}
-                <button
-                    type="button"
-                    x-on:click.prevent="document.getElementById('profile_photo').click()"
-                    class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150"
-                >
-                    {{ __('profile_page.select_new_photo') }}
-                </button>
-
-                {{-- *** UPDATED REMOVE BUTTON *** --}}
-                <button
-                    type="button"
-                    x-show="hasPhoto"
-                    {{-- This now submits the hidden form --}}
-                    x-on:click.prevent="isDeleting = true; document.getElementById('delete_photo_form').submit();"
-                    x-bind:disabled="isDeleting"
-                    class="inline-flex items-center px-4 py-2 ms-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 disabled:opacity-50"
-                >
-                    {{-- This uses the new translation key --}}
-                    <span x-show="!isDeleting">{{ __('profile_page.remove_photo') }}</span>
-                    <span x-show="isDeleting">{{ __('profile_page.removing') }}</span>
-                </button>
-
-                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                    PNG, JPG or JPEG. Max 2MB.
-                </p>
-
-                <x-input-error class="mt-2" :messages="$errors->get('profile_photo')" />
-            </div>
-        </div>
-        
-        {{-- ... (Rest of your form: Name, Email, etc.) ... --}}
-        
         {{-- Name --}}
         <div>
             <x-input-label for="name" :value="__('profile_page.name')" />
-            {{-- UPDATED: mt-1 to mt-2 --}}
             <div class="relative mt-2">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -124,7 +38,6 @@
         {{-- Email --}}
         <div>
             <x-input-label for="email" :value="__('profile_page.email')" />
-            {{-- UPDATED: mt-1 to mt-2 --}}
              <div class="relative mt-2">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
@@ -159,12 +72,6 @@
         <div>
             <x-input-label for="phone_number_profile" :value="__('profile_page.phone_number')" />
             
-            {{-- 
-              UPDATED:
-              - Changed mt-1 to mt-2 for spacing
-              - Changed dark:border-gray-600 to dark:border-gray-700 to match x-text-input
-              - Changed dark:bg-gray-700 to dark:bg-gray-900 to match x-text-input
-            --}}
             <input id="phone_number_profile" name="phone_number" type="tel" 
                    class="mt-2 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 rounded-md shadow-sm text-start" 
                    value="{{ old('phone_number', $user->phone_number) }}" 
@@ -176,7 +83,6 @@
         {{-- Government ID --}}
         <div>
             <x-input-label for="government_id" :value="__('profile_page.government_id')" />
-            {{-- UPDATED: mt-1 to mt-2 --}}
              <div class="relative mt-2">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -207,7 +113,6 @@
     </form>
 </section>
 
-{{-- UPDATED SCRIPT: Removed the block that stripped the '+' from the initial value --}}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const phoneInputProfile = document.querySelector("#phone_number_profile");
@@ -223,27 +128,20 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             separateDialCode: true,
             preferredCountries: ['eg','sa','us','gb'],
-            // The 'value' attribute of the input (e.g., +2010...)
-            // is now correctly read by the library.
-            // 'separateDialCode: true' handles parsing it,
-            // setting the flag, and showing the national number.
         });
 
-        // On form submit: append country code and validate
         const profileForm = phoneInputProfile.closest('form');
         if (profileForm) {
             profileForm.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-                let phoneNumber = phoneInputProfile.value.trim().replace(/\D/g,''); // remove non-digits
+                let phoneNumber = phoneInputProfile.value.trim().replace(/\D/g,''); 
 
-                // Basic validation: digits only, 8-15 characters
                 if (!phoneNumber.match(/^\d{8,15}$/)) {
                     alert("Please enter a valid phone number");
                     return;
                 }
 
-                // Prepend country dial code
                 const dialCode = itiProfile.getSelectedCountryData().dialCode;
                 phoneInputProfile.value = `+${dialCode}${phoneNumber.replace(/^0+/, '')}`;
 

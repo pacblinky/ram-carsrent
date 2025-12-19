@@ -22,7 +22,6 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'phone_number' => ['nullable', 'string', 'phone:INTERNATIONAL'],
             'government_id' => ['nullable', 'string', 'max:255'],
-            'profile_photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ];
     }
 }

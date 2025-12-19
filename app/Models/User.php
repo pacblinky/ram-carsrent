@@ -27,7 +27,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'phone_number',
         "government_id",
         'is_admin',
-        'profile_photo_path',
         'fcm_token',
         'verification_code',
         'verification_code_expires_at'
@@ -63,12 +62,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
      */
     public function getProfilePhotoUrlAttribute(): string
     {
-        if ($this->profile_photo_path) {
-            
-            return asset('storage/' . $this->profile_photo_path) . '?v=' . $this->updated_at->timestamp;
-        }
-
-        // Return a default image or placeholder
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
     }
 
