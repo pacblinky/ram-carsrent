@@ -9,7 +9,6 @@ use App\Http\Controllers\CarsListController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ContactController; // <-- ADD THIS
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\FCMController;
 use App\Models\Car;
 use App\Models\Location;
 use App\Models\Brand;
@@ -64,8 +63,6 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::view('/terms', 'terms.index')->name('terms');
 Route::view('/privacy', 'privacy.index')->name('privacy');
-
-Route::post('/save-fcm-token', [FCMController::class, 'saveTokenAndSendWelcome'])->middleware('auth');
 
 Route::get('/sitemap.xml', function () {
     $cars = Car::all(); 

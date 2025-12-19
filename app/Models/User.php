@@ -27,7 +27,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'phone_number',
         "government_id",
         'is_admin',
-        'fcm_token',
         'verification_code',
         'verification_code_expires_at'
     ];

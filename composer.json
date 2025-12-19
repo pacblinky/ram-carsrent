@@ -9,7 +9,6 @@
         "php": "^8.2",
         "filament/filament": "3.3",
         "filament/widgets": "^3.3",
-        "kreait/laravel-firebase": "^6.1",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "propaganistas/laravel-phone": "^6.0"
@@ -30,10 +29,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "app/Helpers/FCMHelper.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

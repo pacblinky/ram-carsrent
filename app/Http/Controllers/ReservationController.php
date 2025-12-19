@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Car;
 use App\Models\User;
-use App\Enums\ReservationStatus;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
-use function App\Helpers\sendPushNotification;
 
 class ReservationController extends Controller
 {
@@ -95,15 +93,6 @@ class ReservationController extends Controller
                     ->url(route('filament.admin.resources.reservations.view', $reservation), shouldOpenInNewTab: true)
             ])
             ->sendToDatabase($admins);
-
-        // 2. Push Notifications
-        foreach ($admins as $admin) {
-            sendPushNotification(
-                $admin,
-                'New Reservation Created',
-                "A new reservation has been made for {$car->name} from {$start->format('Y-m-d H:i')} to {$end->format('Y-m-d H:i')}."
-            );
-        }
 
         return redirect()->route('reservations.index')
             ->with('success', __('reservations.reservation_created_success'));
