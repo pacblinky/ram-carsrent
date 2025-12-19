@@ -14,9 +14,6 @@ use App\Models\Car;
 use App\Models\Location;
 use App\Models\Brand;
 use App\Models\Video;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     $locations = Location::all();
@@ -73,9 +70,7 @@ Route::post('/save-fcm-token', [FCMController::class, 'saveTokenAndSendWelcome']
 
 Route::get('/sitemap.xml', function () {
     $cars = Car::all(); 
-    
-    return Response::view('sitemap', compact('cars'))
-        ->header('Content-Type', 'text/xml');
+    return response()->view('sitemap', compact('cars'))->header('Content-Type', 'text/xml');
 });
 
 Route::fallback(function () {
