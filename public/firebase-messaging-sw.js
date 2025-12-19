@@ -2,12 +2,12 @@ importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js
 importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
 
 firebase.initializeApp({
-  apiKey: "AIzaSyAHV-uf0yxhbSQu8nLYkcrqkyF2akSRO1Q",
-  authDomain: "ram-car-rent.firebaseapp.com",
-  projectId: "ram-car-rent",
-  storageBucket: "ram-car-rent.firebasestorage.app",
-  messagingSenderId: "584152847886",
-  appId: "1:584152847886:web:b6110f2563b04e2b13ce5f",
+  apiKey: "AIzaSyBc7lYb09hmzgzRDtY8qCkNigOhMg2iUVw",
+  authDomain: "ram-cars-rent.firebaseapp.com",
+  projectId: "ram-cars-rent",
+  storageBucket: "ram-cars-rent.firebasestorage.app",
+  messagingSenderId: "134418214220",
+  appId: "1:134418214220:web:63e23c5f04210e22a5b3e9"
 });
 
 const messaging = firebase.messaging();
