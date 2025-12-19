@@ -49,7 +49,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // Redirect to home page instead of dashboard
-        return redirect(route('home', absolute: false));
+        return redirect(route('verification.notice'));
     }
 }
