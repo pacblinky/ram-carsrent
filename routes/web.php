@@ -65,7 +65,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::view('/terms', 'terms.index')->name('terms');
 Route::view('/privacy', 'privacy.index')->name('privacy');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::post('/push/subscribe', [PushSubscriptionController::class, 'update']);
     Route::post('/push/unsubscribe', [PushSubscriptionController::class, 'delete']);
 });
