@@ -1,27 +1,33 @@
-importScripts('https://www.gstatic.com/firebasejs/12.5.0/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/12.5.0/firebase-messaging-compat.js');
+self.addEventListener('push', function (event) {
+    if (!(self.Notification && self.Notification.permission === 'granted')) {
+        return;
+    }
 
-firebase.initializeApp({
-  apiKey: "AIzaSyBc7lYb09hmzgzRDtY8qCkNigOhMg2iUVw",
-  authDomain: "ram-cars-rent.firebaseapp.com",
-  projectId: "ram-cars-rent",
-  storageBucket: "ram-cars-rent.firebasestorage.app",
-  messagingSenderId: "134418214220",
-  appId: "1:134418214220:web:63e23c5f04210e22a5b3e9"
+    const payload = event.data ? event.data.json() : {};
+    const title = payload.title || 'New Notification';
+    const options = {
+        body: payload.body || '',
+        icon: payload.icon || '/favicon-96x96.png',
+        data: payload.data || {},
+        actions: payload.actions || []
+    };
+
+    event.waitUntil(
+        self.registration.showNotification(title, options)
+    );
 });
 
-const messaging = firebase.messaging();
-
-messaging.onBackgroundMessage((payload) => {
-  const notificationData = payload.data || payload.notification || {};
-  
-  const title = notificationData.title || 'New Notification';
-  const body = notificationData.body || 'You have a new message.';
-  const icon = notificationData.icon || '/favicon-96x96.png'; 
-  
-  self.registration.showNotification(title, { 
-      body: body, 
-      icon: icon,
-      data: payload.data
-  });
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+    event.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
+            if (clientList.length > 0) {
+                let client = clientList[0];
+                if ('focus' in client) return client.focus();
+            }
+            if (clients.openWindow) {
+                return clients.openWindow(event.notification.data.url || '/');
+            }
+        })
+    );
 });

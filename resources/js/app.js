@@ -1,6 +1,7 @@
 import './bootstrap';
 import 'flowbite'; // Assuming Flowbite is used on most pages, keep it synchronous for simplicity
 import "./theme-toggle";
+import "./push-notifcations";
 
 import Alpine from 'alpinejs';
 

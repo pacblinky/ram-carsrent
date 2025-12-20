@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\CarsListController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\ContactController; // <-- ADD THIS
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\PushSubscriptionController;
 use App\Models\Car;
 use App\Models\Location;
 use App\Models\Brand;
@@ -63,6 +64,11 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::view('/terms', 'terms.index')->name('terms');
 Route::view('/privacy', 'privacy.index')->name('privacy');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/push/subscribe', [PushSubscriptionController::class, 'update']);
+    Route::post('/push/unsubscribe', [PushSubscriptionController::class, 'delete']);
+});
 
 Route::get('/sitemap.xml', function () {
     $cars = Car::all(); 

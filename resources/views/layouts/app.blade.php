@@ -4,10 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'Ram Car Rental') }}</title>
+        <meta name="vapid-public-key" content="{{ config('webpush.vapid.public_key') }}">
+        <title>{{ config('app.name', 'RAM | Car Rental') }}</title>
         <meta name="description" content="@yield('meta_description', 'Rent luxury and economy cars at the best prices with Ram Car Rental. Wide selection of brands and locations.')">
         <meta name="keywords" content="@yield('meta_keywords', 'car rental, rent a car, luxury cars, economy cars, vehicle hire')">
-        <meta name="author" content="Ram Car Rental">
+        <meta name="author" content="RAM | Car Rental">
         
         <meta property="og:type" content="website">
         <meta property="og:title" content="@yield('title', config('app.name', 'Ram Car Rental'))">
@@ -55,8 +56,17 @@
 
         @include('layouts.footer')
         
-    <script>
-    </script>
+        @auth
+            @if(Auth::user()->hasVerifiedEmail())
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (window.checkSubscription) {
+                        window.checkSubscription();
+                    }
+                });
+            </script>
+            @endif
+        @endauth
     
     </body>
 </html>
