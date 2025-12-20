@@ -36,10 +36,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        if ($request->has('endpoint')) {
-            $request->user()->deletePushSubscription($request->input('endpoint'));
-        }
-
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

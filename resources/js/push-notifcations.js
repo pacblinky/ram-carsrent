@@ -78,6 +78,38 @@ window.checkSubscription = async function() {
     }
 };
 
+window.handleLogout = async function(event) {
+    event.preventDefault();
+    const form = document.getElementById('logout-form');
+
+    if (!form) {
+        console.error('Logout form not found');
+        return;
+    }
+
+    if ('serviceWorker' in navigator) {
+        try {
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.getSubscription();
+            
+            if (subscription) {
+                await fetch('/push/unsubscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ endpoint: subscription.endpoint })
+                });
+            }
+        } catch (error) {
+            console.error('Error removing subscription during logout:', error);
+        }
+    }
+    
+    form.submit();
+};
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js');
 }
