@@ -3,14 +3,6 @@
 
         <div class="flex items-center space-x-3 rtl:space-x-reverse">
             <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                {{-- 
-                  PROFESSIONAL RESPONSIVE LOGO:
-                  - Mobile/Tablet: h-12 w-auto (48px height, auto width)
-                  - Desktop (md): h-16 w-auto (64px height) 
-                  - Large Desktop (lg): h-20 w-auto (80px height)
-                  - object-contain to show full logo without cropping
-                  - Proper alignment with brand text
-                --}}
                 <img src="{{ asset('images/logo.png') }}" 
                      class="h-12 w-auto md:h-16 lg:h-20 object-contain" 
                      alt="Brand Logo" />
@@ -18,6 +10,7 @@
             </a>
 
             <div class="hidden md:flex items-center space-x-3 rtl:space-x-reverse gap-2">
+                
                 <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
                     <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
@@ -66,9 +59,7 @@
                 {{-- Authenticated User Dropdown --}}
                 <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                     <span class="sr-only">{{ __('navbar.open_user_menu') }}</span>
-                    
                     <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}">
-
                 </button>
                 
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
@@ -87,6 +78,28 @@
                                 {{ __('navbar.profile') }}
                             </a>
                         </li>
+                        
+                        {{-- [START] Push Notification Toggle (Inside Dropdown) --}}
+                        @if(Auth::user()->hasVerifiedEmail())
+                        <li>
+                            <button id="push-notification-toggle-dropdown" onclick="window.togglePushSubscription()" type="button" class="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white text-start">
+                                <span class="flex items-center">
+                                    {{-- Enabled Icon --}}
+                                    <svg id="push-icon-enabled-dropdown" class="w-4 h-4 me-2 hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
+                                        <path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/>
+                                    </svg>
+                                    {{-- Disabled Icon --}}
+                                    <svg id="push-icon-disabled-dropdown" class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12" />
+                                    </svg>
+                                    Notification
+                                </span>
+                            </button>
+                        </li>
+                        @endif
+                        {{-- [END] Push Notification Toggle --}}
+
                         @if(Auth::user()->is_admin)
                         <li>
                             <a href="/admin" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
