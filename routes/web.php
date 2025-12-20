@@ -66,7 +66,9 @@ Route::view('/terms', 'terms.index')->name('terms');
 Route::view('/privacy', 'privacy.index')->name('privacy');
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::post('/push/subscribe', [PushSubscriptionController::class, 'update']);
+    Route::post('/push/subscribe', [PushSubscriptionController::class, 'update'])
+        ->middleware('throttle:3,1');
+
     Route::post('/push/unsubscribe', [PushSubscriptionController::class, 'delete']);
 });
 
