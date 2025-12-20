@@ -7,6 +7,7 @@ return [
     'open_user_menu' => 'فتح قائمة المستخدم',
     'my_reservations' => 'الحجوزات',
     'profile' => 'الملف الشخصي',
+    'notifications' => 'الإشعارات',
     'admin_panel' => 'لوحة الإدارة',
     'sign_out' => 'تسجيل الخروج',
 

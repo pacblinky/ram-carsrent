@@ -7,6 +7,7 @@ return [
     'open_user_menu' => 'Open user menu',
     'my_reservations' => 'Reservations',
     'profile' => 'Profile',
+    'notifications' => 'Notifications',
     'admin_panel' => 'Admin Panel',
     'sign_out' => 'Sign out',
 
