@@ -99,18 +99,17 @@
                         @if(Auth::user()->hasVerifiedEmail())
                         <li>
                             <button id="push-notification-toggle-dropdown" onclick="window.togglePushSubscription()" type="button" class="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white text-start">
-                                {{-- justify-between ensures the text is on the start and icon is on the end --}}
-                                <span class="flex w-full items-center justify-between">
+                                {{-- Removed justify-between, added gap-2 to keep them close but separated --}}
+                                <span class="flex w-full items-center gap-2">
                                     {{-- Text First --}}
                                     <span>{{ __('navbar.notifications') }}</span>
                                     
                                     {{-- Icon Second (After Text) --}}
                                     <span class="flex items-center">
-                                        {{-- ms-2 adds margin-start (left in LTR, right in RTL) --}}
-                                        <svg id="push-icon-enabled-dropdown" class="w-4 h-4 ms-2 hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
+                                        <svg id="push-icon-enabled-dropdown" class="w-4 h-4 hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
                                             <path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/>
                                         </svg>
-                                        <svg id="push-icon-disabled-dropdown" class="w-4 h-4 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <svg id="push-icon-disabled-dropdown" class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12" />
                                         </svg>
