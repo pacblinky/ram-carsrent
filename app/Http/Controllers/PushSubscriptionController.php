@@ -18,14 +18,15 @@ class PushSubscriptionController extends Controller
 
         $user = Auth::user();
 
-        $user->updatePushSubscription(
+        // 1. Assign the result to a variable ($subscription)
+        $subscription = $user->updatePushSubscription(
             $request->endpoint,
             $request->input('keys.p256dh'),
             $request->input('keys.auth')
         );
 
-        // Send the welcome notification
-        $user->notify(new WelcomeNotification()); //
+        // 2. Notify ONLY this specific subscription (current device)
+        $subscription->notify(new WelcomeNotification());
 
         return response()->json(['success' => true]);
     }
