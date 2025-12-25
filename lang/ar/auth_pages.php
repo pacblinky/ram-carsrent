@@ -61,4 +61,6 @@ return [
     'verification_code_label' => 'رمز التحقق',
     'verify_button' => 'تأكيد البريد الإلكتروني',
     'resend_code_button' => 'إعادة إرسال الرمز',
+    'or_update_email' => 'أو قم بتحديث بريدك الإلكتروني',
+    'resend_in_seconds' => 'إعادة الإرسال خلال :seconds ثانية',
 ];

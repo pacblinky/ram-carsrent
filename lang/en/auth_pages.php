@@ -61,4 +61,6 @@ return [
     'verification_code_label' => 'Verification Code',
     'verify_button' => 'Verify Email',
     'resend_code_button' => 'Resend Code',
+    'or_update_email' => 'Or update your email',
+    'resend_in_seconds' => 'Resend in :seconds s',
 ];
