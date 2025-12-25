@@ -72,10 +72,9 @@
         <div>
             <x-input-label for="phone_number_profile" :value="__('profile_page.phone_number')" />
             
-            <input id="phone_number_profile" name="phone_number" type="tel" 
-                   class="mt-2 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 rounded-md shadow-sm text-start" 
-                   value="{{ old('phone_number', $user->phone_number) }}" 
-                   autocomplete="tel">
+            <input required type="tel" id="phone_number_profile" name="phone_number"
+                   value="{{ old('phone_number', $user->phone_number) }}" required autocomplete="tel"
+                   class="mt-2 bg-transparent border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-start placeholder:text-start dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
@@ -116,38 +115,39 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const phoneInputProfile = document.querySelector("#phone_number_profile");
+    // Find the closest form to the input
+    const profileForm = phoneInputProfile ? phoneInputProfile.closest('form') : null;
 
-    if (phoneInputProfile) {
-        const itiProfile = window.intlTelInput(phoneInputProfile, {
+    const initProfileIti = () => {
+        if (!phoneInputProfile || !profileForm) return;
+
+        const iti = window.intlTelInput(phoneInputProfile, {
             initialCountry: "auto",
+            strictMode: true,
+            loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.5/build/js/utils.js"),
             geoIpLookup: callback => {
                 fetch("https://ipapi.co/json")
                     .then(res => res.json())
                     .then(data => callback(data.country_code))
-                    .catch(() => callback("us"));
+                    .catch(() => callback("eg"));
             },
-            separateDialCode: true,
-            preferredCountries: ['eg','sa','us','gb'],
+            preferredCountries: ['eg', 'sa', 'ae', 'kw'],
+            hiddenInput:()=>({ phone: "full_phone" }), 
         });
 
-        const profileForm = phoneInputProfile.closest('form');
-        if (profileForm) {
-            profileForm.addEventListener('submit', function(e) {
+        profileForm.addEventListener('submit', function(e) {
+            if (!iti.isValidNumber()) {
                 e.preventDefault();
+                alert("Please enter a valid phone number");
+            }
+        });
+    };
 
-                let phoneNumber = phoneInputProfile.value.trim().replace(/\D/g,''); 
-
-                if (!phoneNumber.match(/^\d{8,15}$/)) {
-                    alert("Please enter a valid phone number");
-                    return;
-                }
-
-                const dialCode = itiProfile.getSelectedCountryData().dialCode;
-                phoneInputProfile.value = `+${dialCode}${phoneNumber.replace(/^0+/, '')}`;
-
-                this.submit();
-            });
+    const checkIti = setInterval(() => {
+        if (window.intlTelInput) {
+            clearInterval(checkIti);
+            initProfileIti();
         }
-    }
+    }, 50);
 });
 </script>
