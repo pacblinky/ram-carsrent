@@ -71,11 +71,12 @@
         {{-- Phone Number --}}
         <div>
             <x-input-label for="phone_number_profile" :value="__('profile_page.phone_number')" />
-            
-            <input required type="tel" id="phone_number_profile" name="phone_number"
-                   value="{{ old('phone_number', $user->phone_number) }}" required autocomplete="tel"
-                   class="mt-2 bg-transparent border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-start placeholder:text-start dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            
+            <div class="mt-2">
+                {{-- Added opacity-0 to hide input until JS initializes it to prevent FOUC --}}
+                <input required type="tel" id="phone_number_profile" name="phone_number"
+                    value="{{ old('phone_number', $user->phone_number) }}" required autocomplete="tel"
+                    class="opacity-0 transition-opacity duration-500 ease-in-out bg-transparent border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 text-start placeholder:text-start dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
 
@@ -134,6 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
             preferredCountries: ['eg', 'sa', 'ae', 'kw'],
             hiddenInput:()=>({ phone: "full_phone" }), 
         });
+        
+        // Remove opacity-0 once initialized to reveal the formatted input
+        phoneInputProfile.classList.remove('opacity-0');
 
         profileForm.addEventListener('submit', function(e) {
             if (!iti.isValidNumber()) {
