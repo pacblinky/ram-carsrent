@@ -8,6 +8,19 @@ use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
 {
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        // If full_phone is present (from intl-tel-input), use it as the phone_number
+        if ($this->has('full_phone')) {
+            $this->merge([
+                'phone_number' => $this->input('full_phone'),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [
@@ -20,7 +33,7 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-            'full_phone' => ['nullable', 'string', 'phone:INTERNATIONAL'],
+            'phone_number' => ['required', 'string', 'phone:INTERNATIONAL'],
             'government_id' => ['nullable', 'string', 'max:255'],
         ];
     }

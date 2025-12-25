@@ -29,10 +29,14 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        if ($request->has('full_phone')) {
+            $request->merge(['phone_number' => $request->full_phone]);
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'full_phone' => ['required', 'string', 'phone:INTERNATIONAL'],
+            'phone_number' => ['required', 'string', 'phone:INTERNATIONAL'],
             'government_id' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -40,7 +44,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'phone_number' => $request->full_phone,
+            'phone_number' => $request->phone_number,
             'government_id' => $request->government_id,
             'password' => Hash::make($request->password),
         ]);
