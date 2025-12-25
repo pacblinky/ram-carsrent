@@ -28,7 +28,8 @@
                     {{-- 1. Pickup Location --}}
                     <div>
                         <label for="location_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('home.pickup_location') }}</label>
-                        <select name="location_id" id="location_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {{-- FIX: Increased padding from p-2.5 to p-3.5 to prevent Arabic text cutting --}}
+                        <select name="location_id" id="location_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">{{ __('home.select_location') }}</option>
                             @foreach($locations as $location)
                                 <option value="{{ $location->id }}">{{ $location->name }}</option>
@@ -45,6 +46,7 @@
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                                 </svg>
                             </div>
+                            {{-- FIX: Increased padding from p-2.5 to p-3.5 --}}
                             <input
                                 datepicker
                                 datepicker-autohide
@@ -53,7 +55,7 @@
                                 readonly
                                 type="text"
                                 id="pickup_date_display"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
@@ -67,6 +69,7 @@
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                                 </svg>
                             </div>
+                            {{-- FIX: Increased padding from p-2.5 to p-3.5 --}}
                             <input
                                 datepicker
                                 datepicker-autohide
@@ -75,14 +78,15 @@
                                 readonly
                                 type="text"
                                 id="dropoff_date_display"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
                     
-                    {{-- 4. Search Button (MODIFIED) --}}
+                    {{-- 4. Search Button --}}
                     <div class="md:col-span-3">
-                        <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-transform hover:scale-[1.02]">
+                        {{-- FIX: Ensured py-3.5 matches the inputs --}}
+                        <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-transform hover:scale-[1.02]">
                             {{ __('home.search') }}
                         </button>
                     </div>
@@ -91,6 +95,11 @@
         </div>
     </section>
 
+    {{-- ... REST OF THE CODE (Brands, Recent Vehicles, Scripts) REMAINS THE SAME ... --}}
+    {{-- I am omitting the rest of the file to keep the answer clean, as no changes are needed below this point --}}
+    
+    {{-- JUST PASTE THE REST OF YOUR FILE HERE (Brands, Recent Cars, Scripts, etc.) --}}
+    
     {{-- ======================================================= --}}
     {{-- PREMIUM BRANDS SECTION --}}
     {{-- ======================================================= --}}
@@ -124,12 +133,8 @@
             </div>
         </div>
     </section>
-    {{-- ======================================================= --}}
-    {{-- END OF PREMIUM BRANDS SECTION --}}
-    {{-- ======================================================= --}}
-
-
-    {{-- RECENT VEHICLES SECTION (This section was already correct) --}}
+    
+    {{-- RECENT VEHICLES SECTION --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4">
         <div class="flex flex-col items-center md:flex-row md:justify-between md:items-end mb-8 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
             <div class="text-center md:text-start">
@@ -146,7 +151,6 @@
                         ? asset('storage/' . $car->images[0]) 
                         : asset('images/logo.png');
                     
-                    // MODIFIED: Made specs dynamic from $car object
                     $specs = [
                         ['icon' => 'doors',        'text' => $car->number_of_doors ? __('cars_page.feat_doors', ['count' => $car->number_of_doors]) : 'N/A'],
                         ['icon' => 'transmission', 'text' => __('cars_page.feat_transmission_' . $car->transmission)],
@@ -171,7 +175,6 @@
                         <div class="grid grid-cols-2 gap-x-2 gap-y-4 mb-5">
                             @foreach($specs as $spec)
                                 <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                                    {{-- MODIFIED: Replaced 'mileage' with 'doors' and used the 'truck' icon from this file --}}
                                     @if($spec['icon'] == 'doors')
                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-6 0H6a2.25 2.25 0 01-2.25-2.25V6a2.25 2.25 0 012.25-2.25h1.5a.75.75 0 01.75.75v5.25a.75.75 0 01-.75.75h-1.5a2.25 2.25 0 00-2.25 2.25v.75m6-6h6m-6 0v6m6-6v6m0 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6" /></svg>
                                     @elseif($spec['icon'] == 'transmission')
@@ -259,9 +262,7 @@
         </div>
     </section>
 
-    {{-- ======================================================= --}}
-    {{-- NEW VIDEO SLIDESHOW SECTION --}}
-    {{-- ======================================================= --}}
+    {{-- VIDEO SLIDESHOW SECTION --}}
     @if(isset($videos) && $videos->isNotEmpty())
     <section class="max-w-screen-xl mx-auto py-16 px-4">
         <div class="text-center mb-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out animate-on-scroll">
@@ -269,7 +270,6 @@
             <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('home.video_subtitle') ?? 'Explore our vehicles inside and out.' }}</p>
         </div>
 
-        {{-- MODIFIED: Removed 'relative' from here --}}
         <div id="video-carousel" class="w-full opacity-0 translate-y-8 transition-all duration-1000 delay-200 ease-out animate-on-scroll" data-carousel="static">
             <div class="relative h-64 overflow-hidden rounded-2xl shadow-lg md:h-96 lg:h-[500px]">
                 @foreach($videos as $index => $video)
@@ -287,22 +287,17 @@
                 @endforeach
             </div>
             
-            {{-- MODIFIED: Added a wrapper for buttons and placed them below the video container --}}
             <div class="flex items-center justify-center gap-4 mt-4">
-                {{-- MODIFIED: Removed absolute classes, updated colors --}}
                 <button type="button" class="flex items-center justify-center cursor-pointer group focus:outline-none" data-carousel-prev>
                     <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600 group-focus:ring-4 group-focus:ring-gray-300 dark:group-focus:ring-gray-600/70 group-focus:outline-none">
-                        {{-- MODIFIED: Updated text color AND ADDED RTL FIX --}}
                         <svg class="w-4 h-4 text-gray-800 dark:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                         </svg>
                         <span class="sr-only">Previous</span>
                     </span>
                 </button>
-                {{-- MODIFIED: Removed absolute classes, updated colors --}}
                 <button type="button" class="flex items-center justify-center cursor-pointer group focus:outline-none" data-carousel-next>
                     <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600 group-focus:ring-4 group-focus:ring-gray-300 dark:group-focus:ring-gray-600/70 group-focus:outline-none">
-                        {{-- MODIFIED: Updated text color AND ADDED RTL FIX --}}
                         <svg class="w-4 h-4 text-gray-800 dark:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                         </svg>
@@ -313,14 +308,8 @@
         </div>
     </section>
     @endif
-    {{-- ======================================================= --}}
-    {{-- END OF NEW VIDEO SLIDESHOW SECTION --}}
-    {{-- ======================================================= --}}
 
-
-    {{-- ======================================================= --}}
     {{-- BOTTOM CTA SECTIONS --}}
-    {{-- ======================================================= --}}
     <section class="max-w-screen-xl mx-auto py-16 px-4 overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
@@ -379,9 +368,7 @@
         </div>
     </section>
 
-    {{-- ======================================================= --}}
-    {{-- MODIFIED SCRIPT: Added form submit listener --}}
-    {{-- ======================================================= --}}
+    {{-- SCRIPTS --}}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -394,7 +381,7 @@
                 });
             }, 100); 
 
-            // --- 2. SCROLL ANIMATION (FIXED) ---
+            // --- 2. SCROLL ANIMATION ---
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
@@ -484,7 +471,6 @@
             // Initial call to set hidden inputs on page load
             validateAndSync();
 
-            // *** THIS IS THE FIX ***
             // Add submit listener to the form to ensure fields are set
             const heroForm = document.getElementById("hero-search-form");
             if (heroForm) {
@@ -493,7 +479,6 @@
                     updateHiddenInputs();
                 });
             }
-            // *** END OF FIX ***
 
 
             // --- 4. SCRIPT FOR VIDEO CAROUSEL ---
@@ -501,7 +486,7 @@
             if (videoCarousel) {
                 
                 const handleSlideChange = () => {
-                     videoCarousel.querySelectorAll('video').forEach(video => {
+                      videoCarousel.querySelectorAll('video').forEach(video => {
                         if (!video.paused) {
                             video.pause();
                         }
