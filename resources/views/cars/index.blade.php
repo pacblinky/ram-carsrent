@@ -1,5 +1,5 @@
 <x-app-layout>
-    {{-- Style block --}}
+    {{-- Style block (Unchanged from last time) --}}
     <style>
         @keyframes fadeIn {
             from {
@@ -38,7 +38,7 @@
         }
     </style>
 
-    {{-- HERO SEARCH SECTION --}}
+    {{-- HERO SEARCH SECTION (Unchanged) --}}
     <section class="relative bg-gray-900 flex flex-col items-center justify-center pt-24 pb-48">
         <div class="absolute inset-0">
             <img src="{{ asset('images/driving.gif') }}" alt="Background" class="w-full h-full object-cover opacity-50">
@@ -57,6 +57,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6">
                 
                 @php
+                    // MODIFIED: Removed $times, kept defaults
                     $defaultPickupTime = '09:00';
                     $defaultDropoffTime = '17:00';
 
@@ -67,6 +68,7 @@
                     $dropoff_time_value = request('dropoff_datetime') ? \Carbon\Carbon::parse(request('dropoff_datetime'))->format('H:i') : $defaultDropoffTime;
                 @endphp
 
+                {{-- MODIFIED: Grid changed to 3 cols --}}
                 <form action="{{ route('cars.index') }}" method="GET" class="ajax-form grid grid-cols-1 md:grid-cols-3 gap-4 items-end" id="cars-search-form">
                     
                     {{-- Hidden inputs to store combined datetime --}}
@@ -85,9 +87,8 @@
                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                            </div>
-                           {{-- FIX: Increased padding to p-3.5 --}}
                             <select name="location_id" id="location_id" 
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 pe-10 p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white text-start appearance-none indent-6">
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 pe-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white text-start appearance-none indent-6">
                                 <option value="">{{ __('cars_page.all_locations') }}</option>
                                 @foreach($locations as $location)
                                     <option value="{{ $location->id }}" {{ request('location_id') == $location->id ? 'selected' : '' }}>
@@ -107,7 +108,6 @@
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                                 </svg>
                             </div>
-                            {{-- FIX: Increased padding to p-3.5 --}}
                             <input
                                 datepicker
                                 datepicker-autohide
@@ -117,7 +117,7 @@
                                 type="text"
                                 id="pickup_date_display"
                                 value="{{ $pickup_date_value }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
@@ -131,7 +131,6 @@
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                                 </svg>
                             </div>
-                            {{-- FIX: Increased padding to p-3.5 --}}
                             <input
                                 datepicker
                                 datepicker-autohide
@@ -141,15 +140,14 @@
                                 type="text"
                                 id="dropoff_date_display"
                                 value="{{ $dropoff_date_value }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-3.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="{{ __('cars_page.select_date') }}">
                         </div>
                     </div>
                     
-                    {{-- Submit Button --}}
+                    {{-- Submit Button (MODIFIED) --}}
                     <div class="md:col-span-3">
-                        {{-- FIX: Increased padding to py-3.5 to match inputs --}}
-                        <button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-3.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        <button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             {{ __('cars_page.find_vehicle') }}
                         </button>
                     </div>
@@ -162,16 +160,14 @@
 
     {{-- MAIN CONTENT --}}
     <section class="max-w-screen-xl mx-auto pt-48 md:pt-32 pb-12 px-4">
-        {{-- ... Rest of the file including Sidebar Filters, Car List and JS ... --}}
-        {{-- ... Paste the rest of your index.blade.php content here ... --}}
-        
         <div class="mb-8 fade-in-main-title">
             <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{{ __('cars_page.fleet_title') }}</h2>
             <p class="text-lg text-gray-600 dark:text-gray-400">{{ __('cars_page.fleet_subtitle') }}</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {{-- Mobile Filter Toggle Button --}}
+
+            {{-- Mobile Filter Toggle Button (Unchanged) --}}
             <div class="lg:hidden">
                 <button type="button" id="filter-toggle-button" class="flex items-center justify-between w-full p-4 font-medium text-left text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700">
                     <span>{{ __('cars_page.show_filters') ?? 'Show Filters' }}</span> 
@@ -179,8 +175,12 @@
                 </button>
             </div>
 
-            {{-- SIDEBAR FILTERS --}}
+            {{-- =================================== --}}
+            {{-- MODIFIED: SIDEBAR FILTERS --}}
+            {{-- =================================== --}}
             <aside class="hidden lg:block lg:col-span-1 space-y-6 fade-in-filters" id="sidebar-filters">
+                
+                {{-- (Sidebar content is unchanged) --}}
                 <a href="{{ route('cars.index') }}" 
                    class="ajax-filter-link block w-full text-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg shadow-sm hover:bg-red-50 dark:bg-gray-800 dark:border-gray-700 dark:text-red-500 dark:hover:bg-gray-700">
                     <svg class="inline-block w-4 h-4 me-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -189,7 +189,7 @@
                     {{ __('cars_page.clear_all_filters') ?? 'Clear All Filters' }}
                 </a>
 
-                {{-- Search by Name --}}
+                {{-- NEW: Search by Name Box --}}
                 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ __('cars_page.search') ?? 'Search' }}</h3>
                     <form action="{{ route('cars.index') }}" method="GET" class="ajax-form">
@@ -204,6 +204,7 @@
                                    class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                                    placeholder="{{ __('cars_page.search_placeholder') ?? 'Search by name...' }}" />
                         </div>
+                        {{-- FIXED SPACING: Changed mt-3 to mt-4 --}}
                         <button type="submit" class="mt-4 w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 dark:bg-blue-600 dark:hover:bg-blue-700">
                              {{ __('cars_page.search_btn') ?? 'Search' }}
                         </button>
@@ -363,7 +364,7 @@
                                        data-url="{{ route('cars.index', array_merge(request()->query(), ['doors' => $door['name'], 'page' => 1])) }}"
                                        data-clear-url="{{ route('cars.index', request()->except(['doors', 'page'])) }}"
                                        {{ request('doors') == $door['name'] ? 'checked' : '' }}>
-                                
+                                       
                                 <span class="ms-3 flex-1 text-sm font-medium text-gray-900 dark:text-white">{{ $door['label'] }}</span>
                                 <span class="text-xs font-medium text-gray-700 bg-gray-200 px-2 py-0.5 rounded-full dark:bg-gray-600 dark:text-gray-200">
                                     {{ $door['count'] }}
@@ -384,28 +385,30 @@
 
             </aside>
 
-            {{-- MAIN CONTENT CONTAINER --}}
+            {{-- MAIN CONTENT CONTAINER (AJAX will update this) --}}
             <main class="lg:col-span-3" id="car-list-container">
                 @include('cars.partials.car-list')
             </main>
         </div>
     </section>
 
-    {{-- AJAX SCRIPT --}}
+    {{-- =================================== --}}
+    {{-- AJAX SCRIPT (MODIFIED) --}}
+    {{-- =================================== --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('car-list-container');
 
-            // --- Function to bind the mobile toggle button ---
+            // --- Function to bind the mobile toggle button (Unchanged) ---
             function bindMobileToggle() {
                 const sidebar = document.getElementById('sidebar-filters');
                 const toggleButton = document.getElementById('filter-toggle-button');
                 
-                if (toggleButton && sidebar) { 
+                if (toggleButton && sidebar) { // Ensure both elements exist
                     const toggleIcon = document.getElementById('filter-toggle-icon');
                     const toggleButtonText = toggleButton.querySelector('span');
 
-                    // Update button state on bind
+                    // Update button state on bind (in case of AJAX refresh)
                     const isHidden = sidebar.classList.contains('hidden');
                     if (isHidden) {
                         toggleButtonText.textContent = "{{ __('cars_page.show_filters') ?? 'Show Filters' }}";
@@ -415,18 +418,20 @@
                         if (toggleIcon) toggleIcon.classList.add('rotate-180');
                     }
                     
+                    // Remove old listener to prevent duplicates (safer)
                     toggleButton.removeEventListener('click', handleToggleClick); 
+                    // Add the listener
                     toggleButton.addEventListener('click', handleToggleClick);
                 }
             }
             
-            // --- Click handler for the toggle button ---
+            // --- Click handler for the toggle button (Unchanged) ---
             function handleToggleClick() {
                 const sidebar = document.getElementById('sidebar-filters');
                 const toggleButton = document.getElementById('filter-toggle-button');
                 const toggleIcon = document.getElementById('filter-toggle-icon');
                 
-                if (sidebar && toggleButton) { 
+                if (sidebar && toggleButton) { // Ensure both exist
                     const toggleButtonText = toggleButton.querySelector('span');
 
                     sidebar.classList.toggle('hidden');
@@ -442,10 +447,10 @@
                 }
             }
 
-            // --- Initial bind ---
+            // --- Initial bind on page load (Unchanged) ---
             bindMobileToggle();
 
-            // --- DATE-ONLY SCRIPT ---
+            // --- MODIFIED: DATE-ONLY SCRIPT ---
             const bindDateTimeSync = () => {
                 const pickupDateEl = document.getElementById("pickup_date_display");
                 const dropoffDateEl = document.getElementById("dropoff_date_display");
@@ -453,9 +458,9 @@
                 const pickupHiddenEl = document.getElementById("pickup_datetime");
                 const dropoffHiddenEl = document.getElementById("dropoff_datetime");
 
-                if (!pickupDateEl) return; 
+                if (!pickupDateEl) return; // Exit if elements aren't here
 
-                // Use the default times passed from PHP
+                // Use the default times passed from PHP (which include request values)
                 const pickupTimeValue = '{{ $pickup_time_value }}';
                 const dropoffTimeValue = '{{ $dropoff_time_value }}';
 
@@ -480,12 +485,17 @@
                     const dd = dropoffDateEl.value;
 
                     if (pd) {
+                        // If pickup date is set, ensure dropoff date is not before it
                         if (dd && dd < pd) {
-                            dropoffDateEl.value = ""; 
+                            dropoffDateEl.value = ""; // Clear invalid dropoff date
                         }
+                        
+                        // Dynamically update the min-date attribute for Flowbite Datepicker
                         dropoffDateEl.setAttribute('datepicker-min-date', pd);
+
                     }
                     
+                    // Update the hidden inputs
                     updateHiddenInputs();
                 }
 
@@ -493,12 +503,12 @@
                 pickupDateEl.addEventListener("change", validateAndSync);
                 dropoffDateEl.addEventListener("change", validateAndSync);
 
-                // Initial call 
+                // Initial call to set hidden inputs on page load
                 validateAndSync();
             }
             bindDateTimeSync();
             
-            // --- rebindPartialEvents ---
+            // --- rebindPartialEvents (Unchanged) ---
             function rebindPartialEvents() {
                 document.querySelectorAll('.ajax-filter-link-select').forEach(select => {
                     const newSelect = select.cloneNode(true);
@@ -513,7 +523,7 @@
                 });
             }
 
-            // --- fetchCars Function ---
+            // --- fetchCars Function (Unchanged) ---
             function fetchCars(url) {
                 const currentCarListContainer = document.getElementById('car-list-container');
                 const currentSidebarContainer = document.getElementById('sidebar-filters');
@@ -560,7 +570,7 @@
                     
                     rebindPartialEvents(); 
                     bindMobileToggle();
-                    bindDateTimeSync(); 
+                    bindDateTimeSync(); // <-- This re-binds the new date-only logic
                 })
                 .catch(error => console.error('Error fetching cars:', error))
                 .finally(() => {
@@ -573,16 +583,18 @@
                 });
             }
 
-            // --- Click listener ---
+            // --- MODIFIED: Click listener ---
             document.addEventListener('click', function(e) {
+                // Check for pagination links
                 const pageLink = e.target.closest('#pagination-container a');
                 if (pageLink) {
                     e.preventDefault();
                     fetchCars(pageLink.href);
                     container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    return; 
+                    return; // Exit
                 }
 
+                // Check for generic AJAX filter links (for sorting, per_page, and clear)
                 const filterLink = e.target.closest('a.ajax-filter-link');
                 if (filterLink) {
                     e.preventDefault();
@@ -590,7 +602,7 @@
                 }
             });
 
-            // --- Change listener ---
+            // --- Change listener (Unchanged) ---
             document.addEventListener('change', function(e) {
                 if (e.target.classList.contains('ajax-filter-checkbox')) {
                     const checkbox = e.target;
@@ -608,7 +620,7 @@
                 }
             });
 
-            // --- Form Submit listener ---
+            // --- Form Submit listener (MODIFIED) ---
             document.addEventListener('submit', function(e) {
                 if (e.target.classList.contains('ajax-form')) {
                     e.preventDefault();
@@ -619,6 +631,7 @@
                     const pickupHiddenEl = document.getElementById("pickup_datetime");
                     const dropoffHiddenEl = document.getElementById("dropoff_datetime");
 
+                    // Use the PHP-defined default times
                     const pickupTimeValue = '{{ $pickup_time_value }}';
                     const dropoffTimeValue = '{{ $dropoff_time_value }}';
 
@@ -650,6 +663,7 @@
                     });
 
                     formData.forEach((value, key) => {
+                        // Exclude the display fields from the form submission
                         if (key.endsWith('_display')) {
                             return;
                         }
@@ -666,12 +680,12 @@
                 }
             });
 
-            // --- popstate listener ---
+            // --- popstate listener (Unchanged) ---
             window.addEventListener('popstate', function() {
                 fetchCars(window.location.href);
             });
 
-            // --- Initial bind ---
+            // --- Initial bind (Unchanged) ---
             rebindPartialEvents();
         });
     </script>
