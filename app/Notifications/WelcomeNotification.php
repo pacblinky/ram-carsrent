@@ -19,10 +19,8 @@ class WelcomeNotification extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Notifications Enabled! 🎉')
+            ->title('Notifications Enabled!')
             ->body('You will now receive updates about your car rentals directly to your device.')
-            ->icon('/favicon-96x96.png') // Ensure this path matches your public icon
-            ->action('View Profile', 'view_profile')
-            ->data(['url' => route('profile.edit')]); // Action click URL
+            ->icon('/favicon-96x96.png');
     }
 }

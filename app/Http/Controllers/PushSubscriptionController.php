@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\WelcomeNotification;
 
 class PushSubscriptionController extends Controller
@@ -18,15 +19,14 @@ class PushSubscriptionController extends Controller
 
         $user = Auth::user();
 
-        // 1. Assign the result to a variable ($subscription)
         $subscription = $user->updatePushSubscription(
             $request->endpoint,
             $request->input('keys.p256dh'),
             $request->input('keys.auth')
         );
 
-        // 2. Notify ONLY this specific subscription (current device)
-        $subscription->notify(new WelcomeNotification());
+        Notification::route('WebPush', collect([$subscription]))
+            ->notify(new WelcomeNotification());
 
         return response()->json(['success' => true]);
     }
