@@ -57,8 +57,9 @@ Route::get('/cars/{id}', [CarsListController::class, 'show'])->name('cars.show')
 
 // --- ADD THESE NEW CONTACT ROUTES ---
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-// ------------------------------------
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware('throttle:3,1')
+    ->name('contact.store');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 

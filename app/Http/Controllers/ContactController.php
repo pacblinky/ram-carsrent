@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail; // Future: You can use this to send emails
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class ContactController extends Controller
@@ -38,13 +38,20 @@ class ContactController extends Controller
             'message' => 'required|string|min:10',
         ]);
 
-        // ---
-        // In a real application, you would send an email here.
-        // Example:
-        // Mail::to('admin@example.com')->send(new ContactFormMail($validated));
-        // ---
+        // Send email to support
+        // Using Mail::raw for simplicity. You can create a Mailable class for more complex templates.
+        Mail::raw(
+            "Name: {$validated['name']}\n" .
+            "Email: {$validated['email']}\n\n" .
+            "Message:\n{$validated['message']}",
+            function ($message) use ($validated) {
+                $message->to('support@ramco.com.sa')
+                        ->replyTo($validated['email'], $validated['name'])
+                        ->subject('Contact Form: ' . $validated['subject']);
+            }
+        );
 
-        // For this example, we'll just redirect back with a success message.
+        // Redirect back with a success message
         return Redirect::route('contact.index')
             ->with('success_message_key', 'contact.message_sent_details');
     }
