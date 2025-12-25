@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
 use App\Notifications\WelcomeNotification;
+use Illuminate\Support\Facades\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class PushSubscriptionController extends Controller
 {
@@ -25,7 +26,8 @@ class PushSubscriptionController extends Controller
             $request->input('keys.auth')
         );
 
-        Notification::route('WebPush', collect([$subscription]))
+        // 2. Use Notification::route with the CLASS name and wrap subscription in a collection
+        Notification::route(WebPushChannel::class, collect([$subscription]))
             ->notify(new WelcomeNotification());
 
         return response()->json(['success' => true]);
