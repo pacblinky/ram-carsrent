@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\WelcomeNotification;
 use Illuminate\Support\Facades\Notification;
-use NotificationChannels\WebPush\WebPushChannel;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection; 
+// Import the Eloquent Collection
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class PushSubscriptionController extends Controller
 {
@@ -27,8 +27,10 @@ class PushSubscriptionController extends Controller
             $request->input('keys.auth')
         );
 
-        // 2. Create a new EloquentCollection instead of using collect()
-        Notification::route(WebPushChannel::class, new EloquentCollection([$subscription]))
+        // FIX:
+        // 1. Use 'WebPush' (string) because the driver specifically looks for this key.
+        // 2. Use 'new EloquentCollection' because the driver enforces this specific type.
+        Notification::route('WebPush', new EloquentCollection([$subscription]))
             ->notify(new WelcomeNotification());
 
         return response()->json(['success' => true]);
