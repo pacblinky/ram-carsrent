@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
-use Illuminate\Support\Facades\Mail; // Added Mail facade
 
 class ReservationController extends Controller
 {
@@ -77,27 +76,6 @@ class ReservationController extends Controller
             'status'              => 'pending',
         ]);
 
-        // --- SEND NEW RESERVATION EMAIL ---
-        $user = auth()->user();
-        
-        $emailContent = "New Reservation Created!\n\n" .
-                        "Reservation ID: {$reservation->id}\n" .
-                        "Car: {$car->name}\n" .
-                        "Car Link: " . route('cars.show', $car->id) . "\n" .
-                        "Start Date: " . $reservation->start_datetime->format('Y-m-d H:i') . "\n" .
-                        "End Date: " . $reservation->end_datetime->format('Y-m-d H:i') . "\n" .
-                        "Total Price: {$reservation->total_price}\n\n" .
-                        "--- Customer Details ---\n" .
-                        "Name: {$user->name}\n" .
-                        "Email: {$user->email}\n" .
-                        "Phone: {$user->phone_number}\n";
-
-        Mail::raw($emailContent, function ($message) {
-            $message->to('reservations@ramco.com.sa')
-                    ->subject('New Reservation Alert');
-        });
-        // ----------------------------------
-
         $admins = User::where('is_admin', true)->get();
 
         // 1. Filament Database Notification
@@ -137,30 +115,9 @@ class ReservationController extends Controller
 
         $reservation->update(['status' => 'canceled']);
 
-        // --- SEND CANCELLATION EMAIL ---
-        $user = $request->user();
-        $car = $reservation->car;
-
-        $emailContent = "Reservation Canceled!\n\n" .
-                        "Reservation ID: {$reservation->id}\n" .
-                        "Car: {$car->name}\n" .
-                        "Car Link: " . route('cars.show', $car->id) . "\n" .
-                        "Start Date: " . $reservation->start_datetime->format('Y-m-d H:i') . "\n" .
-                        "End Date: " . $reservation->end_datetime->format('Y-m-d H:i') . "\n" .
-                        "Total Price: {$reservation->total_price}\n\n" .
-                        "--- Customer Details ---\n" .
-                        "Name: {$user->name}\n" .
-                        "Email: {$user->email}\n" .
-                        "Phone: {$user->phone_number}\n";
-
-        Mail::raw($emailContent, function ($message) {
-            $message->to('reservations@ramco.com.sa')
-                    ->subject('Reservation Canceled Alert');
-        });
-        // -------------------------------
-
         $admins = User::where('is_admin', true)->get();
-        
+
+        // 1. Filament Database Notification for Cancellation
         Notification::make()
             ->title(__('admin.notifications.reservation_canceled_title'))
             ->body(__('admin.notifications.reservation_canceled_body', [
