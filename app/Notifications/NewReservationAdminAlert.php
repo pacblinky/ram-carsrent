@@ -22,7 +22,7 @@ class NewReservationAdminAlert extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('New Booking #' . $this->reservation->id)
+            ->subject('New Reservation #' . $this->reservation->id)
             ->greeting('Hello Admin Team,')
             ->line('A new reservation has been placed on the website.')
             
