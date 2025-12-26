@@ -47,7 +47,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::post('/cars/{car}/reserve', [ReservationController::class, 'store'])->middleware('throttle:3,1')->name('reservations.store');
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::patch('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
 });
