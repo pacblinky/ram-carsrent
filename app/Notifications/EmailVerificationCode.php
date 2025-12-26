@@ -26,7 +26,7 @@ class EmailVerificationCode extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('RAM | Car Rental - Verification Code')
+            ->subject('Verification Code')
             ->line('Your verification code is: ' . $this->code)
             ->line('This code will expire in 15 minutes.')
             ->line('If you did not create an account, no further action is required.');
